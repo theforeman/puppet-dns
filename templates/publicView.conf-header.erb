@@ -1,0 +1,17 @@
+zone "." IN  {
+	type hint;
+	file "named.ca";
+};
+
+zone "localhost" IN  {
+	type master;
+	file "localhost.zone";
+	allow-update  { none;  };
+};
+
+zone "0.0.127.in-addr.arpa" IN  {
+	type master;
+	file "named.local";
+	allow-update  { none;  };
+};
+
