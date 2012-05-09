@@ -3,6 +3,10 @@ DNS
 
 A puppet module to setup bind for The Foreman
 
+## Dependencies
+
+* Reworked Concat module (https://github.com/GregSutcliffe/pupmod-concat)
+
 ToDo
 ----
 OSes other than Debian

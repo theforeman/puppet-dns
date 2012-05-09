@@ -64,16 +64,15 @@ class dns {
             ensure  => directory;
     }
 
-    include concat::setup
-
-    concat::fragment {
-        "dns_zone_${zone}-header":
-            order => 05,
-            target => "$publicviewpath",
+    concat_build { 'dns_zones':
+      order  => ['*.dns'],
+      target => "${publicviewpath}",
 	    notify => Service["$namedservicename"],
-            content => template("dns/publicView.conf-header.erb");
     }
-    concat { "${publicviewpath}": }
+
+    concat_fragment { "dns_zones+05_${zone}.dns":
+      content => template("dns/publicView.conf-header.erb"),
+    }
 
     service {
         "$namedservicename":
