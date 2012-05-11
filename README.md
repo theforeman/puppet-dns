@@ -5,7 +5,7 @@ A puppet module to setup bind for The Foreman
 
 ## Dependencies
 
-* Reworked Concat module (https://github.com/GregSutcliffe/pupmod-concat)
+* Reworked Concat module (https://github.com/GregSutcliffe/puppet-concat)
 
 ToDo
 ----
