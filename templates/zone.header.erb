@@ -10,5 +10,6 @@ $TTL <%= ttl %>
 $ORIGIN <%= zone %>.
 
 <%= zone %>. IN  NS <%= soa %>.
+<% if ! reverse %>
 <%= soa %>. IN  A <%= soaip %>
-
+<% end %>

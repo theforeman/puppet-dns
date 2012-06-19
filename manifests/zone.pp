@@ -16,7 +16,6 @@ define dns::zone ($zonetype='master', $soa, $reverse='false', $ttl='10800', $soa
   concat_build { "zonefile_${zone}":
     order  => ['*.zone'],
     target => "${vardir}/puppetstore/${filename}",
-    notify => Service[$namedservicename],
   }
 
   concat_fragment { "dns_zones+10_${zone}.dns":
@@ -32,7 +31,7 @@ define dns::zone ($zonetype='master', $soa, $reverse='false', $ttl='10800', $soa
     command => "/bin/cp puppetstore/${filename} zones/${filename}",
     cwd     => $vardir,
     creates => "${vardir}/zones/${filename}",
+    notify  => Service[$namedservicename],
   }
 
 }
-
