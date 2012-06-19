@@ -1,4 +1,4 @@
-define dns::zone ($zonetype="master",$soa,$reverse="false",$ttl="10800",$soaip){
+define dns::zone ($zonetype='master', $soa, $reverse='false', $ttl='10800', $soaip) {
   $contact = "root@${name}"
   $serial = 1
   include dns
@@ -16,21 +16,21 @@ define dns::zone ($zonetype="master",$soa,$reverse="false",$ttl="10800",$soaip){
   concat_build { "zonefile_${zone}":
     order  => ['*.zone'],
     target => "${vardir}/puppetstore/${filename}",
-    notify => Service["$namedservicename"],
+    notify => Service[$namedservicename],
   }
 
   concat_fragment { "dns_zones+10_${zone}.dns":
-    content => template("dns/named.zone.erb"),
-    notify  => Service["$namedservicename"],
+    content => template('dns/named.zone.erb'),
+    notify  => Service[$namedservicename],
   }
   concat_fragment { "zonefile_${zone}+05_${zone}.zone":
-    content => template("dns/zone.header.erb"),
-    notify  => Service["$namedservicename"],
+    content => template('dns/zone.header.erb'),
+    notify  => Service[$namedservicename],
   }
 
   exec { "create-zone_${zone}":
     command => "/bin/cp puppetstore/${filename} zones/${filename}",
-    cwd     => "${vardir}",
+    cwd     => $vardir,
     creates => "${vardir}/zones/${filename}",
   }
 

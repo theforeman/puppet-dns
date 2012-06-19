@@ -1,10 +1,10 @@
 class dns::params {
-    $dnsdir             = "/etc/bind"
+    $dnsdir             = '/etc/bind'
     $namedconf_path     = "${dnsdir}/named.conf"
-    $vardir             = "/var/cache/bind"
+    $vardir             = '/var/cache/bind'
     $optionspath        = "${dnsdir}/named.conf.options"
-    $dns_server_package = "bind9"
-    $namedservicename   = "bind9"
+    $dns_server_package = 'bind9'
+    $namedservicename   = 'bind9'
     $user               = 'bind'
 
     #pertaining to rndc
@@ -12,6 +12,6 @@ class dns::params {
 
     #pertaining to views
     $publicviewpath   = "${dnsdir}/zones.conf"
-    $publicview       = "zones"
+    $publicview       = 'zones'
     $zonefilepath     = "${vardir}/zones"
 }

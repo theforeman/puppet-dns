@@ -14,82 +14,81 @@ class dns {
     $namedservicename = $dns::params::namedservicename
     $zonefilepath = $dns::params::zonefilepath
 
-    package { "dns": 
+    package { 'dns':
       ensure => installed,
-      name => "${dns_server_package}";
+      name   => $dns_server_package,
     }
 
     file {
-        "$namedconf_path":
+        $namedconf_path:
             owner   => root,
             group   => 0,
-            mode    => 644,
-            require => Package["dns"],
-            content => template("dns/named.conf.erb");
-        "$dnsdir":
+            mode    => '0644',
+            require => Package['dns'],
+            content => template('dns/named.conf.erb');
+        $dnsdir:
             ensure  => directory,
             owner   => root,
             group   => 0,
-            mode    => 755;
-        "$vardir":
+            mode    => '0755';
+        $vardir:
+            ensure  => directory,
             owner   => $dns::params::user,
             group   => $dns::params::user,
             recurse => true,
-            mode    => 755,
-            ensure  => directory;
-        "$optionspath":
+            mode    => '0755';
+        $optionspath:
             owner   => root,
             group   => 0,
-            mode    => 0644,
-            content => template("dns/options.conf.erb");
+            mode    => '0644',
+            content => template('dns/options.conf.erb');
         "${vardir}/named.ca":
             owner   => $dns::params::user,
             group   => $dns::params::user,
-            mode   => 644,
-	    source => "puppet:///modules/dns/named.ca";	
+            mode    => '0644',
+            source  => 'puppet:///modules/dns/named.ca';
         "${vardir}/named.local":
             owner   => $dns::params::user,
             group   => $dns::params::user,
-            mode   => 644,
-	    source => "puppet:///modules/dns/named.local";
+            mode    => '0644',
+            source  => 'puppet:///modules/dns/named.local';
         "${vardir}/localhost.zone":
             owner   => $dns::params::user,
             group   => $dns::params::user,
-            mode   => 644,
-	    source => "puppet:///modules/dns/localhost.zone";
-        "$zonefilepath":
+            mode    => '0644',
+            source  => 'puppet:///modules/dns/localhost.zone';
+        $zonefilepath:
+            ensure  => directory,
             owner   => $dns::params::user,
             group   => $dns::params::user,
-            mode   => 755,
-            ensure  => directory;
+            mode    => '0755';
     }
 
     concat_build { 'dns_zones':
       order  => ['*.dns'],
-      target => "${publicviewpath}",
-	    notify => Service["$namedservicename"],
+      target => $publicviewpath,
+      notify => Service[$namedservicename],
     }
 
     concat_fragment { "dns_zones+05_${zone}.dns":
-      content => template("dns/publicView.conf-header.erb"),
+      content => template('dns/publicView.conf-header.erb'),
     }
 
     service {
-        "$namedservicename":
-            enable     => "true",
-            ensure     => "running",
-            hasstatus  => "true",
-            hasrestart => "true",
-            require    => Package["dns"];
-   }
+        $namedservicename:
+            ensure     => running,
+            enable     => true,
+            hasstatus  => true,
+            hasrestart => true,
+            require    => Package['dns'];
+    }
 
-   file { "${vardir}/puppetstore": ensure => directory }
+    file { "${vardir}/puppetstore": ensure => directory }
 
-   exec { "create-rndc.key":
-     command => "/usr/sbin/rndc-confgen -r /dev/urandom -a",
-     cwd     => "/tmp",
-     creates => "/etc/bind/rndc.key",
-   }
+    exec { 'create-rndc.key':
+      command => '/usr/sbin/rndc-confgen -r /dev/urandom -a',
+      cwd     => '/tmp',
+      creates => '/etc/bind/rndc.key',
+    }
 
 }
-
