@@ -86,9 +86,15 @@ class dns {
     file { "${vardir}/puppetstore": ensure => directory }
 
     exec { 'create-rndc.key':
-      command => '/usr/sbin/rndc-confgen -r /dev/urandom -a',
+      command => "/usr/sbin/rndc-confgen -r /dev/urandom -a -c ${rndckeypath}",
       cwd     => '/tmp',
-      creates => '/etc/bind/rndc.key',
+      creates => $rndckeypath,
     }
 
+    file { $rndckeypath:
+      owner   => 'root',
+      group   => $dns::params::group,
+      mode    => '0640',
+      require => Exec['create-rndc.key'],
+    }
 }
