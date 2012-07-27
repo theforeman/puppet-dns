@@ -1,6 +1,17 @@
-define dns::zone ($zonetype='master', $soa, $reverse='false', $ttl='10800', $soaip) {
-  $contact = "root@${name}"
+define dns::zone (
+    $zonetype='master',
+    $soa='',
+    $reverse=false,
+    $ttl='10800',
+    $soaip='',
+    $refresh = 86400,
+    $update_retry = 3600,
+    $expire = 604800,
+    $negttl = 3600
+) {
+  $contact = "root.${name}"
   $serial = 1
+
   include dns
   include dns::params
 

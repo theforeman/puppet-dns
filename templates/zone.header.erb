@@ -1,15 +1,13 @@
 $TTL <%= ttl %>
-<%= zone %>. IN SOA <%= soa %>. <%= contact %> (
- 	<%= serial %>	;Serial
- 	86400		;Refresh
- 	3600		;Retry
- 	604800		;Expire
- 	3600		;Negative caching TTL
- ) 
+@ IN SOA <%= soa %>. <%= contact %> (
+	<%= serial %>	;Serial
+	<%= refresh %>	;Refresh
+	<%= update_retry %>	;Retry
+	<%= expire %>	;Expire
+	<%= negttl %>	;Negative caching TTL
+)
 
-$ORIGIN <%= zone %>.
-
-<%= zone %>. IN  NS <%= soa %>.
+@ IN NS <%= soa %>.
 <% if ! reverse %>
-<%= soa %>. IN  A <%= soaip %>
+<%= soa %>. IN A <%= soaip %>
 <% end %>
