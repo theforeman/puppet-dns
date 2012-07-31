@@ -19,49 +19,31 @@ class dns {
       name   => $dns_server_package,
     }
 
+    File {
+        require => Package['dns'],
+    }
+
     file {
         $namedconf_path:
             owner   => root,
-            group   => 0,
-            mode    => '0644',
+            group   => $dns::params::group,
+            mode    => '0640',
             require => Package['dns'],
             content => template('dns/named.conf.erb');
-        $dnsdir:
-            ensure  => directory,
-            owner   => root,
-            group   => 0,
-            mode    => '0755';
-        $vardir:
-            ensure  => directory,
-            owner   => $dns::params::user,
-            group   => $dns::params::user,
-            recurse => true,
-            mode    => '0755';
         $optionspath:
             owner   => root,
-            group   => 0,
-            mode    => '0644',
+            group   => $dns::params::group,
+            mode    => '0640',
             content => template('dns/options.conf.erb');
-        "${vardir}/named.ca":
-            owner   => $dns::params::user,
-            group   => $dns::params::user,
-            mode    => '0644',
-            source  => 'puppet:///modules/dns/named.ca';
-        "${vardir}/named.local":
-            owner   => $dns::params::user,
-            group   => $dns::params::user,
-            mode    => '0644',
-            source  => 'puppet:///modules/dns/named.local';
-        "${vardir}/localhost.zone":
-            owner   => $dns::params::user,
-            group   => $dns::params::user,
-            mode    => '0644',
-            source  => 'puppet:///modules/dns/localhost.zone';
         $zonefilepath:
             ensure  => directory,
             owner   => $dns::params::user,
-            group   => $dns::params::user,
-            mode    => '0755';
+            group   => $dns::params::group,
+            mode    => '0640';
+        "${vardir}/puppetstore":
+            ensure  => directory,
+            group   => $dns::params::group,
+            mode    => '0640';
     }
 
     concat_build { 'dns_zones':
@@ -70,8 +52,8 @@ class dns {
       notify => Service[$namedservicename],
     }
 
-    concat_fragment { "dns_zones+05_${zone}.dns":
-      content => template('dns/publicView.conf-header.erb'),
+    concat_fragment { 'dns_zones+01-header.dns':
+      content => ' ',
     }
 
     service {
@@ -82,8 +64,6 @@ class dns {
             hasrestart => true,
             require    => Package['dns'];
     }
-
-    file { "${vardir}/puppetstore": ensure => directory }
 
     exec { 'create-rndc.key':
       command => "/usr/sbin/rndc-confgen -r /dev/urandom -a -c ${rndckeypath}",

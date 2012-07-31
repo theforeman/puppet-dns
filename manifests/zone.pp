@@ -24,24 +24,21 @@ define dns::zone (
   $vardir           = $dns::params::vardir
   $namedservicename = $dns::params::namedservicename
 
-  concat_build { "zonefile_${zone}":
-    order  => ['*.zone'],
-    target => "${vardir}/puppetstore/${filename}",
-  }
-
   concat_fragment { "dns_zones+10_${zone}.dns":
     content => template('dns/named.zone.erb'),
-    notify  => Service[$namedservicename],
   }
-  concat_fragment { "zonefile_${zone}+05_${zone}.zone":
+
+  file { "${vardir}/puppetstore/${filename}":
     content => template('dns/zone.header.erb'),
-    notify  => Service[$namedservicename],
+    require => File["${vardir}/puppetstore"],
   }
 
   exec { "create-zone_${zone}":
-    command => "/bin/cp puppetstore/${filename} zones/${filename}",
+    command => "/bin/cp puppetstore/${filename} ${zonefilename}",
     cwd     => $vardir,
-    creates => "${vardir}/zones/${filename}",
+    creates => $zonefilename,
+    require => File["${vardir}/puppetstore/${filename}",
+        $dns::params::zonefilepath],
     notify  => Service[$namedservicename],
   }
 
