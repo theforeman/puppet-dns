@@ -9,7 +9,6 @@ class dns {
     $rndc_secret = $dns::params::rndc_secret
     $optionspath = $dns::params::optionspath
     $publicviewpath = $dns::params::publicviewpath
-    $publicview = $dns::params::publicview
     $vardir = $dns::params::vardir
     $namedservicename = $dns::params::namedservicename
     $zonefilepath = $dns::params::zonefilepath

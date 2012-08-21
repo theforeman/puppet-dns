@@ -30,6 +30,5 @@ class dns::params {
 
     #pertaining to views
     $publicviewpath   = "${dnsdir}/zones.conf"
-    $publicview       = 'zones'
     $zonefilepath     = "${vardir}/zones"
 }
