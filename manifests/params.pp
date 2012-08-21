@@ -4,6 +4,7 @@ class dns::params {
         $dnsdir             = '/etc/bind'
         $vardir             = '/var/cache/bind'
         $optionspath        = "${dnsdir}/named.conf.options"
+        $zonefilepath       = "${vardir}/zones"
         $dns_server_package = 'bind9'
         $namedservicename   = 'bind9'
         $user               = 'bind'
@@ -13,6 +14,7 @@ class dns::params {
         $dnsdir             = '/etc'
         $vardir             = '/var/named'
         $optionspath        = '/etc/named/options.conf'
+        $zonefilepath       = "${vardir}/dynamic"
         $dns_server_package = 'bind'
         $namedservicename   = 'named'
         $user               = 'named'
@@ -30,5 +32,4 @@ class dns::params {
 
     #pertaining to views
     $publicviewpath   = "${dnsdir}/zones.conf"
-    $zonefilepath     = "${vardir}/zones"
 }
