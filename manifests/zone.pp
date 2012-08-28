@@ -17,12 +17,8 @@ define dns::zone (
 
   $zone             = $name
   $filename         = "db.${zone}"
-  $dnsdir           = $dns::params::dnsdir
-  $zonefilename     = "${dns::params::zonefilepath}/${filename}"
-  $publicviewpath   = $dns::params::publicviewpath
   $zonefilepath     = $dns::params::zonefilepath
-  $vardir           = $dns::params::vardir
-  $namedservicename = $dns::params::namedservicename
+  $zonefilename     = "${zonefilepath}/${filename}"
 
   concat_fragment { "dns_zones+10_${zone}.dns":
     content => template('dns/named.zone.erb'),
