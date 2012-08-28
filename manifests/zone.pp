@@ -28,18 +28,10 @@ define dns::zone (
     content => template('dns/named.zone.erb'),
   }
 
-  file { "${vardir}/puppetstore/${filename}":
+  file { $zonefilename:
     content => template('dns/zone.header.erb'),
-    require => File["${vardir}/puppetstore"],
+    require => File[$dns::params::zonefilepath],
+    replace => false,
+    notify  => Service[$dns::params::namedservicename],
   }
-
-  exec { "create-zone_${zone}":
-    command => "/bin/cp puppetstore/${filename} ${zonefilename}",
-    cwd     => $vardir,
-    creates => $zonefilename,
-    require => File["${vardir}/puppetstore/${filename}",
-        $dns::params::zonefilepath],
-    notify  => Service[$namedservicename],
-  }
-
 }
