@@ -9,7 +9,7 @@ define dns::zone (
     $expire = 604800,
     $negttl = 3600
 ) {
-  $contact = "root.${name}"
+  $contact = "root.${name}."
   $serial = 1
 
   include dns
