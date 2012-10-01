@@ -1,17 +1,35 @@
 class dns::params {
-    $dnsdir             = "/etc/bind"
+    case $::operatingsystem {
+      'debian', 'ubuntu': {
+        $dnsdir             = '/etc/bind'
+        $vardir             = '/var/cache/bind'
+        $optionspath        = "${dnsdir}/named.conf.options"
+        $zonefilepath       = "${vardir}/zones"
+        $dns_server_package = 'bind9'
+        $namedservicename   = 'bind9'
+        $user               = 'bind'
+        $group              = 'bind'
+      }
+      'redhat', 'centos': {
+        $dnsdir             = '/etc'
+        $vardir             = '/var/named'
+        $optionspath        = '/etc/named/options.conf'
+        $zonefilepath       = "${vardir}/dynamic"
+        $dns_server_package = 'bind'
+        $namedservicename   = 'named'
+        $user               = 'named'
+        $group              = 'named'
+      }
+      default: {
+        fail ("Unsupported operating system $::operatingsystem")
+      }
+    }
+
     $namedconf_path     = "${dnsdir}/named.conf"
-    $vardir             = "/var/cache/bind"
-    $optionspath        = "${dnsdir}/named.conf.options"
-    $dns_server_package = "bind9"
-    $namedservicename   = "bind9"
-    $user               = 'bind'
 
     #pertaining to rndc
-    $rndckeypath = "${dnsdir}/rndc.key"
+    $rndckeypath      = "${dnsdir}/rndc.key"
 
     #pertaining to views
     $publicviewpath   = "${dnsdir}/zones.conf"
-    $publicview       = "zones"
-    $zonefilepath     = "${vardir}/zones"
 }

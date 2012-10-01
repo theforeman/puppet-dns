@@ -9,87 +9,71 @@ class dns {
     $rndc_secret = $dns::params::rndc_secret
     $optionspath = $dns::params::optionspath
     $publicviewpath = $dns::params::publicviewpath
-    $publicview = $dns::params::publicview
     $vardir = $dns::params::vardir
     $namedservicename = $dns::params::namedservicename
     $zonefilepath = $dns::params::zonefilepath
 
-    package { "dns": 
+    package { 'dns':
       ensure => installed,
-      name => "${dns_server_package}";
+      name   => $dns_server_package,
+    }
+
+    File {
+        require => Package['dns'],
     }
 
     file {
-        "$namedconf_path":
+        $namedconf_path:
             owner   => root,
-            group   => 0,
-            mode    => 644,
-            require => Package["dns"],
-            content => template("dns/named.conf.erb");
-        "$dnsdir":
+            group   => $dns::params::group,
+            mode    => '0640',
+            require => Package['dns'],
+            content => template('dns/named.conf.erb');
+        $optionspath:
+            owner   => root,
+            group   => $dns::params::group,
+            mode    => '0640',
+            content => template('dns/options.conf.erb');
+        $zonefilepath:
             ensure  => directory,
-            owner   => root,
-            group   => 0,
-            mode    => 755;
-        "$vardir":
             owner   => $dns::params::user,
-            group   => $dns::params::user,
-            recurse => true,
-            mode    => 755,
-            ensure  => directory;
-        "$optionspath":
-            owner   => root,
-            group   => 0,
-            mode    => 0644,
-            content => template("dns/options.conf.erb");
-        "${vardir}/named.ca":
-            owner   => $dns::params::user,
-            group   => $dns::params::user,
-            mode   => 644,
-	    source => "puppet:///modules/dns/named.ca";	
-        "${vardir}/named.local":
-            owner   => $dns::params::user,
-            group   => $dns::params::user,
-            mode   => 644,
-	    source => "puppet:///modules/dns/named.local";
-        "${vardir}/localhost.zone":
-            owner   => $dns::params::user,
-            group   => $dns::params::user,
-            mode   => 644,
-	    source => "puppet:///modules/dns/localhost.zone";
-        "$zonefilepath":
-            owner   => $dns::params::user,
-            group   => $dns::params::user,
-            mode   => 755,
-            ensure  => directory;
+            group   => $dns::params::group,
+            mode    => '0640';
+        "${vardir}/puppetstore":
+            ensure  => directory,
+            group   => $dns::params::group,
+            mode    => '0640';
     }
 
     concat_build { 'dns_zones':
       order  => ['*.dns'],
-      target => "${publicviewpath}",
-	    notify => Service["$namedservicename"],
+      target => $publicviewpath,
+      notify => Service[$namedservicename],
     }
 
-    concat_fragment { "dns_zones+05_${zone}.dns":
-      content => template("dns/publicView.conf-header.erb"),
+    concat_fragment { 'dns_zones+01-header.dns':
+      content => ' ',
     }
 
     service {
-        "$namedservicename":
-            enable     => "true",
-            ensure     => "running",
-            hasstatus  => "true",
-            hasrestart => "true",
-            require    => Package["dns"];
-   }
+        $namedservicename:
+            ensure     => running,
+            enable     => true,
+            hasstatus  => true,
+            hasrestart => true,
+            require    => Package['dns'];
+    }
 
-   file { "${vardir}/puppetstore": ensure => directory }
+    exec { 'create-rndc.key':
+      command => "/usr/sbin/rndc-confgen -r /dev/urandom -a -c ${rndckeypath}",
+      cwd     => '/tmp',
+      creates => $rndckeypath,
+    }
 
-   exec { "create-rndc.key":
-     command => "/usr/sbin/rndc-confgen -r /dev/urandom -a",
-     cwd     => "/tmp",
-     creates => "/etc/bind/rndc.key",
-   }
-
+    file { $rndckeypath:
+      owner   => 'root',
+      group   => $dns::params::group,
+      mode    => '0640',
+      require => Exec['create-rndc.key'],
+    }
 }
-
