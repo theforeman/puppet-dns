@@ -18,6 +18,10 @@ class dns {
       name   => $dns_server_package,
     }
 
+    group { $dns::params::group:
+      require => Package['dns']
+    }
+
     File {
         require => Package['dns'],
     }
