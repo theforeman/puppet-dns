@@ -32,4 +32,6 @@ class dns::params {
 
     #pertaining to views
     $publicviewpath   = "${dnsdir}/zones.conf"
+
+    $forwarders       = []
 }
