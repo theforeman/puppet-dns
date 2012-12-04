@@ -32,11 +32,13 @@ class dns {
             group   => $dns::params::group,
             mode    => '0640',
             require => Package['dns'],
+            notify  => Service[$namedservicename],
             content => template('dns/named.conf.erb');
         $optionspath:
             owner   => root,
             group   => $dns::params::group,
             mode    => '0640',
+            notify  => Service[$namedservicename],
             content => template('dns/options.conf.erb');
         $zonefilepath:
             ensure  => directory,
