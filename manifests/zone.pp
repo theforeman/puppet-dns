@@ -7,17 +7,24 @@ define dns::zone (
     $refresh = 86400,
     $update_retry = 3600,
     $expire = 604800,
-    $negttl = 3600
+    $negttl = 3600,
+    $zonefilepath     = $dns::params::zonefilepath,
+    $namedservicename     = $dns::params::namedservicename
 ) {
   $contact = "root.${name}."
   $serial = 1
 
-  include dns
+  if ! defined(Class["dns"]) {
+    class { dns:
+      zonefilepath => $zonefilepath,
+      namedservicename => $namedservicename
+    }
+  }
+
   include dns::params
 
   $zone             = $name
   $filename         = "db.${zone}"
-  $zonefilepath     = $dns::params::zonefilepath
   $zonefilename     = "${zonefilepath}/${filename}"
 
   concat_fragment { "dns_zones+10_${zone}.dns":
@@ -26,8 +33,8 @@ define dns::zone (
 
   file { $zonefilename:
     content => template('dns/zone.header.erb'),
-    require => File[$dns::params::zonefilepath],
+    require => File[$zonefilepath],
     replace => false,
-    notify  => Service[$dns::params::namedservicename],
+    notify  => Service[$namedservicename],
   }
 }

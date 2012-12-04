@@ -1,17 +1,17 @@
-class dns {
-    include dns::params
-
-    $namedconf_path = $dns::params::namedconf_path
-    $dnsdir = $dns::params::dnsdir
-    $dns_server_package = $dns::params::dns_server_package
-    $rndckeypath = $dns::params::rndckeypath
-    $rndc_alg = $dns::params::rndc_alg
-    $rndc_secret = $dns::params::rndc_secret
-    $optionspath = $dns::params::optionspath
-    $publicviewpath = $dns::params::publicviewpath
-    $vardir = $dns::params::vardir
-    $namedservicename = $dns::params::namedservicename
-    $zonefilepath = $dns::params::zonefilepath
+class dns(
+    $namedconf_path = $dns::params::namedconf_path,
+    $dnsdir = $dns::params::dnsdir,
+    $dns_server_package = $dns::params::dns_server_package,
+    $rndckeypath = $dns::params::rndckeypath,
+    $rndc_alg = $dns::params::rndc_alg,
+    $rndc_secret = $dns::params::rndc_secret,
+    $optionspath = $dns::params::optionspath,
+    $publicviewpath = $dns::params::publicviewpath,
+    $vardir = $dns::params::vardir,
+    $namedservicename = $dns::params::namedservicename,
+    $zonefilepath = $dns::params::zonefilepath,
+    $forwarders = $dns::params::forwarders
+) inherits dns::params {
 
     package { 'dns':
       ensure => installed,
