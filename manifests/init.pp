@@ -74,6 +74,7 @@ class dns(
       command => "/usr/sbin/rndc-confgen -r /dev/urandom -a -c ${rndckeypath}",
       cwd     => '/tmp',
       creates => $rndckeypath,
+      require => Package['dns'],
     }
 
     file { $rndckeypath:
