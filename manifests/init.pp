@@ -10,6 +10,7 @@ class dns(
     $vardir = $dns::params::vardir,
     $namedservicename = $dns::params::namedservicename,
     $zonefilepath = $dns::params::zonefilepath,
+    $localzonepath = $dns::params::localzonepath,
     $forwarders = $dns::params::forwarders
 ) inherits dns::params {
 
