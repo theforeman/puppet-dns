@@ -5,6 +5,7 @@ class dns::params {
         $vardir             = '/var/cache/bind'
         $optionspath        = "${dnsdir}/named.conf.options"
         $zonefilepath       = "${vardir}/zones"
+        $localzonepath      = "${dnsdir}/zones.rfc1918"
         $dns_server_package = 'bind9'
         $namedservicename   = 'bind9'
         $user               = 'bind'
@@ -15,6 +16,7 @@ class dns::params {
         $vardir             = '/var/named'
         $optionspath        = '/etc/named/options.conf'
         $zonefilepath       = "${vardir}/dynamic"
+        $localzonepath      = "${dnsdir}/named.rfc1912.zones"
         $dns_server_package = 'bind'
         $namedservicename   = 'named'
         $user               = 'named'

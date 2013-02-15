@@ -10,7 +10,7 @@ options  {
 	include "<%= optionspath %>";
 };
 
-include "/etc/named.rfc1912.zones";
+include "<%= localzonepath %>";
 
 // Public view read by Server Admin
 include "<%= publicviewpath %>";
