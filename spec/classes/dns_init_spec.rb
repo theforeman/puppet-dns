@@ -17,7 +17,6 @@ describe 'dns' do
 
     it { should contain_package('dns').with_ensure('present').with_name('bind') }
 
-    it { should contain_file('/var/named/puppetstore').with_ensure('directory') }
     it { should contain_file('/etc/named/options.conf') }
     it { should contain_file('/var/named/dynamic').with_ensure('directory') }
     it { should contain_file('/etc/named.conf').

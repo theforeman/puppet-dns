@@ -31,10 +31,6 @@ class dns::config {
       owner   => $dns::params::user,
       group   => $dns::params::group,
       mode    => '0640';
-    "${dns::vardir}/puppetstore":
-      ensure  => directory,
-      group   => $dns::params::group,
-      mode    => '0640';
   }
 
   exec { 'create-rndc.key':
