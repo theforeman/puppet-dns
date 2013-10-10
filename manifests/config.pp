@@ -1,3 +1,4 @@
+# Configure dns
 class dns::config {
   group { $dns::params::group: }
 
@@ -36,11 +37,10 @@ class dns::config {
   exec { 'create-rndc.key':
     command => "/usr/sbin/rndc-confgen -r /dev/urandom -a -c ${dns::rndckeypath}",
   } ->
-  file { $rndckeypath:
+  file { $dns::rndckeypath:
     owner   => 'root',
     group   => $dns::params::group,
     mode    => '0640',
   }
-
 }
 

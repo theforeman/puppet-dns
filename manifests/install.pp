@@ -1,3 +1,4 @@
+# Install dns service
 class dns::install {
   package { 'dns':
     ensure => present,

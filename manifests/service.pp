@@ -1,3 +1,4 @@
+# Enable and start dns service
 class dns::service {
   service { $dns::namedservicename:
     ensure     => running,

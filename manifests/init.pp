@@ -1,3 +1,4 @@
+# Install, configure and start dns service
 class dns(
   $namedconf_path = $dns::params::namedconf_path,
   $dnsdir = $dns::params::dnsdir,
