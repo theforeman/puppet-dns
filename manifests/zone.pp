@@ -15,7 +15,8 @@ define dns::zone (
     $aaaa = [],
     $cname = [],
     $zonefilepath     = $dns::params::zonefilepath,
-    $namedservicename     = $dns::params::namedservicename
+    $namedservicename     = $dns::params::namedservicename,
+    $replace = false,
 ) {
   $contact = "root.${name}."
   $serial = 1
@@ -40,6 +41,7 @@ define dns::zone (
   file { $zonefilename:
     content => template('dns/zone.erb'),
     require => File[$zonefilepath],
+    replace => $replace,
     notify  => Service[$namedservicename],
   }
 }
