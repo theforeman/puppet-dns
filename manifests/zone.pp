@@ -10,7 +10,9 @@ define dns::zone (
     $expire = 604800,
     $negttl = 3600,
     $zonefilepath     = $dns::params::zonefilepath,
-    $namedservicename     = $dns::params::namedservicename
+    $namedservicename     = $dns::params::namedservicename,
+    $masters = [],
+    $allow_transfer = []
 ) {
   $contact = "root.${name}."
   $serial = 1
@@ -33,6 +35,9 @@ define dns::zone (
   }
 
   file { $zonefilename:
+    owner   => $dns::params::user,
+    group   => $dns::params::group,
+    mode    => '0640',
     content => template('dns/zone.header.erb'),
     require => File[$zonefilepath],
     replace => false,

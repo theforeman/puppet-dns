@@ -1,7 +1,17 @@
 zone "<%= @zone %>" {
-    type <%= @zonetype %>;
-    file "<%= @zonefilename %>";
-    update-policy {
-            grant rndc-key zonesub ANY;
-    };
+  type <%= @zonetype %>;
+  file "<%= @zonefilename %>";
+<% if @zonetype == 'master' -%>    
+  update-policy {
+    grant rndc-key zonesub ANY;
+  };
+<% else -%>
+<%- if @allow_transfer -%>
+  allow-transfer { <% allow_transfer.each do |node| %><%= node %>; <% end %>};
+<% end -%>
+<% if @masters -%>
+  masters { <% masters.each do |node| %><%= node %>; <% end %>};
+<% end -%>
+<% end -%>
 };
+# vim: set et sw=2 ts=2 ft=named:
