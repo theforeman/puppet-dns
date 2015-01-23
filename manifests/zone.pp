@@ -9,8 +9,14 @@ define dns::zone (
     $update_retry = 3600,
     $expire = 604800,
     $negttl = 3600,
+    $ns = [],
+    $mx = [],
+    $a = [],
+    $aaaa = [],
+    $cname = [],
     $zonefilepath     = $dns::params::zonefilepath,
-    $namedservicename     = $dns::params::namedservicename
+    $namedservicename     = $dns::params::namedservicename,
+    $replace = false,
 ) {
   $contact = "root.${name}."
   $serial = 1
@@ -33,9 +39,9 @@ define dns::zone (
   }
 
   file { $zonefilename:
-    content => template('dns/zone.header.erb'),
+    content => template('dns/zone.erb'),
     require => File[$zonefilepath],
-    replace => false,
+    replace => $replace,
     notify  => Service[$namedservicename],
   }
 }

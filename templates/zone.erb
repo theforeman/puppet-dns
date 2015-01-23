@@ -1,0 +1,34 @@
+$TTL <%= @ttl %>
+@ IN SOA <%= @soa %>. <%= @contact %> (
+	<%= @serial %>	;Serial
+	<%= @refresh %>	;Refresh
+	<%= @update_retry %>	;Retry
+	<%= @expire %>	;Expire
+	<%= @negttl %>	;Negative caching TTL
+)
+
+@ IN NS <%= @soa %>.
+<% if ! @reverse %>
+<%= @soa %>. IN A <%= @soaip %>
+<% end %>
+
+<% @ns.each do |nsrec| -%>
+  IN NS <%= nsrec['name'] %>
+<% end -%>
+
+<% @mx.each do |mxrec| -%>
+  IN MX <%= mxrec['priority'] %> <%= mxrec['name'] %>
+<% end -%>
+
+<% @a.each do |arec| -%>
+<%= arec['name'] %> IN A <%= arec['ip'] %>
+<% end -%>
+
+<% @aaaa.each do |aaaarec| -%>
+<%= aaaarec['name'] %> IN AAAA <%= aaaarec['ip'] %>
+<% end -%>
+
+<% @cname.each do |cnamerec| -%>
+<%= cnamerec['cname'] %> IN CNAME <%= cnamerec['original'] %>
+<% end -%>
+
