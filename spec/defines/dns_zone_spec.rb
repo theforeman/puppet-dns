@@ -13,6 +13,10 @@ describe 'dns::zone' do
 
   let(:title) { "example.com" }
 
+  let :pre_condition do
+    'include dns'
+  end
+
   it "should have valid zone configuration" do
     verify_concat_fragment_exact_contents(subject, 'dns_zones+10_example.com.dns', [
       'zone "example.com" {',
