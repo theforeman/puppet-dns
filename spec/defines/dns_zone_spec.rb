@@ -135,10 +135,4 @@ describe 'dns::zone' do
     end
   end
 
-  context 'when soa is not a part of the zone' do
-    let(:params) {{ :soa => 'foo.example.tld', :zone => 'example.com' }}
-    it "should raise an error" do
-      expect { should compile }.to raise_error(/soa must be within the defined zone/)
-    end
-  end
 end

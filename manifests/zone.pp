@@ -21,13 +21,6 @@ define dns::zone (
   validate_bool($reverse)
   validate_array($masters, $allow_transfer)
 
-  # Validate that the value for soa is within the zone
-  $soa_parts    = split($soa, '[.]')
-  $soa_hostname = $soa_parts[0]
-  if $soa != "${soa_hostname}.${zone}" and ! $reverse {
-    fail('soa must be within the defined zone.')
-  }
-
   $zonefilename = "${zonefilepath}/${filename}"
 
   concat_fragment { "dns_zones+10_${zone}.dns":
