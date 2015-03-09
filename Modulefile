@@ -8,4 +8,4 @@ description 'Module for configuring the ISC BIND server for Foreman'
 project_page 'http://github.com/theforeman/foreman-installer'
 
 dependency 'theforeman/concat_native', '>= 1.3.0'
-dependency 'theforeman/stdlib', '>= 1.0.0'
+dependency 'puppetlabs/stdlib', '>= 1.0.0'
