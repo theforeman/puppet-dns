@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.1
+* Fix template variable lookups under the future parser
+
 ## 2.0.0
 * Add masters/allow_transfer parameters to dns::zone to configure master/slave
   relationships
