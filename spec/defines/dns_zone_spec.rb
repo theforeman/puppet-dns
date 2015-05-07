@@ -54,6 +54,34 @@ describe 'dns::zone' do
     ])
   end
 
+  context 'when including static records' do
+    let(:params) {{ :static_records => true }}
+    it "should create zone static file" do
+      should contain_file('/var/named/dynamic/db.example.com.static').with({
+        :owner    => 'named',
+        :group    => 'named',
+        :mode     => '0644',
+        :notify   => 'Service[named]',
+      })
+    end
+ 
+    it "should have valid zone file contents" do
+      verify_exact_contents(subject, '/var/named/dynamic/db.example.com', [
+        '$TTL 10800',
+        '@ IN SOA puppetmaster.example.com. root.example.com. (',
+        '	1	;Serial',
+        '	86400	;Refresh',
+        '	3600	;Retry',
+        '	604800	;Expire',
+        '	3600	;Negative caching TTL',
+        ')',
+        '@ IN NS puppetmaster.example.com.',
+        'puppetmaster.example.com. IN A 192.168.1.1',
+        '$INCLUDE /var/named/dynamic/db.example.com.static example.com.'
+      ])
+    end
+  end
+
   context 'when reverse => true' do
     let(:title) { '1.168.192.in-addr.arpa' }
     let(:params) {{ :reverse => true }}

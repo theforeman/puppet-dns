@@ -11,3 +11,6 @@ $TTL <%= @ttl %>
 <% if ! @reverse %>
 <%= @soa %>. IN A <%= @soaip %>
 <% end %>
+<% if @static_records %>
+$INCLUDE <%= @zonefilepath -%>/<%= @filename -%>.static <%= @zone -%>.
+<% end %>
