@@ -60,4 +60,20 @@ describe 'dns::record' do
     it { should_not compile }
   end
 
+  context 'when creating SRV record with non-integer weight' do
+    let(:title) { "badsrv.example.com" }
+    let(:params) {{ 
+      :label  => "_http._tcp.badsrv.example.com.",
+      :target => "vm123.example.com.",
+      :zone   => "example.com",
+      :priority => "10",
+      :weight   => "badweight",
+      :port     => "80",
+      :type   => "SRV",
+      :comment => "Created by vm123",
+    }}
+    
+    it { should_not compile }
+  end
+
 end
