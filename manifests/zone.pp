@@ -16,9 +16,10 @@ define dns::zone (
     $contact        = "root.${title}.",
     $zonefilepath   = $::dns::zonefilepath,
     $filename       = "db.${title}",
+    $static_records = false,
 ) {
 
-  validate_bool($reverse)
+  validate_bool($reverse, $static_records)
   validate_array($masters, $allow_transfer)
 
   $zonefilename = "${zonefilepath}/${filename}"
@@ -36,4 +37,42 @@ define dns::zone (
     replace => false,
     notify  => Service[$::dns::namedservicename],
   }
+
+  if ($static_records == true) and ($zonetype == 'master')  {
+    concat_fragment { "dns-static-${zone}+01header.dnsstatic":
+      content => template('dns/static-header.erb'),
+    }
+  
+    Dns::Record <<| |>> { notify => Concat_build["dns-static-${zone}"] }
+  
+    concat_build { "dns-static-${zone}":
+      order  => [ '*.dnsstatic' ],
+      notify => [
+        #Service[$::dns::namedservicename],
+        File[ "${zonefilename}.nsupdate"],
+      ],
+    }
+  
+    file { "${zonefilename}.nsupdate":
+      ensure  => file,
+      owner   => $dns::user,
+      group   => $dns::group,
+      mode    => '0644',
+      # notify  => Service[$::dns::namedservicename],
+      notify  => Exec["update_dns_${zone}"],
+      source  => concat_output("dns-static-${zone}"),
+      require => Concat_build[ "dns-static-${zone}"],
+    }
+
+    exec { "update_dns_${zone}":
+      command     => "${::dns::zonefilepath}/nsupdate_wrapper ${zone}",
+      refreshonly => true,
+      require     => [
+        File["${zonefilename}.nsupdate"],
+        File['nsupdate_wrapper'],
+        File[$zonefilename],
+      ],
+    }
+  }
+
 }
