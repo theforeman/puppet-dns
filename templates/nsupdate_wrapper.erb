@@ -30,9 +30,9 @@ nsupdate -y ${C_DNSKEY} -v db.${C_ZONE}.copy
 
 
 if [ -f db.${C_ZONE}.nsupdate.old ]; then
-  mv db.${C_ZONE}.nsupdate db.${C_ZONE}.nsupdate.old
-else
   cp db.${C_ZONE}.nsupdate db.${C_ZONE}.nsupdate.old
+else
+  mv db.${C_ZONE}.nsupdate db.${C_ZONE}.nsupdate.old
 fi
 
 rm db.${C_ZONE}.copy
