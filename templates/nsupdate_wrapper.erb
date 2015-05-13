@@ -18,7 +18,7 @@ cp db.${C_ZONE}.nsupdate db.${C_ZONE}.copy
 if [ -f db.${C_ZONE}.nsupdate.old ]; then
 	diff db.${C_ZONE}.copy db.${C_ZONE}.nsupdate.old | egrep "^> update" | sed 's/^> //g' | sed -e 's/update add/update delete/g' >> db.${C_ZONE}.copy
 else
-  /etc/init.d/<%= scope.lookupvar('::dns::namedservicename') -%> reload
+  service <%= scope.lookupvar('::dns::namedservicename') -%> reload
 fi
 
 # Add the closing commands to the *.nsupdate.copy file 
