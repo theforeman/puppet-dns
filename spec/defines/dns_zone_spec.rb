@@ -64,7 +64,7 @@ describe 'dns::zone' do
         :notify   => 'Exec[update_dns_example.com]',
       })
     end
- 
+
   end
 
   context 'when reverse => true' do
