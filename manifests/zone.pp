@@ -23,8 +23,10 @@ define dns::zone (
 
   $zonefilename = "${zonefilepath}/${filename}"
 
-  concat_fragment { "dns_zones+10_${zone}.dns":
+  concat::fragment { "dns_zones+10_${zone}.dns":
+    target  => $::dns::publicviewpath,
     content => template('dns/named.zone.erb'),
+    order   => "10-${zone}",
   }
 
   file { $zonefilename:
