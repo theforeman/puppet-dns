@@ -4,10 +4,11 @@ describe 'dns::zone' do
 
   let(:facts) do
     {
-      :osfamily   => 'RedHat',
-      :fqdn       => 'puppetmaster.example.com',
-      :clientcert => 'puppetmaster.example.com',
-      :ipaddress  => '192.168.1.1'
+      :clientcert     => 'puppetmaster.example.com',
+      :concat_basedir => '/doesnotexist',
+      :fqdn           => 'puppetmaster.example.com',
+      :ipaddress      => '192.168.1.1',
+      :osfamily       => 'RedHat',
     }
   end
 
