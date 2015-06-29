@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.0.0
+* Change theforeman-concat_native to puppetlabs-concat
+* Test with Puppet 4
+
 ## 2.0.1
 * Fix template variable lookups under the future parser
 
