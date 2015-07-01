@@ -29,6 +29,17 @@ class dns::config {
       owner   => $dns::params::user,
       group   => $dns::params::group,
       mode    => '0640';
+    'nsupdate_wrapper':
+      ensure  => file,
+      path    => "${dns::zonefilepath}/nsupdate_wrapper",
+      owner   => $dns::params::user,
+      group   => $dns::params::group,
+      mode    => '0750',
+      content => template('dns/nsupdate_wrapper.erb'),
+      require => [
+        File[$dns::zonefilepath],
+        File[$dns::rndckeypath],
+      ];
   }
 
   exec { 'create-rndc.key':

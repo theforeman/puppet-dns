@@ -26,6 +26,7 @@ describe 'dns' do
           with_content(%r{include "/etc/named.rfc1912.zones"}).
           with_content(%r{include "/etc/zones.conf"}).
           with_content(%r{include "/etc/named/options.conf"})}
+    it { should contain_file('nsupdate_wrapper') }
     it { should contain_exec('create-rndc.key').
           with_command("/usr/sbin/rndc-confgen -r /dev/urandom -a -c /etc/rndc.key") }
 

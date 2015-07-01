@@ -1,0 +1,40 @@
+#!/bin/bash
+set -e
+
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+C_ZONE="$1"
+C_WORKDIR="<%= scope.lookupvar('::dns::zonefilepath') -%>"
+C_DNSKEY="rndc-key:$(cat <%= scope.lookupvar('::dns::rndckeypath') -%> | sed -n "3p" | awk -F'"' '{print $2}')"
+
+cd $C_WORKDIR
+
+# Create a copy of the nsupdate file. We will edit the copy later, and use it for making the changes
+cp db.${C_ZONE}.nsupdate db.${C_ZONE}.copy
+
+# If the zone has been edited before, an *.nsupdate.old file will exist. If it exists, we will diff it with
+# the new one to see whether there are records we no longer need. If it doesn't exist, we will assume the zone
+# is new, and reload BIND before making any changes in order to make sure BIND has the zone config loaded
+if [ -f db.${C_ZONE}.nsupdate.old ]; then
+	diff db.${C_ZONE}.copy db.${C_ZONE}.nsupdate.old | egrep "^> update" | sed 's/^> //g' | sed -e 's/update add/update delete/g' >> db.${C_ZONE}.copy
+else
+  service <%= scope.lookupvar('::dns::namedservicename') -%> reload
+fi
+
+# Add the closing commands to the *.nsupdate.copy file 
+echo "show" >> db.${C_ZONE}.copy
+echo "send" >> db.${C_ZONE}.copy
+
+# Make the changes
+nsupdate -y ${C_DNSKEY} -v db.${C_ZONE}.copy
+
+
+if [ -f db.${C_ZONE}.nsupdate.old ]; then
+  cp db.${C_ZONE}.nsupdate db.${C_ZONE}.nsupdate.old
+else
+  mv db.${C_ZONE}.nsupdate db.${C_ZONE}.nsupdate.old
+fi
+
+rm db.${C_ZONE}.copy
+
+exit 0

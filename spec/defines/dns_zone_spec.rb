@@ -55,6 +55,19 @@ describe 'dns::zone' do
     ])
   end
 
+  context 'when including static records' do
+    let(:params) {{ :static_records => true }}
+    it "should create zone static file" do
+      should contain_file('/var/named/dynamic/db.example.com.nsupdate').with({
+        :owner    => 'named',
+        :group    => 'named',
+        :mode     => '0644',
+        :notify   => 'Exec[update_dns_example.com]',
+      })
+    end
+
+  end
+
   context 'when reverse => true' do
     let(:title) { '1.168.192.in-addr.arpa' }
     let(:params) {{ :reverse => true }}
