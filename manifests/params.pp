@@ -11,6 +11,7 @@ class dns::params {
         $namedservicename   = 'bind9'
         $user               = 'bind'
         $group              = 'bind'
+        $rndcconfgen        = '/usr/sbin/rndc-confgen'
       }
       'RedHat': {
         $dnsdir             = '/etc'
@@ -22,6 +23,19 @@ class dns::params {
         $namedservicename   = 'named'
         $user               = 'named'
         $group              = 'named'
+        $rndcconfgen        = '/usr/sbin/rndc-confgen'
+      }
+      /^(FreeBSD|DragonFly)$/: {
+        $dnsdir             = '/usr/local/etc/namedb'
+        $vardir             = '/usr/local/etc/namedb/working'
+        $optionspath        = '/usr/local/etc/namedb/options.conf'
+        $zonefilepath       = "${dnsdir}/dynamic"
+        $localzonepath      = undef # "${dnsdir}/master/empty.db"
+        $dns_server_package = 'bind910'
+        $namedservicename   = 'named'
+        $user               = 'bind'
+        $group              = 'bind'
+        $rndcconfgen        = '/usr/local/sbin/rndc-confgen'
       }
       default: {
         fail ("Unsupported operating system family ${::osfamily}")
