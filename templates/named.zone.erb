@@ -1,6 +1,11 @@
 zone "<%= @zone %>" {
     type <%= @zonetype %>;
+<% if @zonetype == 'forward' -%>
+    forward <%= @forward %>;
+<% end -%>
+<% if @manage_file == true -%>
     file "<%= @zonefilename %>";
+<% end -%>
 <% if @zonetype == 'master' -%>
     update-policy {
             grant rndc-key zonesub ANY;
@@ -11,5 +16,8 @@ zone "<%= @zone %>" {
 <% end -%>
 <% unless @masters.empty? -%>
     masters { <%= @masters.join('; ') %>; };
+<% end -%>
+<% unless @forwarders.empty? -%>
+    forwarders { <%= @forwarders.join('; ') %>; };
 <% end -%>
 };

@@ -16,10 +16,14 @@ define dns::zone (
     $contact        = "root.${title}.",
     $zonefilepath   = $::dns::zonefilepath,
     $filename       = "db.${title}",
+    $manage_file    = true,
+    $forward        = 'first',
+    $forwarders     = [],
 ) {
 
-  validate_bool($reverse)
-  validate_array($masters, $allow_transfer)
+  validate_bool($reverse, $manage_file)
+  validate_array($masters, $allow_transfer, $forwarders)
+  validate_re($forward, '^(first|only)$', 'Only \'first\' or \'only\' are valid values for forward field')
 
   $zonefilename = "${zonefilepath}/${filename}"
 
@@ -29,13 +33,15 @@ define dns::zone (
     order   => "10-${zone}",
   }
 
-  file { $zonefilename:
-    ensure  => file,
-    owner   => $dns::user,
-    group   => $dns::group,
-    mode    => '0644',
-    content => template('dns/zone.header.erb'),
-    replace => false,
-    notify  => Service[$::dns::namedservicename],
+  if $manage_file {
+    file { $zonefilename:
+      ensure  => file,
+      owner   => $dns::user,
+      group   => $dns::group,
+      mode    => '0644',
+      content => template('dns/zone.header.erb'),
+      replace => false,
+      notify  => Service[$::dns::namedservicename],
+    }
   }
 }
