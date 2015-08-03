@@ -41,16 +41,19 @@ class dns::params {
         fail ("Unsupported operating system family ${::osfamily}")
       }
     }
+    
+    $namedconf_template   = 'dns/named.conf.erb'
+    $optionsconf_template = 'dns/options.conf.erb'
 
-    $namedconf_path     = "${dnsdir}/named.conf"
+    $namedconf_path       = "${dnsdir}/named.conf"
 
     #pertaining to rndc
-    $rndckeypath      = "${dnsdir}/rndc.key"
+    $rndckeypath          = "${dnsdir}/rndc.key"
 
     #pertaining to views
-    $publicviewpath   = "${dnsdir}/zones.conf"
+    $publicviewpath       = "${dnsdir}/zones.conf"
 
-    $forwarders       = []
+    $forwarders           = []
 
-    $listen_on_v6     = 'any'
+    $listen_on_v6         = 'any'
 }

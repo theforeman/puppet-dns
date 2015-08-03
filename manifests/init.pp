@@ -1,17 +1,19 @@
 # Install, configure and start dns service
 class dns(
-  $namedconf_path     = $::dns::params::namedconf_path,
-  $dnsdir             = $::dns::params::dnsdir,
-  $dns_server_package = $::dns::params::dns_server_package,
-  $rndckeypath        = $::dns::params::rndckeypath,
-  $optionspath        = $::dns::params::optionspath,
-  $publicviewpath     = $::dns::params::publicviewpath,
-  $vardir             = $::dns::params::vardir,
-  $namedservicename   = $::dns::params::namedservicename,
-  $zonefilepath       = $::dns::params::zonefilepath,
-  $localzonepath      = $::dns::params::localzonepath,
-  $forwarders         = $::dns::params::forwarders,
-  $listen_on_v6       = $::dns::params::listen_on_v6
+  $namedconf_path       = $::dns::params::namedconf_path,
+  $dnsdir               = $::dns::params::dnsdir,
+  $dns_server_package   = $::dns::params::dns_server_package,
+  $rndckeypath          = $::dns::params::rndckeypath,
+  $optionspath          = $::dns::params::optionspath,
+  $publicviewpath       = $::dns::params::publicviewpath,
+  $vardir               = $::dns::params::vardir,
+  $namedservicename     = $::dns::params::namedservicename,
+  $zonefilepath         = $::dns::params::zonefilepath,
+  $localzonepath        = $::dns::params::localzonepath,
+  $forwarders           = $::dns::params::forwarders,
+  $listen_on_v6         = $::dns::params::listen_on_v6,
+  $namedconf_template   = $::dns::params::namedconf_template,
+  $optionsconf_template = $::dns::params::optionsconf_template,
 ) inherits dns::params {
   class { '::dns::install': } ~>
   class { '::dns::config': } ~>

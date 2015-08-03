@@ -18,12 +18,12 @@ class dns::config {
       owner   => root,
       group   => $dns::params::group,
       mode    => '0640',
-      content => template('dns/named.conf.erb');
+      content => template($::dns::namedconf_template);
     $dns::optionspath:
       owner   => root,
       group   => $dns::params::group,
       mode    => '0640',
-      content => template('dns/options.conf.erb');
+      content => template($::dns::optionsconf_template);
     $dns::zonefilepath:
       ensure  => directory,
       owner   => $dns::params::user,
