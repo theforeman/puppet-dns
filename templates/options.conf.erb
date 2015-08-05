@@ -4,6 +4,11 @@ forwarders { <%= scope.lookupvar('::dns::forwarders').join("; ") %>; };
 <% end -%>
 
 listen-on-v6 { <%= scope.lookupvar('::dns::listen_on_v6') %>; };
+
+<% unless scope.lookupvar('::dns::allow_recursion').empty? -%>
+allow-recursion { <%= scope.lookupvar('::dns::allow_recursion').join("; ") %>; };
+<% end -%>
+
 <% if (@osfamily =~ /^(FreeBSD|DragonFly)$/) -%>
 pid-file "/var/run/named/pid";
 <% end -%>

@@ -12,9 +12,13 @@ class dns(
   $localzonepath        = $::dns::params::localzonepath,
   $forwarders           = $::dns::params::forwarders,
   $listen_on_v6         = $::dns::params::listen_on_v6,
+  $allow_recursion      = $::dns::params::allow_recursion,
   $namedconf_template   = $::dns::params::namedconf_template,
   $optionsconf_template = $::dns::params::optionsconf_template,
 ) inherits dns::params {
+  validate_array($dns::forwarders)
+  validate_array($dns::allow_recursion)
+
   class { '::dns::install': } ~>
   class { '::dns::config': } ~>
   class { '::dns::service': } ->

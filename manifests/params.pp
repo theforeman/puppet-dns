@@ -56,4 +56,6 @@ class dns::params {
     $forwarders           = []
 
     $listen_on_v6         = 'any'
+
+    $allow_recursion      = []
 }
