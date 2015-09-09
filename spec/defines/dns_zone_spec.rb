@@ -108,6 +108,40 @@ describe 'dns::zone' do
     end
   end
 
+  context 'when also_notify defined' do
+    let(:params) {{ :also_notify => ['192.168.1.2'] }}
+
+    it "should have valid zone configuration with also-notify" do
+      verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_example.com.dns', [
+        'zone "example.com" {',
+        '    type master;',
+        '    file "/var/named/dynamic/db.example.com";',
+        '    update-policy {',
+        '            grant rndc-key zonesub ANY;',
+        '    };',
+        '    also-notify { 192.168.1.2; };',
+        '};',
+      ])
+    end
+
+    context 'when also_notify with multiple values' do
+      let(:params) {{ :also_notify => ['192.168.1.2', '192.168.1.3'] }}
+
+      it "should have valid zone configuration with also-notify" do
+        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_example.com.dns', [
+          'zone "example.com" {',
+          '    type master;',
+          '    file "/var/named/dynamic/db.example.com";',
+          '    update-policy {',
+          '            grant rndc-key zonesub ANY;',
+          '    };',
+          '    also-notify { 192.168.1.2; 192.168.1.3; };',
+          '};',
+        ])
+      end
+    end
+  end
+
   context 'when zonetype => slave' do
     let(:params) {{ :zonetype => 'slave', :masters  => ['192.168.1.1'] }}
 
