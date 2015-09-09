@@ -12,6 +12,7 @@ define dns::zone (
     $serial         = 1,
     $masters        = [],
     $allow_transfer = [],
+    $also_notify    = [],
     $zone           = $title,
     $contact        = "root.${title}.",
     $zonefilepath   = $::dns::zonefilepath,
