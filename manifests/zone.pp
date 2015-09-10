@@ -23,7 +23,7 @@ define dns::zone (
 ) {
 
   validate_bool($reverse, $manage_file)
-  validate_array($masters, $allow_transfer, $forwarders)
+  validate_array($masters, $allow_transfer, $forwarders, $also_notify)
   validate_re($forward, '^(first|only)$', 'Only \'first\' or \'only\' are valid values for forward field')
 
   $zonefilename = "${zonefilepath}/${filename}"
