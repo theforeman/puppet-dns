@@ -18,7 +18,7 @@ describe 'dns' do
       it { should contain_class('dns::config') }
       it { should contain_class('dns::service') }
 
-      it { should contain_package('dns').with_ensure('present').with_name('bind') }
+      it { should contain_package('bind').with_ensure('present') }
 
       it { should contain_file('/etc/named/options.conf').
                   with_content(%r{listen-on-v6 { any; };}) }
@@ -57,7 +57,7 @@ describe 'dns' do
       it { should contain_class('dns::config') }
       it { should contain_class('dns::service') }
 
-      it { should contain_package('dns').with_ensure('present').with_name('bind910') }
+      it { should contain_package('bind910').with_ensure('present') }
 
       it { should contain_file('/usr/local/etc/namedb/options.conf').
                   with_content(%r{listen-on-v6 { any; };}) }
