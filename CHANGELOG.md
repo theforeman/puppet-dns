@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.1.0
+* Support configuration on FreeBSD
+* Add namedconf_template/optionsconf_template parameters to override templates
+* Add allow_recursion parameter to control it on a global level
+* Add recursion, allow_query, dnssec_enable and dnssec_validation global
+  parameters
+* Add manage_file, forward and forwarders parameters to dns::zone
+* Add also_notify parameter to dns::zone
+* Change package resource to ensure_packages
+
 ## 3.0.0
 * Change theforeman-concat_native to puppetlabs-concat
 * Test with Puppet 4
