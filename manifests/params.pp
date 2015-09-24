@@ -41,7 +41,7 @@ class dns::params {
         fail ("Unsupported operating system family ${::osfamily}")
       }
     }
-    
+
     $namedconf_template   = 'dns/named.conf.erb'
     $optionsconf_template = 'dns/options.conf.erb'
 
@@ -60,6 +60,8 @@ class dns::params {
     $recursion            = 'yes'
     $allow_recursion      = []
     $allow_query          = [ 'any' ]
+
+    $empty_zones_enable   = 'yes'
 
     $dnssec_enable        = 'yes'
     $dnssec_validation    = 'yes'

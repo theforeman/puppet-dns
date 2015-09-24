@@ -8,6 +8,8 @@ allow-query { <%= scope.lookupvar('::dns::allow_query').join("; ") %>; };
 dnssec-enable <%= scope.lookupvar('::dns::dnssec_enable') %>;
 dnssec-validation <%= scope.lookupvar('::dns::dnssec_validation') %>;
 
+empty-zones-enable <%= scope.lookupvar('::dns::empty_zones_enable') %>;
+
 listen-on-v6 { <%= scope.lookupvar('::dns::listen_on_v6') %>; };
 
 <% unless scope.lookupvar('::dns::allow_recursion').empty? -%>

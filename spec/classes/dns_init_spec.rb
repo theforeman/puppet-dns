@@ -21,7 +21,8 @@ describe 'dns' do
       it { should contain_package('bind').with_ensure('present') }
 
       it { should contain_file('/etc/named/options.conf').
-                  with_content(%r{listen-on-v6 { any; };}) }
+                  with_content(%r{listen-on-v6 { any; };}).
+                  with_content(%r{empty-zones-enable yes;}) }
       it { should contain_file('/var/named/dynamic').with_ensure('directory') }
       it { should contain_file('/etc/named.conf').
                   with_content(%r{include "/etc/rndc.key"}).
@@ -38,6 +39,11 @@ describe 'dns' do
       let(:params) { {:listen_on_v6 => 'none'} }
       it { should contain_file('/etc/named/options.conf').
                   with_content(%r{listen-on-v6 { none; };}) }
+    end
+    describe 'with empty zones disabled' do
+      let(:params) { {:empty_zones_enable => 'no'} }
+      it { should contain_file('/etc/named/options.conf').
+                  with_content(%r{empty-zones-enable no;}) }
     end
   end
 

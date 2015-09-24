@@ -15,6 +15,7 @@ class dns(
   $recursion            = $::dns::params::recursion,
   $allow_recursion      = $::dns::params::allow_recursion,
   $allow_query          = $::dns::params::allow_query,
+  $empty_zones_enable   = $::dns::params::empty_zones_enable,
   $dnssec_enable        = $::dns::params::dnssec_enable,
   $dnssec_validation    = $::dns::params::dnssec_validation,
   $namedconf_template   = $::dns::params::namedconf_template,
