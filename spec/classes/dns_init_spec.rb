@@ -45,6 +45,11 @@ describe 'dns' do
       it { should contain_file('/etc/named/options.conf').
                   with_content(%r{empty-zones-enable no;}) }
     end
+
+    describe 'with service_ensure stopped' do
+      let(:params) { {:service_ensure => 'stopped'} }
+      it { should contain_service('named').with_ensure('stopped').with_enable(true) }
+    end
   end
 
   describe 'on FreeBSD with no custom parameters' do
@@ -76,6 +81,11 @@ describe 'dns' do
                   with_command("/usr/local/sbin/rndc-confgen -r /dev/urandom -a -c /usr/local/etc/namedb/rndc.key") }
 
       it { should contain_service('named').with_ensure('running').with_enable(true) }
+    end
+
+    describe 'with service_ensure stopped' do
+      let(:params) { {:service_ensure => 'stopped'} }
+      it { should contain_service('named').with_ensure('stopped').with_enable(true) }
     end
   end
 end

@@ -65,4 +65,6 @@ class dns::params {
 
     $dnssec_enable        = 'yes'
     $dnssec_validation    = 'yes'
+
+    $service_ensure       = 'running'
 }

@@ -20,6 +20,7 @@ class dns(
   $dnssec_validation    = $::dns::params::dnssec_validation,
   $namedconf_template   = $::dns::params::namedconf_template,
   $optionsconf_template = $::dns::params::optionsconf_template,
+  $service_ensure       = $::dns::params::service_ensure,
 ) inherits dns::params {
   validate_array($dns::forwarders)
   validate_array($dns::allow_recursion)
@@ -27,6 +28,7 @@ class dns(
   validate_re($dns::recursion, '^(yes|no)$', 'Only \'yes\' and \'no\' are valid values for recursion field')
   validate_re($dns::dnssec_enable, '^(yes|no)$', 'Only \'yes\' and \'no\' are valid values for dnssec_enable field')
   validate_re($dns::dnssec_validation, '^(yes|no|auto)$', 'Only \'yes\', \'no\' and \'auto\' are valid values for dnssec_validation field')
+  validate_re($dns::service_ensure, '^running|true|stopped|false$', 'Only \'running\', \'false\', \'stopped\' and \'false\' are validate values for service_ensure field')
 
   class { '::dns::install': } ~>
   class { '::dns::config': } ~>
