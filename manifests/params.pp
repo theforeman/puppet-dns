@@ -57,7 +57,7 @@ class dns::params {
 
     $listen_on_v6         = 'any'
 
-    $recursion            = 'yes'
+    $recursion            = 'no'
     $allow_recursion      = []
     $allow_query          = [ 'any' ]
 
