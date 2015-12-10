@@ -10,6 +10,7 @@ class dns(
   $namedservicename     = $::dns::params::namedservicename,
   $zonefilepath         = $::dns::params::zonefilepath,
   $localzonepath        = $::dns::params::localzonepath,
+  $forward              = $::dns::params::forward,
   $forwarders           = $::dns::params::forwarders,
   $listen_on_v6         = $::dns::params::listen_on_v6,
   $recursion            = $::dns::params::recursion,
@@ -26,6 +27,7 @@ class dns(
   validate_array($dns::forwarders)
   validate_array($dns::allow_recursion)
   validate_array($dns::allow_query)
+  validate_re($dns::forward, '^(only|first)$', 'Only \'only\' and \'first\' are valid values for forward field')
   validate_re($dns::recursion, '^(yes|no)$', 'Only \'yes\' and \'no\' are valid values for recursion field')
   validate_re($dns::dnssec_enable, '^(yes|no)$', 'Only \'yes\' and \'no\' are valid values for dnssec_enable field')
   validate_re($dns::dnssec_validation, '^(yes|no|auto)$', 'Only \'yes\', \'no\' and \'auto\' are valid values for dnssec_validation field')

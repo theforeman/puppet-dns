@@ -2,6 +2,9 @@ directory "<%= scope.lookupvar('::dns::vardir') %>";
 <% unless scope.lookupvar('::dns::forwarders').empty? -%>
 forwarders { <%= scope.lookupvar('::dns::forwarders').join("; ") %>; };
 <% end -%>
+<% unless scope.lookupvar('::dns::forward').empty?  -%>
+forward <%= scope.lookupvar('::dns::forward') %>;
+<% end -%>
 
 recursion <%= scope.lookupvar('::dns::recursion') %>;
 allow-query { <%= scope.lookupvar('::dns::allow_query').join("; ") %>; };
