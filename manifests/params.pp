@@ -53,7 +53,7 @@ class dns::params {
     #pertaining to views
     $publicviewpath       = "${dnsdir}/zones.conf"
 
-    $forward              = undef
+    $forward              = ''
     $forwarders           = []
 
     $listen_on_v6         = 'any'
