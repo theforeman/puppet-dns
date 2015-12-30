@@ -59,7 +59,7 @@ class dns::params {
     $listen_on_v6         = 'any'
 
     $recursion            = 'yes'
-    $allow_recursion      = []
+    $allow_recursion      = [ 'localnets', 'localhost' ]
     $allow_query          = [ 'any' ]
 
     $empty_zones_enable   = 'yes'

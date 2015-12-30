@@ -31,6 +31,17 @@ describe 'dns' do
                   with_content(%r{include "/etc/named/options.conf"}) }
       it { should contain_exec('create-rndc.key').
                   with_command("/usr/sbin/rndc-confgen -r /dev/urandom -a -c /etc/rndc.key") }
+      it { verify_exact_contents(catalogue, '/etc/named/options.conf', [
+          'directory "/var/named";',
+          'recursion yes;',
+          'allow-query { any; };',
+          'dnssec-enable yes;',
+          'dnssec-validation yes;',
+          'empty-zones-enable yes;',
+          'listen-on-v6 { any; };',
+          'allow-recursion { localnets; localhost; };'
+        ])
+      }
 
       it { should contain_service('named').with_ensure('running').with_enable(true) }
     end
