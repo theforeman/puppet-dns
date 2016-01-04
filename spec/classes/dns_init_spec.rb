@@ -62,12 +62,12 @@ describe 'dns' do
       it { should contain_file('/etc/named/options.conf').with_content(%r{forward only;}) }
     end
 
-    describe 'with forward first' do
-      let(:params) { {:forward => 'first'} }
-      it { should contain_file('/etc/named/options.conf').with_content(%r{forward first;}) }
+    describe 'with undef forward' do
+      let(:params) { {:forward => :undef} }
+      it { should contain_file('/etc/named/options.conf').without_content(%r{forward ;}) }
     end
 
-      describe 'with service_ensure stopped' do
+    describe 'with service_ensure stopped' do
       let(:params) { {:service_ensure => 'stopped'} }
       it { should contain_service('named').with_ensure('stopped').with_enable(true) }
     end
