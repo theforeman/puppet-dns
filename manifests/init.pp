@@ -31,6 +31,9 @@ class dns(
   validate_re($dns::dnssec_enable, '^(yes|no)$', 'Only \'yes\' and \'no\' are valid values for dnssec_enable field')
   validate_re($dns::dnssec_validation, '^(yes|no|auto)$', 'Only \'yes\', \'no\' and \'auto\' are valid values for dnssec_validation field')
   validate_re($dns::service_ensure, '^running|true|stopped|false$', 'Only \'running\', \'false\', \'stopped\' and \'false\' are validate values for service_ensure field')
+  if $dns::forward {
+    validate_re($dns::forward, '^(only|first)$', 'Only \'only\' and \'first\' are valid values for forward field')
+  }
   validate_bool($dns::service_enable)
 
   class { '::dns::install': } ~>
