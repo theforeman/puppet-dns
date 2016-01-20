@@ -17,6 +17,7 @@ class dns(
   $allow_recursion      = $::dns::params::allow_recursion,
   $allow_query          = $::dns::params::allow_query,
   $empty_zones_enable   = $::dns::params::empty_zones_enable,
+  $dns_notify           = $::dns::params::dns_notify,
   $dnssec_enable        = $::dns::params::dnssec_enable,
   $dnssec_validation    = $::dns::params::dnssec_validation,
   $namedconf_template   = $::dns::params::namedconf_template,
@@ -33,6 +34,9 @@ class dns(
   validate_re($dns::service_ensure, '^running|true|stopped|false$', 'Only \'running\', \'false\', \'stopped\' and \'false\' are validate values for service_ensure field')
   if $dns::forward {
     validate_re($dns::forward, '^(only|first)$', 'Only \'only\' and \'first\' are valid values for forward field')
+  }
+  if $dns::dns_notify {
+    validate_re($dns_notify, '^(yes|no|explicit)$', 'Only \'yes\', \'no\', or \'explicit\' are valid values for dns_notify field')
   }
   validate_bool($dns::service_enable)
 

@@ -151,6 +151,7 @@ describe 'dns::zone' do
         '    type slave;',
         '    file "/var/named/dynamic/db.example.com";',
         '    masters { 192.168.1.1; };',
+        '    notify no;',
         '};',
       ])
     end
@@ -164,6 +165,24 @@ describe 'dns::zone' do
           '    type slave;',
           '    file "/var/named/dynamic/db.example.com";',
           '    masters { 192.168.1.1; 192.168.1.2; };',
+          '    notify no;',
+          '};',
+        ])
+      end
+    end
+
+    context 'when dns_notify => no' do
+      let(:params) {{ :dns_notify => 'no' }}
+
+      it "should have valid slave zone configuration" do
+        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_example.com.dns', [
+          'zone "example.com" {',
+          '    type master;',
+          '    file "/var/named/dynamic/db.example.com";',
+          '    update-policy {',
+          '            grant rndc-key zonesub ANY;',
+          '    };',
+          '    notify no;',
           '};',
         ])
       end

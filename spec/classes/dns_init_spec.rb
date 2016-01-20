@@ -57,6 +57,12 @@ describe 'dns' do
                   with_content(%r{empty-zones-enable no;}) }
     end
 
+    describe 'with dns_notify disabled' do
+      let(:params) { {:dns_notify => 'no' } }
+      it { should contain_file('/etc/named/options.conf').
+                  with_content(%r{notify no;}) }
+    end
+
     describe 'with forward only' do
       let(:params) { {:forward => 'only'} }
       it { should contain_file('/etc/named/options.conf').with_content(%r{forward only;}) }

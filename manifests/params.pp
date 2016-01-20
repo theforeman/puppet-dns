@@ -64,6 +64,8 @@ class dns::params {
 
     $empty_zones_enable   = 'yes'
 
+    $dns_notify           = undef
+
     $dnssec_enable        = 'yes'
     $dnssec_validation    = 'yes'
 
