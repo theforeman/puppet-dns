@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.2.0
+* Add empty_zones_enable and forward global parameters
+* Add service_ensure, service_enable parameters to manage service properties
+* Change allow_recursion default to localnets and localhost to prevent open
+  recursion
+* Support Puppet 3.0 minimum
+* Support Fedora 21, remove Debian 6 (Squeeze), add Ubuntu 16.04
+
 ## 3.1.0
 * Support configuration on FreeBSD
 * Add namedconf_template/optionsconf_template parameters to override templates
