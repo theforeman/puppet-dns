@@ -1,5 +1,27 @@
+# == Class: dns
+#
 # Install, configure and start dns service
-class dns(
+#
+# === Parameters:
+#
+# $acls::                  Specify a hash of ACLs. Each key is the
+#                          name of a network, and its value is
+#                          an array of subnet strings.
+#                          type:hash
+#
+# $controls::              Specify a hash of controls. Each key is the
+#                          name of a network, and its value is a hash
+#                          containing 'port' => integer, 'keys' => array
+#                          and 'allowed_addresses' => array
+#                          type:hash
+#
+# === Usage:
+#
+# * Simple usage:
+#
+#     include dns
+#
+class dns (
   $namedconf_path       = $::dns::params::namedconf_path,
   $dnsdir               = $::dns::params::dnsdir,
   $dns_server_package   = $::dns::params::dns_server_package,
@@ -21,6 +43,7 @@ class dns(
   $dnssec_enable        = $::dns::params::dnssec_enable,
   $dnssec_validation    = $::dns::params::dnssec_validation,
   $namedconf_template   = $::dns::params::namedconf_template,
+  $acls                 = $::dns::params::acls,
   $optionsconf_template = $::dns::params::optionsconf_template,
   $controls             = $::dns::params::controls,
   $service_ensure       = $::dns::params::service_ensure,
@@ -41,6 +64,7 @@ class dns(
   }
   validate_bool($dns::service_enable)
   validate_hash($controls)
+  validate_hash($acls)
 
   class { '::dns::install': } ~>
   class { '::dns::config': } ~>

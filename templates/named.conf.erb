@@ -16,5 +16,13 @@ options  {
 include "<%= scope.lookupvar('::dns::localzonepath') %>";
 <% end -%>
 
+<%- scope.lookupvar('::dns::acls').sort_by {|k, v| k}.each do |acl_name, acl_array| -%>
+acl "<%= acl_name %>"  {
+        <%- acl_array.sort.each do |subnet| -%>
+        <%= subnet %>;
+        <%- end -%>
+};
+<%- end -%>
+
 // Public view read by Server Admin
 include "<%= scope.lookupvar('::dns::publicviewpath') %>";

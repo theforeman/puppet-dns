@@ -91,6 +91,28 @@ describe 'dns' do
       let(:params) { {:service_enable => false} }
       it { should contain_service('named').with_ensure('running').with_enable(false) }
     end
+
+    describe 'with acls set' do
+      let(:params) { {:acls => { 'trusted_nets' => [ '127.0.0.1/24', '127.0.1.0/24' ] } } }
+      it { verify_exact_contents(catalogue, '/etc/named.conf', [
+          '// named.conf',
+          'include "/etc/rndc.key";',
+          'controls  {',
+          '        inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; };',
+          '};',
+          'options  {',
+          '        include "/etc/named/options.conf";',
+          '};',
+          'include "/etc/named.rfc1912.zones";',
+          'acl "trusted_nets"  {',
+          '        127.0.0.1/24;',
+          '        127.0.1.0/24;',
+          '};',
+          '// Public view read by Server Admin',
+          'include "/etc/zones.conf";',
+        ])
+      }
+    end
   end
 
   describe 'on FreeBSD with no custom parameters' do
