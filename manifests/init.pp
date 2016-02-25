@@ -22,6 +22,7 @@ class dns(
   $dnssec_validation    = $::dns::params::dnssec_validation,
   $namedconf_template   = $::dns::params::namedconf_template,
   $optionsconf_template = $::dns::params::optionsconf_template,
+  $controls             = $::dns::params::controls,
   $service_ensure       = $::dns::params::service_ensure,
   $service_enable       = $::dns::params::service_enable,
 ) inherits dns::params {
@@ -39,6 +40,7 @@ class dns(
     validate_re($dns_notify, '^(yes|no|explicit)$', 'Only \'yes\', \'no\', or \'explicit\' are valid values for dns_notify field')
   }
   validate_bool($dns::service_enable)
+  validate_hash($controls)
 
   class { '::dns::install': } ~>
   class { '::dns::config': } ~>

@@ -69,6 +69,8 @@ class dns::params {
     $dnssec_enable        = 'yes'
     $dnssec_validation    = 'yes'
 
+    $controls             = { '127.0.0.1' => { 'port' => 953, 'allowed_addresses' => [ '127.0.0.1' ], 'keys' => [ 'rndc-key' ] }, }
+
     $service_ensure       = 'running'
     $service_enable       = true
 }

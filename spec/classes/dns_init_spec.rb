@@ -6,10 +6,10 @@ describe 'dns' do
 
     let(:facts) do
       {
-         :clientcert => 'puppetmaster.example.com',
+         :clientcert     => 'puppetmaster.example.com',
          :concat_basedir => '/doesnotexist',
-         :fqdn => 'puppetmaster.example.com',
-         :osfamily => 'RedHat',
+         :fqdn           => 'puppetmaster.example.com',
+         :osfamily       => 'RedHat',
       }
     end
 
@@ -24,11 +24,6 @@ describe 'dns' do
                   with_content(%r{listen-on-v6 { any; };}).
                   with_content(%r{empty-zones-enable yes;}) }
       it { should contain_file('/var/named/dynamic').with_ensure('directory') }
-      it { should contain_file('/etc/named.conf').
-                  with_content(%r{include "/etc/rndc.key"}).
-                  with_content(%r{include "/etc/named.rfc1912.zones"}).
-                  with_content(%r{include "/etc/zones.conf"}).
-                  with_content(%r{include "/etc/named/options.conf"}) }
       it { should contain_exec('create-rndc.key').
                   with_command("/usr/sbin/rndc-confgen -r /dev/urandom -a -c /etc/rndc.key") }
       it { verify_exact_contents(catalogue, '/etc/named/options.conf', [
@@ -40,6 +35,20 @@ describe 'dns' do
           'empty-zones-enable yes;',
           'listen-on-v6 { any; };',
           'allow-recursion { localnets; localhost; };'
+        ])
+      }
+      it { verify_exact_contents(catalogue, '/etc/named.conf', [
+          '// named.conf',
+          'include "/etc/rndc.key";',
+          'controls  {',
+          '        inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; };',
+          '};',
+          'options  {',
+          '        include "/etc/named/options.conf";',
+          '};',
+          'include "/etc/named.rfc1912.zones";',
+          '// Public view read by Server Admin',
+          'include "/etc/zones.conf";',
         ])
       }
 
