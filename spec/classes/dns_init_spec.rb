@@ -48,7 +48,7 @@ describe 'dns' do
           '};',
           'include "/etc/named.rfc1912.zones";',
           '// Public view read by Server Admin',
-          'include "/etc/zones.conf";',
+          'include "/etc/named/zones.conf";',
         ])
       }
 
@@ -109,7 +109,7 @@ describe 'dns' do
           '        127.0.1.0/24;',
           '};',
           '// Public view read by Server Admin',
-          'include "/etc/zones.conf";',
+          'include "/etc/named/zones.conf";',
         ])
       }
     end

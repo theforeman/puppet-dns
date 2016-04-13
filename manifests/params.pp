@@ -7,6 +7,7 @@ class dns::params {
         $optionspath        = "${dnsdir}/named.conf.options"
         $zonefilepath       = "${vardir}/zones"
         $localzonepath      = "${dnsdir}/zones.rfc1918"
+        $publicviewpath     = "${dnsdir}/zones.conf"
         $dns_server_package = 'bind9'
         $namedservicename   = 'bind9'
         $user               = 'bind'
@@ -19,6 +20,7 @@ class dns::params {
         $optionspath        = '/etc/named/options.conf'
         $zonefilepath       = "${vardir}/dynamic"
         $localzonepath      = "${dnsdir}/named.rfc1912.zones"
+        $publicviewpath     = "${dnsdir}/named/zones.conf"
         $dns_server_package = 'bind'
         $namedservicename   = 'named'
         $user               = 'named'
@@ -31,6 +33,7 @@ class dns::params {
         $optionspath        = '/usr/local/etc/namedb/options.conf'
         $zonefilepath       = "${dnsdir}/dynamic"
         $localzonepath      = undef # "${dnsdir}/master/empty.db"
+        $publicviewpath     = "${dnsdir}/zones.conf"
         $dns_server_package = 'bind910'
         $namedservicename   = 'named'
         $user               = 'bind'
@@ -49,9 +52,6 @@ class dns::params {
 
     #pertaining to rndc
     $rndckeypath          = "${dnsdir}/rndc.key"
-
-    #pertaining to views
-    $publicviewpath       = "${dnsdir}/zones.conf"
 
     $forward              = undef
     $forwarders           = []
