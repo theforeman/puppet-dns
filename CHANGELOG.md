@@ -1,5 +1,13 @@
 # Changelog
 
+## 3.3.0
+
+* Add dns_notify to dns class and dns::zone define
+* Add acls hash
+* Add controls hash
+* Change default path for zones.conf to /etc/named/zones.conf for the RedHat
+  OS family
+
 ## 3.2.0
 * Add empty_zones_enable and forward global parameters
 * Add service_ensure, service_enable parameters to manage service properties
