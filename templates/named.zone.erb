@@ -2,6 +2,9 @@ zone "<%= @zone %>" {
     type <%= @zonetype %>;
 <% if @zonetype == 'forward' -%>
     forward <%= @forward %>;
+<% unless @forwarders.empty? -%>
+    forwarders { <%= @forwarders.join('; ') %>; };
+<% end -%>
 <% end -%>
 <% if @manage_file == true -%>
     file "<%= @zonefilename %>";
@@ -19,9 +22,6 @@ zone "<%= @zone %>" {
 <% end -%>
 <% unless @masters.empty? -%>
     masters { <%= @masters.join('; ') %>; };
-<% end -%>
-<% unless @forwarders.empty? -%>
-    forwarders { <%= @forwarders.join('; ') %>; };
 <% end -%>
 <% if @_dns_notify -%>
     notify <%= @_dns_notify %>;
