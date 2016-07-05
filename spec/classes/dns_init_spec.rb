@@ -20,13 +20,8 @@ describe 'dns' do
 
       it { should contain_package('bind').with_ensure('present') }
 
-      it { should contain_file('/etc/named/options.conf').
-                  with_content(%r{listen-on-v6 { any; };}).
-                  with_content(%r{empty-zones-enable yes;}) }
-      it { should contain_file('/var/named/dynamic').with_ensure('directory') }
-      it { should contain_exec('create-rndc.key').
-                  with_command("/usr/sbin/rndc-confgen -r /dev/urandom -a -c /etc/rndc.key") }
-      it { verify_exact_contents(catalogue, '/etc/named/options.conf', [
+      it { should contain_concat('/etc/named/options.conf') }
+      it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
           'directory "/var/named";',
           'recursion yes;',
           'allow-query { any; };',
@@ -35,9 +30,10 @@ describe 'dns' do
           'empty-zones-enable yes;',
           'listen-on-v6 { any; };',
           'allow-recursion { localnets; localhost; };'
-        ])
-      }
-      it { verify_exact_contents(catalogue, '/etc/named.conf', [
+      ])}
+
+      it { should contain_concat('/etc/named.conf') }
+      it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
           '// named.conf',
           'include "/etc/rndc.key";',
           'controls  {',
@@ -48,38 +44,51 @@ describe 'dns' do
           '};',
           'include "/etc/named.rfc1912.zones";',
           '// Public view read by Server Admin',
-          'include "/etc/named/zones.conf";',
-        ])
-      }
+          'include "/etc/named/zones.conf";'
+      ])}
+
+      it { should contain_file('/var/named/dynamic').with_ensure('directory') }
+      it { should contain_exec('create-rndc.key').
+                  with_command("/usr/sbin/rndc-confgen -r /dev/urandom -a -c /etc/rndc.key") }
 
       it { should contain_service('named').with_ensure('running').with_enable(true) }
     end
 
     describe 'with ipv6 disabled' do
       let(:params) { {:listen_on_v6 => 'none'} }
-      it { should contain_file('/etc/named/options.conf').
-                  with_content(%r{listen-on-v6 { none; };}) }
+      it { should contain_concat('/etc/named/options.conf') }
+      it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+          'listen-on-v6 { none; };',
+      ])}
     end
     describe 'with empty zones disabled' do
       let(:params) { {:empty_zones_enable => 'no'} }
-      it { should contain_file('/etc/named/options.conf').
-                  with_content(%r{empty-zones-enable no;}) }
+      it { should contain_concat('/etc/named/options.conf') }
+      it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+          'empty-zones-enable no;',
+      ])}
     end
 
     describe 'with dns_notify disabled' do
       let(:params) { {:dns_notify => 'no' } }
-      it { should contain_file('/etc/named/options.conf').
-                  with_content(%r{notify no;}) }
+      it { should contain_concat('/etc/named/options.conf') }
+      it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+          'notify no;',
+      ])}
     end
 
     describe 'with forward only' do
       let(:params) { {:forward => 'only'} }
-      it { should contain_file('/etc/named/options.conf').with_content(%r{forward only;}) }
+      it { should contain_concat('/etc/named/options.conf') }
+      it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+          'forward only;',
+      ])}
     end
 
     describe 'with undef forward' do
       let(:params) { {:forward => :undef} }
-      it { should contain_file('/etc/named/options.conf').without_content(%r{forward ;}) }
+      it { should contain_concat('/etc/named/options.conf') }
+      it { should contain_concat_fragment('options.conf+10-main.dns').without_content('/forward ;/') }
     end
 
     describe 'with service_ensure stopped' do
@@ -94,7 +103,7 @@ describe 'dns' do
 
     describe 'with acls set' do
       let(:params) { {:acls => { 'trusted_nets' => [ '127.0.0.1/24', '127.0.1.0/24' ] } } }
-      it { verify_exact_contents(catalogue, '/etc/named.conf', [
+      it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
           '// named.conf',
           'include "/etc/rndc.key";',
           'controls  {',
@@ -109,9 +118,8 @@ describe 'dns' do
           '        127.0.1.0/24;',
           '};',
           '// Public view read by Server Admin',
-          'include "/etc/named/zones.conf";',
-        ])
-      }
+          'include "/etc/named/zones.conf";'
+      ])}
     end
   end
 
@@ -133,13 +141,32 @@ describe 'dns' do
 
       it { should contain_package('bind910').with_ensure('present') }
 
-      it { should contain_file('/usr/local/etc/namedb/options.conf').
-                  with_content(%r{listen-on-v6 { any; };}) }
+      it { should contain_concat('/usr/local/etc/namedb/options.conf') }
+      it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+           'recursion yes;',
+           'allow-query { any; };',
+           'dnssec-enable yes;',
+           'dnssec-validation yes;',
+           'empty-zones-enable yes;',
+           'listen-on-v6 { any; };',
+           'allow-recursion { localnets; localhost; };'
+      ])}
+
+      it { should contain_concat('/usr/local/etc/namedb/named.conf') }
+      it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
+          '// named.conf',
+          'include "/usr/local/etc/namedb/rndc.key";',
+          'controls  {',
+          '        inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; };',
+          '};',
+          'options  {',
+          '        include "/usr/local/etc/namedb/options.conf";',
+          '};',
+          '// Public view read by Server Admin',
+          'include "/usr/local/etc/namedb/zones.conf";'
+      ])}
+
       it { should contain_file('/usr/local/etc/namedb/dynamic').with_ensure('directory') }
-      it { should contain_file('/usr/local/etc/namedb/named.conf').
-                  with_content(%r{include "/usr/local/etc/namedb/rndc.key"}).
-                  with_content(%r{include "/usr/local/etc/namedb/zones.conf"}).
-                  with_content(%r{include "/usr/local/etc/namedb/options.conf"}) }
       it { should contain_exec('create-rndc.key').
                   with_command("/usr/local/sbin/rndc-confgen -r /dev/urandom -a -c /usr/local/etc/namedb/rndc.key") }
 
