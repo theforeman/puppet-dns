@@ -121,6 +121,11 @@ describe 'dns' do
           'include "/etc/named/zones.conf";'
       ])}
     end
+
+    describe 'with additional options' do
+      let(:params) { { :additional_options => { 'max-cache-ttl' => 3600, 'max-ncache-ttl' => 3600 } } }
+      it { should contain_concat_fragment('options.conf+10-main.dns').with_content('/max-cache-ttl 3600;\nmax-ncache-ttl 3600;/') }
+    end
   end
 
   describe 'on FreeBSD with no custom parameters' do
