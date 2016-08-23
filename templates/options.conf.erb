@@ -25,3 +25,7 @@ allow-recursion { <%= scope.lookupvar('::dns::allow_recursion').join("; ") %>; }
 <% if (@osfamily =~ /^(FreeBSD|DragonFly)$/) -%>
 pid-file "/var/run/named/pid";
 <% end -%>
+
+<%- scope.lookupvar('::dns::additional_options').sort_by {|k, v| k}.each do |option, value| -%>
+<%= option %> <%= value %>;
+<%- end -%>

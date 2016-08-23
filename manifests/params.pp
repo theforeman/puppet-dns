@@ -74,4 +74,7 @@ class dns::params {
     $service_ensure       = 'running'
     $service_enable       = true
     $acls                 = {}
+
+    $additional_options   = {}
+
 }
