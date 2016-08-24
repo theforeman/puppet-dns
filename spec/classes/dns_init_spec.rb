@@ -124,7 +124,18 @@ describe 'dns' do
 
     describe 'with additional options' do
       let(:params) { { :additional_options => { 'max-cache-ttl' => 3600, 'max-ncache-ttl' => 3600 } } }
-      it { should contain_concat_fragment('options.conf+10-main.dns').with_content('/max-cache-ttl 3600;\nmax-ncache-ttl 3600;/') }
+      it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+          'directory "/var/named";',
+          'recursion yes;',
+          'allow-query { any; };',
+          'dnssec-enable yes;',
+          'dnssec-validation yes;',
+          'empty-zones-enable yes;',
+          'listen-on-v6 { any; };',
+          'allow-recursion { localnets; localhost; };',
+          'max-cache-ttl 3600;',
+          'max-ncache-ttl 3600;'
+      ])}
     end
   end
 
