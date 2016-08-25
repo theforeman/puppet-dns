@@ -48,6 +48,7 @@ class dns (
   $controls             = $::dns::params::controls,
   $service_ensure       = $::dns::params::service_ensure,
   $service_enable       = $::dns::params::service_enable,
+  $additional_options   = $::dns::params::additional_options,
 ) inherits dns::params {
   validate_array($dns::forwarders)
   validate_array($dns::allow_recursion)
@@ -65,6 +66,7 @@ class dns (
   validate_bool($dns::service_enable)
   validate_hash($controls)
   validate_hash($acls)
+  validate_hash($additional_options)
 
   class { '::dns::install': } ~>
   class { '::dns::config': } ~>
