@@ -1,5 +1,15 @@
 # Changelog
 
+## 3.4.0
+
+* Add additional_options parameter to dns class for options without parameters
+
+## 3.3.1
+
+* Skip package installation when dns_server_package is empty
+* Nest 'forwarders' only if 'forward' is used
+* Use concat fragments instead of file resource templates for config
+
 ## 3.3.0
 
 * Add dns_notify to dns class and dns::zone define
