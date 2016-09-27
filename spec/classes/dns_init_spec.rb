@@ -91,6 +91,12 @@ describe 'dns' do
       it { should contain_concat_fragment('options.conf+10-main.dns').without_content('/forward ;/') }
     end
 
+    describe 'with false listen_on_v6' do
+      let(:params) { {:listen_on_v6 => false} }
+      it { should contain_concat('/etc/named/options.conf') }
+      it { should contain_concat_fragment('options.conf+10-main.dns').without_content('/listen_on_v6/') }
+    end
+
     describe 'with service_ensure stopped' do
       let(:params) { {:service_ensure => 'stopped'} }
       it { should contain_service('named').with_ensure('stopped').with_enable(true) }
