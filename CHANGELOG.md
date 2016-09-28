@@ -1,5 +1,9 @@
 # Changelog
 
+## 3.4.1
+
+* Do not configure listen-on-v6 parameter if it's not set
+
 ## 3.4.0
 
 * Add additional_options parameter to dns class for options without parameters
