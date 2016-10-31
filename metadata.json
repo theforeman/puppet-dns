@@ -82,6 +82,9 @@
       ]
     },
     {
+      "operatingsystem": "Archlinux"
+    },
+    {
       "operatingsystem": "DragonFly",
       "operatingsystemrelease": [
         "3.6",

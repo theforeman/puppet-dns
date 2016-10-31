@@ -40,6 +40,19 @@ class dns::params {
         $group              = 'bind'
         $rndcconfgen        = '/usr/local/sbin/rndc-confgen'
       }
+      'Archlinux': {
+        $dnsdir             = '/etc'
+        $vardir             = '/var/named'
+        $optionspath        = '/etc/named.options.conf'
+        $zonefilepath       = "${vardir}/dynamic"
+        $localzonepath      = undef # "${dnsdir}/named.local.conf"
+        $publicviewpath     = "${dnsdir}/zones.conf"
+        $dns_server_package = 'bind'
+        $namedservicename   = 'named'
+        $user               = 'named'
+        $group              = 'named'
+        $rndcconfgen        = '/usr/sbin/rndc-confgen'
+      }
       default: {
         fail ("Unsupported operating system family ${::osfamily}")
       }
