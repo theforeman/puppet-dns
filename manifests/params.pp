@@ -91,4 +91,6 @@ class dns::params {
     $additional_options   = {}
    
     $additional_files     = []
+   
+    $additional_config    = {}
 }
