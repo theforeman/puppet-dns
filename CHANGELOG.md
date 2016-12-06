@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.0.0
+
+* Add Arch Linux support
+* Fix README to state the module is under the Apache License 2.0, add full
+  licence text
+* Drop support for Ruby 1.8.7
+
 ## 3.4.1
 
 * Do not configure listen-on-v6 parameter if it's not set
