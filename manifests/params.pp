@@ -89,6 +89,12 @@ class dns::params {
     $service_enable       = true
     $acls                 = {}
 
+    $transfer_source      = undef
+    $transfer_source_port = undef
+
+    $notify_source        = undef
+    $notify_source_port   = undef
+
     $additional_options   = {}
 
 }

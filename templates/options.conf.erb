@@ -23,6 +23,14 @@ listen-on-v6 { <%= scope.lookupvar('::dns::listen_on_v6') %>; };
 listen-on port 53 { <%= scope.lookupvar('::dns::listen_on_53') %>; };
 <% end -%>
 
+<% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::transfert_source')) -%>
+transfert-source <%= scope.lookupvar('::dns::transfert_source') %> <% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::transfert_source_port')) %> port <%= scope.lookupvar('::dns::transfert_source_port') %>;
+<% end -%>
+
+<% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::notify_source')) -%>
+notify-source <%= scope.lookupvar('::dns::notify_source') %> <% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::notify_source_port')) %> port <%= scope.lookupvar('::dns::notify_source_port') %>;
+<% end -%>
+
 <% unless scope.lookupvar('::dns::allow_recursion').empty? -%>
 allow-recursion { <%= scope.lookupvar('::dns::allow_recursion').join("; ") %>; };
 <% end -%>
