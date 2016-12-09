@@ -35,6 +35,7 @@ class dns (
   $forward              = $::dns::params::forward,
   $forwarders           = $::dns::params::forwarders,
   $listen_on_v6         = $::dns::params::listen_on_v6,
+  $listen_on_53         = $::dns::params::listen_on_53,
   $recursion            = $::dns::params::recursion,
   $allow_recursion      = $::dns::params::allow_recursion,
   $allow_query          = $::dns::params::allow_query,
@@ -49,6 +50,11 @@ class dns (
   $service_ensure       = $::dns::params::service_ensure,
   $service_enable       = $::dns::params::service_enable,
   $additional_options   = $::dns::params::additional_options,
+  $transfert_source     = $::dns::params::transfert_source,
+  $transfert_source_port= $::dns::params::transfert_source_port,
+  $notify_source        = $::dns::params::notify_source,
+  $notify_source_port   = $::dns::params::notify_source_port
+
 ) inherits dns::params {
   validate_array($dns::forwarders)
   validate_array($dns::allow_recursion)

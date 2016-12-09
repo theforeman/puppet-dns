@@ -70,6 +70,7 @@ class dns::params {
     $forwarders           = []
 
     $listen_on_v6         = 'any'
+    $listen_on_53         = 'any'
 
     $recursion            = 'yes'
     $allow_recursion      = [ 'localnets', 'localhost' ]
@@ -87,6 +88,12 @@ class dns::params {
     $service_ensure       = 'running'
     $service_enable       = true
     $acls                 = {}
+
+    $transfer_source      = undef
+    $transfer_source_port = undef
+
+    $notify_source        = undef
+    $notify_source_port   = undef
 
     $additional_options   = {}
 
