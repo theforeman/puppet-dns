@@ -19,6 +19,9 @@ notify <%= scope.lookupvar('::dns::dns_notify') %>;
 <% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::listen_on_v6')) -%>
 listen-on-v6 { <%= scope.lookupvar('::dns::listen_on_v6') %>; };
 <% end -%>
+<% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::listen_on_53')) -%>
+listen-on port 53 { <%= scope.lookupvar('::dns::listen_on_53') %>; };
+<% end -%>
 
 <% unless scope.lookupvar('::dns::allow_recursion').empty? -%>
 allow-recursion { <%= scope.lookupvar('::dns::allow_recursion').join("; ") %>; };

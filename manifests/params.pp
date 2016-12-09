@@ -70,6 +70,7 @@ class dns::params {
     $forwarders           = []
 
     $listen_on_v6         = 'any'
+    $listen_on_53         = 'any'
 
     $recursion            = 'yes'
     $allow_recursion      = [ 'localnets', 'localhost' ]
