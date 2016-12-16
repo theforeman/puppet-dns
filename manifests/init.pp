@@ -35,7 +35,7 @@ class dns (
   $forward              = $::dns::params::forward,
   $forwarders           = $::dns::params::forwarders,
   $listen_on_v6         = $::dns::params::listen_on_v6,
-  $listen_on_v4         = $::dns::params::listen_on_v4,
+  $listen_on            = $::dns::params::listen_on,
   $recursion            = $::dns::params::recursion,
   $allow_recursion      = $::dns::params::allow_recursion,
   $allow_query          = $::dns::params::allow_query,

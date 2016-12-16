@@ -19,8 +19,8 @@ notify <%= scope.lookupvar('::dns::dns_notify') %>;
 <% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::listen_on_v6')) -%>
 listen-on-v6 { <%= scope.lookupvar('::dns::listen_on_v6') %>; };
 <% end -%>
-<% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::listen_on_v4')) -%>
-listen-on port 53 { <%= scope.lookupvar('::dns::listen_on_v4') %>; };
+<% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::listen_on')) -%>
+listen-on port 53 { <%= scope.lookupvar('::dns::listen_on') %>; };
 <% end -%>
 <% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::transfer_source')) -%>
 transfer-source <%= scope.lookupvar('::dns::transfer_source') %> <% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::transfer_source_port')) %> port <%= scope.lookupvar('::dns::transfer_source_port') %><% end -%>;
