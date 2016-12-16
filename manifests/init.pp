@@ -3,17 +3,91 @@
 # Install, configure and start dns service
 #
 # === Parameters:
+# $namedconf_path::        Path of the named config
+#                          type:Stdlib::Absolutepath
+#
+# $dnsdir::                Directory holding the named configs
+#                          type:Stdlib::Absolutepath
+#
+# $dns_server_package::    Name of the package to install
+#                          type:String
+#
+# $rndckeypath::           Path of the RNDC key
+#                          type:Stdlib::Absolutepath
+#
+# $optionspath::           Path of the named options
+#                          type:Stdlib::Absolutepath
+#
+# $publicviewpath::        Path of the config file holding all the zones
+#                          type:Stdlib::Absolutepath
+#
+# $vardir::                Directory holding the variable or working files
+#                          type:Stdlib::Absolutepath
+#
+# $namedservicename::      Name of the service
+#                          type:String
+#
+# $zonefilepath::          Directory containing zone files
+#                          type:Stdlib::Absolutepath
+#
+# $localzonepath::         File holding local zones like RFC1912 or RFC1918 files.
+#                          type:Optional[Stdlib::Absolutepath]
+#
+# $forward::               The forward option
+#                          type:Optional[String]
+#
+# $forwarders::            The forwarders option
+#                          type:Array[String]
+#
+# $listen_on_v6::          The listen-on-v6 option
+#                          type:Optional[String]
+#
+# $recursion::             The recursion option
+#                          type:Enum[yes, no]
+#
+# $allow_recursion::       The allow-recursion option
+#                          type:Array[String]
+#
+# $allow_query::           The allow-query option
+#                          type:Array[String]
+#
+# $empty_zones_enable::    The empty-zones-enable option
+#                          type:Enum[yes, no]
+#
+# $dns_notify::            The notify option in named.conf
+#                          type:Enum[yes, no, explicit]
+#
+# $dnssec_enable::         The dnssec-enable option
+#                          type:Enum[yes, no]
+#
+# $dnssec_validation::     The dnssec-validation option
+#                          type:Enum[yes, no]
+#
+# $namedconf_template::    The template to be used for named.conf
+#                          type:String
 #
 # $acls::                  Specify a hash of ACLs. Each key is the
 #                          name of a network, and its value is
 #                          an array of subnet strings.
-#                          type:hash
+#                          type:Hash[String, Array[String]]
+#
+# $optionsconf_template::  The template to be used for options.conf
+#                          type:String
 #
 # $controls::              Specify a hash of controls. Each key is the
 #                          name of a network, and its value is a hash
 #                          containing 'port' => integer, 'keys' => array
 #                          and 'allowed_addresses' => array
-#                          type:hash
+#                          type:Hash[String, Hash[String, Data]]
+#
+# $service_ensure::        The ensure attribute on the service
+#                          type:Enum[running, stopped]
+#
+# $service_enable::        Whether to enable the service (start at boot)
+#                          type:Boolean
+#
+# $additional_options::    Additional options
+#                          type:Hash[String, String]
 #
 # === Usage:
 #
