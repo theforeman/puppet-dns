@@ -12,6 +12,7 @@ define dns::zone (
     $serial         = 1,
     $masters        = [],
     $allow_transfer = [],
+    $allow_query    = [],
     $also_notify    = [],
     $zone           = $title,
     $contact        = "root.${title}.",
@@ -24,7 +25,7 @@ define dns::zone (
 ) {
 
   validate_bool($reverse, $manage_file)
-  validate_array($masters, $allow_transfer, $forwarders, $also_notify)
+  validate_array($masters, $allow_transfer, $allow_query, $forwarders, $also_notify)
   validate_re($forward, '^(first|only)$', 'Only \'first\' or \'only\' are valid values for forward field')
   if $dns_notify {
     validate_re($dns_notify, '^(yes|no|explicit)$', 'Only \'yes\', \'no\', or \'explicit\' are valid values for dns_notify field')

@@ -187,6 +187,24 @@ describe 'dns::zone' do
         ])
       end
     end
+
+    context 'with allow query' do
+        let(:params) {{ :zonetype => 'slave', :masters  => ['192.168.1.1', '192.168.1.2'], :allow_query => ['1.2.3.4'] }}
+
+      it "should have valid slave zone configuration" do
+        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_example.com.dns', [
+          'zone "example.com" {',
+          '    type slave;',
+          '    file "/var/named/dynamic/db.example.com";',
+          '    allow-query { 1.2.3.4; };',
+          '    masters { 192.168.1.1; 192.168.1.2; };',
+          '    notify no;',
+          '};',
+        ])
+      end
+    end
+
+
   end
 
 end
