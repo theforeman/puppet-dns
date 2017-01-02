@@ -17,6 +17,9 @@ zone "<%= @zone %>" {
 <% unless @allow_transfer.empty? -%>
     allow-transfer { <%= @allow_transfer.join('; ') %>; };
 <% end -%>
+<% unless @allow_query.empty? -%>
+    allow-query { <%= @allow_query.join('; ') %>; };
+<% end -%>
 <% unless @also_notify.empty? -%>
     also-notify { <%= @also_notify.join('; ') %>; };
 <% end -%>
