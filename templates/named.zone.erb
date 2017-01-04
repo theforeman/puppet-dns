@@ -6,9 +6,7 @@ zone "<%= @zone %>" {
     forwarders { <%= @forwarders.join('; ') %>; };
 <% end -%>
 <% end -%>
-<% if @manage_file == true -%>
     file "<%= @zonefilename %>";
-<% end -%>
 <% if @zonetype == 'master' -%>
     update-policy {
             grant rndc-key zonesub ANY;
