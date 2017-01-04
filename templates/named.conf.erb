@@ -24,5 +24,13 @@ acl "<%= acl_name %>"  {
 };
 <%- end -%>
 
+<%- scope.lookupvar('::dns::additional_files').each do |includefile| -%>
+include "<%= includefile %>";
+<%- end -%>
+
+<%- scope.lookupvar('::dns::additional_config').sort_by {|k, v| k}.each do |option, value| -%>
+<%= option %> <%= value %>;
+<%- end -%>
+
 // Public view read by Server Admin
 include "<%= scope.lookupvar('::dns::publicviewpath') %>";

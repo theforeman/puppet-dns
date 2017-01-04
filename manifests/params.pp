@@ -89,5 +89,8 @@ class dns::params {
     $acls                 = {}
 
     $additional_options   = {}
-
+   
+    $additional_files     = []
+   
+    $additional_config    = {}
 }
