@@ -58,36 +58,37 @@ class dns::params {
       }
     }
 
-    $namedconf_template   = 'dns/named.conf.erb'
-    $optionsconf_template = 'dns/options.conf.erb'
+    $namedconf_template    = 'dns/named.conf.erb'
+    $optionsconf_template  = 'dns/options.conf.erb'
 
-    $namedconf_path       = "${dnsdir}/named.conf"
+    $namedconf_path        = "${dnsdir}/named.conf"
 
     #pertaining to rndc
-    $rndckeypath          = "${dnsdir}/rndc.key"
+    $rndckeypath           = "${dnsdir}/rndc.key"
 
-    $forward              = undef
-    $forwarders           = []
+    $forward               = undef
+    $forwarders            = []
 
-    $listen_on_v6         = 'any'
+    $listen_on_v6          = 'any'
 
-    $recursion            = 'yes'
-    $allow_recursion      = [ 'localnets', 'localhost' ]
-    $allow_query          = [ 'any' ]
+    $recursion             = 'yes'
+    $allow_recursion       = [ 'localnets', 'localhost' ]
+    $allow_query           = [ 'any' ]
 
-    $empty_zones_enable   = 'yes'
+    $empty_zones_enable    = 'yes'
 
-    $dns_notify           = undef
+    $dns_notify            = undef
 
-    $dnssec_enable        = 'yes'
-    $dnssec_validation    = 'yes'
+    $dnssec_enable         = 'yes'
+    $dnssec_validation     = 'yes'
 
-    $controls             = { '127.0.0.1' => { 'port' => 953, 'allowed_addresses' => [ '127.0.0.1' ], 'keys' => [ 'rndc-key' ] }, }
+    $controls              = { '127.0.0.1' => { 'port' => 953, 'allowed_addresses' => [ '127.0.0.1' ], 'keys' => [ 'rndc-key' ] }, }
 
-    $service_ensure       = 'running'
-    $service_enable       = true
-    $acls                 = {}
+    $service_ensure        = 'running'
+    $service_enable        = true
+    $acls                  = {}
 
-    $additional_options   = {}
+    $additional_options    = {}
+    $additional_directives = []
 
 }

@@ -54,6 +54,58 @@ describe 'dns' do
       it { should contain_service('named').with_ensure('running').with_enable(true) }
     end
 
+    describe 'with additional_directives' do
+      let(:params) { {:additional_directives => [
+        [
+         'logging {',
+         '  channel string {',
+         '    print-severity boolean;',
+         '    print-category boolean;',
+         '  };',
+         '};',
+        ].join("\n"),
+        [
+         'lwres {',
+         '  listen-on [ port integer ] {',
+         '    ( ipv4_address | ipv6_address ) [ port integer ];',
+         '  };',
+         '  view string optional_class;',
+         '  search { string; ... };',
+         '  ndots integer;',
+         '};',
+        ].join("\n"),
+      ]} }
+
+      it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
+          '// named.conf',
+          'include "/etc/rndc.key";',
+          'controls  {',
+          '        inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; };',
+          '};',
+          'options  {',
+          '        include "/etc/named/options.conf";',
+          '};',
+          'include "/etc/named.rfc1912.zones";',
+          '// additional directives',
+          'logging {',
+          '  channel string {',
+          '    print-severity boolean;',
+          '    print-category boolean;',
+          '  };',
+          '};',
+          'lwres {',
+          '  listen-on [ port integer ] {',
+          '    ( ipv4_address | ipv6_address ) [ port integer ];',
+          '  };',
+          '  view string optional_class;',
+          '  search { string; ... };',
+          '  ndots integer;',
+          '};',
+          '// Public view read by Server Admin',
+          'include "/etc/named/zones.conf";'
+      ])}
+    end
+
     describe 'with ipv6 disabled' do
       let(:params) { {:listen_on_v6 => 'none'} }
       it { should contain_concat('/etc/named/options.conf') }
