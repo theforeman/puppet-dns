@@ -23,6 +23,12 @@ acl "<%= acl_name %>"  {
         <%- end -%>
 };
 <%- end -%>
+<%- if scope.lookupvar('::dns::additional_directives').any? -%>
+// additional directives
+<%- scope.lookupvar('::dns::additional_directives').each do |directive| -%>
+<%= directive %>
+<%- end -%>
+<%- end -%>
 
 // Public view read by Server Admin
 include "<%= scope.lookupvar('::dns::publicviewpath') %>";

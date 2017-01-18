@@ -22,33 +22,34 @@
 #     include dns
 #
 class dns (
-  $namedconf_path       = $::dns::params::namedconf_path,
-  $dnsdir               = $::dns::params::dnsdir,
-  $dns_server_package   = $::dns::params::dns_server_package,
-  $rndckeypath          = $::dns::params::rndckeypath,
-  $optionspath          = $::dns::params::optionspath,
-  $publicviewpath       = $::dns::params::publicviewpath,
-  $vardir               = $::dns::params::vardir,
-  $namedservicename     = $::dns::params::namedservicename,
-  $zonefilepath         = $::dns::params::zonefilepath,
-  $localzonepath        = $::dns::params::localzonepath,
-  $forward              = $::dns::params::forward,
-  $forwarders           = $::dns::params::forwarders,
-  $listen_on_v6         = $::dns::params::listen_on_v6,
-  $recursion            = $::dns::params::recursion,
-  $allow_recursion      = $::dns::params::allow_recursion,
-  $allow_query          = $::dns::params::allow_query,
-  $empty_zones_enable   = $::dns::params::empty_zones_enable,
-  $dns_notify           = $::dns::params::dns_notify,
-  $dnssec_enable        = $::dns::params::dnssec_enable,
-  $dnssec_validation    = $::dns::params::dnssec_validation,
-  $namedconf_template   = $::dns::params::namedconf_template,
-  $acls                 = $::dns::params::acls,
-  $optionsconf_template = $::dns::params::optionsconf_template,
-  $controls             = $::dns::params::controls,
-  $service_ensure       = $::dns::params::service_ensure,
-  $service_enable       = $::dns::params::service_enable,
-  $additional_options   = $::dns::params::additional_options,
+  $namedconf_path        = $::dns::params::namedconf_path,
+  $dnsdir                = $::dns::params::dnsdir,
+  $dns_server_package    = $::dns::params::dns_server_package,
+  $rndckeypath           = $::dns::params::rndckeypath,
+  $optionspath           = $::dns::params::optionspath,
+  $publicviewpath        = $::dns::params::publicviewpath,
+  $vardir                = $::dns::params::vardir,
+  $namedservicename      = $::dns::params::namedservicename,
+  $zonefilepath          = $::dns::params::zonefilepath,
+  $localzonepath         = $::dns::params::localzonepath,
+  $forward               = $::dns::params::forward,
+  $forwarders            = $::dns::params::forwarders,
+  $listen_on_v6          = $::dns::params::listen_on_v6,
+  $recursion             = $::dns::params::recursion,
+  $allow_recursion       = $::dns::params::allow_recursion,
+  $allow_query           = $::dns::params::allow_query,
+  $empty_zones_enable    = $::dns::params::empty_zones_enable,
+  $dns_notify            = $::dns::params::dns_notify,
+  $dnssec_enable         = $::dns::params::dnssec_enable,
+  $dnssec_validation     = $::dns::params::dnssec_validation,
+  $namedconf_template    = $::dns::params::namedconf_template,
+  $acls                  = $::dns::params::acls,
+  $optionsconf_template  = $::dns::params::optionsconf_template,
+  $controls              = $::dns::params::controls,
+  $service_ensure        = $::dns::params::service_ensure,
+  $service_enable        = $::dns::params::service_enable,
+  $additional_options    = $::dns::params::additional_options,
+  $additional_directives = $::dns::params::additional_directives,
 ) inherits dns::params {
   validate_array($dns::forwarders)
   validate_array($dns::allow_recursion)
@@ -67,6 +68,7 @@ class dns (
   validate_hash($controls)
   validate_hash($acls)
   validate_hash($additional_options)
+  validate_array($additional_directives)
 
   class { '::dns::install': } ~>
   class { '::dns::config': } ~>
