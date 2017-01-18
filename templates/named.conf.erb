@@ -12,8 +12,10 @@ options  {
         include "<%= scope.lookupvar('::dns::optionspath') %>";
 };
 
+<% unless scope.lookupvar("::dns::enable_views") -%>
 <% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar("::dns::localzonepath")) -%>
 include "<%= scope.lookupvar('::dns::localzonepath') %>";
+<% end -%>
 <% end -%>
 
 <%- scope.lookupvar('::dns::acls').sort_by {|k, v| k}.each do |acl_name, acl_array| -%>

@@ -94,6 +94,11 @@
 #                               with caution.
 #                               type:Array[String]
 #
+# $enable_views::               Flag to indicate bind views support. Will remove
+#                               global zone configuration like localzonepath
+#                               inclusion.
+#                               type:Boolean
+#
 # === Usage:
 #
 # * Simple usage:
@@ -129,6 +134,7 @@ class dns (
   $service_enable        = $::dns::params::service_enable,
   $additional_options    = $::dns::params::additional_options,
   $additional_directives = $::dns::params::additional_directives,
+  $enable_views          = $::dns::params::enable_views,
 ) inherits dns::params {
   validate_array($dns::forwarders)
   validate_array($dns::allow_recursion)

@@ -8,6 +8,7 @@ class dns::params {
         $zonefilepath       = "${vardir}/zones"
         $localzonepath      = "${dnsdir}/zones.rfc1918"
         $publicviewpath     = "${dnsdir}/zones.conf"
+        $viewconfigpath     = "${dnsdir}/views"
         $dns_server_package = 'bind9'
         $namedservicename   = 'bind9'
         $user               = 'bind'
@@ -21,6 +22,7 @@ class dns::params {
         $zonefilepath       = "${vardir}/dynamic"
         $localzonepath      = "${dnsdir}/named.rfc1912.zones"
         $publicviewpath     = "${dnsdir}/named/zones.conf"
+        $viewconfigpath     = "${dnsdir}/named/views"
         $dns_server_package = 'bind'
         $namedservicename   = 'named'
         $user               = 'named'
@@ -34,6 +36,7 @@ class dns::params {
         $zonefilepath       = "${dnsdir}/dynamic"
         $localzonepath      = undef # "${dnsdir}/master/empty.db"
         $publicviewpath     = "${dnsdir}/zones.conf"
+        $viewconfigpath     = "${dnsdir}/named/views"
         $dns_server_package = 'bind910'
         $namedservicename   = 'named'
         $user               = 'bind'
@@ -47,6 +50,7 @@ class dns::params {
         $zonefilepath       = "${vardir}/dynamic"
         $localzonepath      = undef # "${dnsdir}/named.local.conf"
         $publicviewpath     = "${dnsdir}/zones.conf"
+        $viewconfigpath     = "${dnsdir}/views"
         $dns_server_package = 'bind'
         $namedservicename   = 'named'
         $user               = 'named'
@@ -66,6 +70,7 @@ class dns::params {
     #pertaining to rndc
     $rndckeypath           = "${dnsdir}/rndc.key"
 
+    $enable_views          = false
     $forward               = undef
     $forwarders            = []
 

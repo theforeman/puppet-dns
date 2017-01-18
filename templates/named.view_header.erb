@@ -1,0 +1,51 @@
+view "<%= @title %>" {
+<% unless @forwarders.empty? -%>
+    forward <%= @forward %>;
+    forwarders { <%= @forwarders.join('; ') %>; };
+<% end -%>
+<% unless @match_clients.empty? -%>
+    match-clients { <%= @match_clients.join('; ') %>; };
+<% end -%>
+<% unless @match_destinations.empty? -%>
+    match-destinations { <%= @match_destinations.join('; ') %>; };
+<% end -%>
+<% unless @allow_transfer.empty? -%>
+    allow-transfer { <%= @allow_transfer.join('; ') %>; };
+<% end -%>
+<% unless @allow_recursion.empty? -%>
+    allow-recursion { <%= @allow_recursion.join('; ') %>; };
+<% end -%>
+<% unless @allow_query.empty? -%>
+    allow-query { <%= @allow_query.join('; ') %>; };
+<% end -%>
+<% unless @allow_query_cache.empty? -%>
+    allow-query-cache { <%= @allow_query_cache.join('; ') %>; };
+<% end -%>
+<% unless @also_notify.empty? -%>
+    also-notify { <%= @also_notify.join('; ') %>; };
+<% end -%>
+<% if @dns_notify -%>
+    notify <%= @dns_notify %>;
+<% end -%>
+<% if @match_recursive_only -%>
+    match-recursive-only <%= @match_recursive_only %>;
+<% end -%>
+<% if @recursion -%>
+    recursion <%= @recursion %>;
+<% end -%>
+<% if @dnssec_enable -%>
+    dnssec-enable <%= @dnssec_enable %>;
+<% end -%>
+<% if @dnssec_validation -%>
+    dnssec-validation <%= @dnssec_validation %>;
+<% end -%>
+<% if @notify -%>
+    notify <%= @notify %>;
+<% end -%>
+
+<% if @include_localzones -%>
+<% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar("::dns::localzonepath")) -%>
+include "<%= scope.lookupvar('::dns::localzonepath') %>";
+<% end -%>
+<% end -%>
+
