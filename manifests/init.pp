@@ -34,13 +34,13 @@
 #                               type:Optional[Stdlib::Absolutepath]
 #
 # $forward::                    The forward option
-#                               type:Optional[String]
+#                               type:Optional[Enum['only', 'first']]
 #
 # $forwarders::                 The forwarders option
 #                               type:Array[String]
 #
 # $listen_on_v6::               The listen-on-v6 option
-#                               type:Optional[String]
+#                               type:Optional[Variant[String, Boolean]]
 #
 # $recursion::                  The recursion option
 #                               type:Enum[yes, no]
@@ -61,7 +61,7 @@
 #                               type:Enum[yes, no]
 #
 # $dnssec_validation::          The dnssec-validation option
-#                               type:Enum[yes, no]
+#                               type:Enum[yes, no, auto]
 #
 # $namedconf_template::         The template to be used for named.conf
 #                               type:String
