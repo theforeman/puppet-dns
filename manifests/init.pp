@@ -33,6 +33,9 @@
 # $localzonepath::              File holding local zones like RFC1912 or RFC1918 files.
 #                               type:Optional[Stdlib::Absolutepath]
 #
+# $defaultzonepath::            File holding default zone includes like db.local.
+#                               type:Optional[Stdlib::Absolutepath]
+#
 # $forward::                    The forward option
 #                               type:Optional[Enum['only', 'first']]
 #
@@ -116,6 +119,7 @@ class dns (
   $namedservicename      = $::dns::params::namedservicename,
   $zonefilepath          = $::dns::params::zonefilepath,
   $localzonepath         = $::dns::params::localzonepath,
+  $defaultzonepath       = $::dns::params::defaultzonepath,
   $forward               = $::dns::params::forward,
   $forwarders            = $::dns::params::forwarders,
   $listen_on_v6          = $::dns::params::listen_on_v6,

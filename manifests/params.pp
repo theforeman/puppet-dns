@@ -66,6 +66,7 @@ class dns::params {
     $optionsconf_template  = 'dns/options.conf.erb'
 
     $namedconf_path        = "${dnsdir}/named.conf"
+    $defaultzonepath       = "${dnsdir}/named.conf.default-zones"
 
     #pertaining to rndc
     $rndckeypath           = "${dnsdir}/rndc.key"

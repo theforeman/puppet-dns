@@ -17,6 +17,7 @@ define dns::view (
     $dnssec_validation    = 'yes',
     $dns_notify           = 'yes',
     $include_localzones   = true,
+    $include_defaultzones = true,
     $order                = '-',
 ) {
   validate_array($match_clients, $match_destinations, $allow_transfer, $allow_recursion, $allow_query, $allow_query_cache, $also_notify, $forwarders)
