@@ -55,17 +55,15 @@ define dns::zone (
 
   create_viewzones($_target_views)
 
-  if $manage_file {
-    unless defined(File[$zonefilename]) {
-      file { $zonefilename:
-        ensure  => file,
-        owner   => $dns::user,
-        group   => $dns::group,
-        mode    => '0644',
-        content => template('dns/zone.header.erb'),
-        replace => false,
-        notify  => Service[$::dns::namedservicename],
-      }
+  if $manage_file and !defined(File[$zonefilename]) {
+    file { $zonefilename:
+      ensure  => file,
+      owner   => $dns::user,
+      group   => $dns::group,
+      mode    => '0644',
+      content => template('dns/zone.header.erb'),
+      replace => false,
+      notify  => Service[$::dns::namedservicename],
     }
   }
 }
