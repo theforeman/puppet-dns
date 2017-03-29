@@ -149,8 +149,8 @@ class dns (
   validate_hash($additional_options)
   validate_array($additional_directives)
 
-  class { '::dns::install': } ~>
-  class { '::dns::config': } ~>
-  class { '::dns::service': } ->
-  Class['dns']
+  class { '::dns::install': }
+  ~> class { '::dns::config': }
+  ~> class { '::dns::service': }
+  ~> Class['dns']
 }

@@ -42,8 +42,8 @@ class dns::config {
   exec { 'create-rndc.key':
     command => "${dns::rndcconfgen} -r /dev/urandom -a -c ${dns::rndckeypath}",
     creates => $dns::rndckeypath,
-  } ->
-  file { $dns::rndckeypath:
+  }
+  -> file { $dns::rndckeypath:
     owner => 'root',
     group => $dns::params::group,
     mode  => '0640',
