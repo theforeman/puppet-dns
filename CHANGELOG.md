@@ -1,5 +1,12 @@
 # Changelog
 
+## 4.1.0
+
+* Add `$allow_query` parameter for zones.
+* Add `$additional_directives` parameter to define top-scope directives in
+  `named.conf`.
+* Document all class parameters.
+
 ## 4.0.0
 
 * Add Arch Linux support
