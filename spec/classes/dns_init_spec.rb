@@ -14,13 +14,15 @@ describe 'dns' do
     end
 
     describe 'with no custom parameters' do
+      it { should compile.with_all_deps }
       it { should contain_class('dns::install') }
       it { should contain_class('dns::config') }
       it { should contain_class('dns::service') }
 
       it { should contain_package('bind').with_ensure('present') }
 
-      it { should contain_concat('/etc/named/options.conf') }
+      it { should contain_concat_file('/etc/named/options.conf') }
+      it { should contain_concat_fragment('options.conf+10-main.dns') }
       it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
           'directory "/var/named";',
           'recursion yes;',
@@ -32,7 +34,7 @@ describe 'dns' do
           'allow-recursion { localnets; localhost; };'
       ])}
 
-      it { should contain_concat('/etc/named.conf') }
+      it { should contain_concat_file('/etc/named.conf') }
       it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
           '// named.conf',
           'include "/etc/rndc.key";',
@@ -108,14 +110,14 @@ describe 'dns' do
 
     describe 'with ipv6 disabled' do
       let(:params) { {:listen_on_v6 => 'none'} }
-      it { should contain_concat('/etc/named/options.conf') }
+      it { should contain_concat_file('/etc/named/options.conf') }
       it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
           'listen-on-v6 { none; };',
       ])}
     end
     describe 'with empty zones disabled' do
       let(:params) { {:empty_zones_enable => 'no'} }
-      it { should contain_concat('/etc/named/options.conf') }
+      it { should contain_concat_file('/etc/named/options.conf') }
       it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
           'empty-zones-enable no;',
       ])}
@@ -123,7 +125,7 @@ describe 'dns' do
 
     describe 'with dns_notify disabled' do
       let(:params) { {:dns_notify => 'no' } }
-      it { should contain_concat('/etc/named/options.conf') }
+      it { should contain_concat_file('/etc/named/options.conf') }
       it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
           'notify no;',
       ])}
@@ -131,7 +133,7 @@ describe 'dns' do
 
     describe 'with forward only' do
       let(:params) { {:forward => 'only'} }
-      it { should contain_concat('/etc/named/options.conf') }
+      it { should contain_concat_file('/etc/named/options.conf') }
       it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
           'forward only;',
       ])}
@@ -139,13 +141,13 @@ describe 'dns' do
 
     describe 'with undef forward' do
       let(:params) { {:forward => :undef} }
-      it { should contain_concat('/etc/named/options.conf') }
+      it { should contain_concat_file('/etc/named/options.conf') }
       it { should contain_concat_fragment('options.conf+10-main.dns').without_content('/forward ;/') }
     end
 
     describe 'with false listen_on_v6' do
       let(:params) { {:listen_on_v6 => false} }
-      it { should contain_concat('/etc/named/options.conf') }
+      it { should contain_concat_file('/etc/named/options.conf') }
       it { should contain_concat_fragment('options.conf+10-main.dns').without_content('/listen_on_v6/') }
     end
 
@@ -215,7 +217,7 @@ describe 'dns' do
 
       it { should contain_package('bind910').with_ensure('present') }
 
-      it { should contain_concat('/usr/local/etc/namedb/options.conf') }
+      it { should contain_concat_file('/usr/local/etc/namedb/options.conf') }
       it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
            'recursion yes;',
            'allow-query { any; };',
@@ -226,7 +228,7 @@ describe 'dns' do
            'allow-recursion { localnets; localhost; };'
       ])}
 
-      it { should contain_concat('/usr/local/etc/namedb/named.conf') }
+      it { should contain_concat_file('/usr/local/etc/namedb/named.conf') }
       it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
           '// named.conf',
           'include "/usr/local/etc/namedb/rndc.key";',
