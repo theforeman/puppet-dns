@@ -1,36 +1,29 @@
 # Define new zone for the dns
 define dns::zone (
-    $target_views   = [],
-    $zonetype       = 'master',
-    $soa            = $::fqdn,
-    $reverse        = false,
-    $ttl            = '10800',
-    $soaip          = $::ipaddress,
-    $refresh        = 86400,
-    $update_retry   = 3600,
-    $expire         = 604800,
-    $negttl         = 3600,
-    $serial         = 1,
-    $masters        = [],
-    $allow_transfer = [],
-    $allow_query    = [],
-    $also_notify    = [],
-    $zone           = $title,
-    $contact        = undef,
-    $zonefilepath   = $::dns::zonefilepath,
-    $filename       = "db.${title}",
-    $manage_file    = true,
-    $forward        = 'first',
-    $forwarders     = [],
-    $dns_notify     = undef,
+    Array[String] $target_views                         = [],
+    String $zonetype                                    = 'master',
+    String $soa                                         = $::fqdn,
+    Boolean $reverse                                    = false,
+    String $ttl                                         = '10800',
+    Stdlib::Compat::Ip_address $soaip                   = $::ipaddress,
+    Integer $refresh                                    = 86400,
+    Integer $update_retry                               = 3600,
+    Integer $expire                                     = 604800,
+    Integer $negttl                                     = 3600,
+    Integer $serial                                     = 1,
+    Array $masters                                      = [],
+    Array $allow_transfer                               = [],
+    Array $allow_query                                  = [],
+    Array $also_notify                                  = [],
+    String $zone                                        = $title,
+    Optional[String] $contact                           = undef,
+    Stdlib::Absolutepath $zonefilepath                  = $::dns::zonefilepath,
+    String $filename                                    = "db.${title}",
+    Boolean $manage_file                                = true,
+    Enum['first', 'only'] $forward                      = 'first',
+    Array $forwarders                                   = [],
+    Optional[Enum['yes', 'no', 'explicit']] $dns_notify = undef,
 ) {
-
-  validate_bool($reverse, $manage_file)
-  validate_array($masters, $allow_transfer, $allow_query, $forwarders, $also_notify, $target_views)
-  validate_re($forward, '^(first|only)$', 'Only \'first\' or \'only\' are valid values for forward field')
-  if $dns_notify {
-    validate_re($dns_notify, '^(yes|no|explicit)$', 'Only \'yes\', \'no\', or \'explicit\' are valid values for dns_notify field')
-  }
 
   $_contact = pick($contact, "root.${zone}.")
 
