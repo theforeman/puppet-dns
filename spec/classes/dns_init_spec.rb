@@ -54,6 +54,27 @@ describe 'dns' do
       it { should contain_service('named').with_ensure('running').with_enable(true) }
     end
 
+    describe 'with unmanaged localzonepath' do
+
+      let(:params) do {
+          :localzonepath => 'unmanaged',
+      } end
+
+      it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
+          '// named.conf',
+          'include "/etc/rndc.key";',
+          'controls  {',
+          '        inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; };',
+          '};',
+          'options  {',
+          '        include "/etc/named/options.conf";',
+          '};',
+          '// Public view read by Server Admin',
+          'include "/etc/named/zones.conf";'
+      ])}
+    end
+
+
     describe 'with additional_directives' do
       let(:params) { {:additional_directives => [
         [

@@ -31,7 +31,11 @@
 #                               type:Stdlib::Absolutepath
 #
 # $localzonepath::              File holding local zones like RFC1912 or RFC1918 files.
-#                               type:Optional[Stdlib::Absolutepath]
+#                               The special value 'unmanaged' can be used if one plans
+#                               to create custom RFC1912/RFC1918 zones via ::dns,
+#                               where the inclusion of package-shipped zone files is
+#                               not desired.
+#                               type:Optional[Variant[Enum['unmanaged'],Stdlib::Absolutepath]]
 #
 # $defaultzonepath::            File holding default zone includes like db.local.
 #                               type:Optional[Stdlib::Absolutepath]
@@ -118,7 +122,10 @@ class dns (
   Stdlib::Absolutepath $vardir                                    = $::dns::params::vardir,
   String $namedservicename                                        = $::dns::params::namedservicename,
   Stdlib::Absolutepath $zonefilepath                              = $::dns::params::zonefilepath,
-  Optional[Stdlib::Absolutepath] $localzonepath                   = $::dns::params::localzonepath,
+  Optional[
+    Variant[Enum['unmanaged'],
+      Stdlib::Absolutepath]
+    ] $localzonepath                                              = $::dns::params::localzonepath,
   Optional[Enum['only', 'first']] $forward                        = $::dns::params::forward,
   Array[String] $forwarders                                       = $::dns::params::forwarders,
   Optional[Variant[String, Boolean]] $listen_on_v6                = $::dns::params::listen_on_v6,

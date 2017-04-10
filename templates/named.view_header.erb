@@ -44,7 +44,7 @@ view "<%= @title %>" {
 <% end -%>
 
 <% if @include_localzones -%>
-<% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar("::dns::localzonepath")) -%>
+<% unless [nil, :undefined, :undef, 'unmanaged'].include?(scope.lookupvar("::dns::localzonepath")) -%>
 include "<%= scope.lookupvar('::dns::localzonepath') %>";
 <% end -%>
 <% end -%>
