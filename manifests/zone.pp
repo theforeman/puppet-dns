@@ -46,7 +46,22 @@ define dns::zone (
     $_dns_notify = $dns_notify
   }
 
-  create_viewzones($_target_views)
+  $_target_views.each |$view| {
+    $target = $view ? {
+      '_GLOBAL_' => $::dns::publicviewpath,
+      default    => "${::dns::viewconfigpath}/${view}.conf",
+    }
+
+    concat::fragment { "dns_zones+10_${view}_${title}.dns":
+      target  => $target,
+      content => template('dns/named.zone.erb'),
+      order   => "${view}-11-${zone}-1",
+    }
+
+    unless ($view == '_GLOBAL_' or defined(Dns::View[$view])) {
+      fail("Please define a dns::view '${view}' before using it as a dns::zone target")
+    }
+  }
 
   if $manage_file and !defined(File[$zonefilename]) {
     file { $zonefilename:
