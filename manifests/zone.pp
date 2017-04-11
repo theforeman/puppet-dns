@@ -32,10 +32,11 @@ define dns::zone (
     $_dns_notify = $dns_notify
   }
 
-  concat::fragment { "dns_zones+10_${zone}.dns":
+  concat_fragment { "dns_zones+10_${zone}.dns":
     target  => $::dns::publicviewpath,
     content => template('dns/named.zone.erb'),
     order   => "10-${zone}",
+    tag     => 'concat_file_publicviewport',
   }
 
   if $manage_file {

@@ -2,34 +2,44 @@
 class dns::config {
   group { $dns::params::group: }
 
-  concat { $::dns::publicviewpath:
+  concat_file { $::dns::publicviewpath:
     owner => root,
     group => $dns::params::group,
     mode  => '0640',
+    tag   => 'concat_file_publicviewport',
   }
 
-  concat::fragment { 'dns_zones+01-header.dns':
+  concat_fragment { 'dns_zones+01-header.dns':
     target  => $::dns::publicviewpath,
     content => ' ',
     order   => '01',
+    tag     => 'concat_file_publicviewport',
   }
 
-  concat { [$::dns::namedconf_path, $::dns::optionspath]:
+  concat_file { $::dns::namedconf_path:
     owner => root,
     group => $::dns::params::group,
     mode  => '0640',
+    tag   => 'concat_file_namedconf_path',
   }
-
-  concat::fragment { 'named.conf+10-main.dns':
+  concat_file { $::dns::optionspath:
+    owner => root,
+    group => $::dns::params::group,
+    mode  => '0640',
+    tag   => 'concat_file_optionspath',
+  }
+  concat_fragment { 'named.conf+10-main.dns':
     target  => $::dns::namedconf_path,
     content => template($::dns::namedconf_template),
     order   => '10',
+    tag     => 'concat_file_namedconf_path',
   }
 
-  concat::fragment { 'options.conf+10-main.dns':
+  concat_fragment { 'options.conf+10-main.dns':
     target  => $::dns::optionspath,
     content => template($::dns::optionsconf_template),
     order   => '10',
+    tag     => 'concat_file_optionspath',
   }
 
   file { $dns::zonefilepath:
