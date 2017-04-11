@@ -1,33 +1,23 @@
 # Define new view for the dns
 define dns::view (
-    $match_clients        = [],
-    $match_destinations   = [],
-    $match_recursive_only = 'no',
-
-    $allow_transfer       = [],
-    $allow_recursion      = [],
-    $allow_query          = [],
-    $allow_query_cache    = [],
-
-    $also_notify          = [],
-    $forwarders           = [],
-    $forward              = 'first',
-    $recursion            = 'yes',
-    $dnssec_enable        = 'yes',
-    $dnssec_validation    = 'yes',
-    $dns_notify           = 'yes',
-    $include_localzones   = true,
-    $include_defaultzones = true,
-    $order                = '-',
+    Array[String]        $match_clients        = [],
+    Array[String]        $match_destinations   = [],
+    Enum['yes','no']     $match_recursive_only = 'no',
+    Array[String]        $allow_transfer       = [],
+    Array[String]        $allow_recursion      = [],
+    Array[String]        $allow_query          = [],
+    Array[String]        $allow_query_cache    = [],
+    Array[String]        $also_notify          = [],
+    Array[String]        $forwarders           = [],
+    Enum['only','first'] $forward              = 'first',
+    Enum['yes','no']     $recursion            = 'yes',
+    Enum['yes','no']     $dnssec_enable        = 'yes',
+    Enum['yes','no']     $dnssec_validation    = 'yes',
+    Enum['yes','no']     $dns_notify           = 'yes',
+    Boolean              $include_localzones   = true,
+    Boolean              $include_defaultzones = true,
+    String               $order                = '-',
 ) {
-  validate_array($match_clients, $match_destinations, $allow_transfer, $allow_recursion, $allow_query, $allow_query_cache, $also_notify, $forwarders)
-  validate_re($forward, '^(first|only)$', 'Only \'first\' or \'only\' are valid values for forward field')
-
-  validate_re($recursion, '^(yes|no)$', 'Only \'yes\' and \'no\' are valid values for recursion field')
-  validate_re($dnssec_enable, '^(yes|no)$', 'Only \'yes\' and \'no\' are valid values for dnssec_enable field')
-  validate_re($dnssec_validation, '^(yes|no|auto)$', 'Only \'yes\', \'no\' and \'auto\' are valid values for dnssec_validation field')
-  validate_re($match_recursive_only, '^(yes|no)$', 'Only \'yes\' or \'no\' are valid values for match_recursive_only field')
-  validate_re($dns_notify, '^(yes|no)$', 'Only \'yes\' or \'no\' are valid values for dns_notify field')
 
   unless $::dns::enable_views { fail('Must set $dns::enable_views to true in order to use dns::view') }
 
