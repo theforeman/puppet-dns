@@ -24,24 +24,11 @@ view "<%= @title %>" {
 <% unless @also_notify.empty? -%>
     also-notify { <%= @also_notify.join('; ') %>; };
 <% end -%>
-<% if @dns_notify -%>
     notify <%= @dns_notify %>;
-<% end -%>
-<% if @match_recursive_only -%>
     match-recursive-only <%= @match_recursive_only %>;
-<% end -%>
-<% if @recursion -%>
     recursion <%= @recursion %>;
-<% end -%>
-<% if @dnssec_enable -%>
     dnssec-enable <%= @dnssec_enable %>;
-<% end -%>
-<% if @dnssec_validation -%>
     dnssec-validation <%= @dnssec_validation %>;
-<% end -%>
-<% if @notify -%>
-    notify <%= @notify %>;
-<% end -%>
 
 <% if @include_localzones -%>
 <% unless [nil, :undefined, :undef, 'unmanaged'].include?(scope.lookupvar("::dns::localzonepath")) -%>
