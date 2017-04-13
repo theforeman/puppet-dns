@@ -1,19 +1,16 @@
 require 'spec_helper_acceptance'
 
 describe 'Scenario: install bind with views enabled' do
+
   before(:context) do
     case fact('osfamily')
     when 'Debian'
-      package_name = 'bind9'
       utils = 'dnsutils'
     else
-      package_name = 'bind'
       utils = 'bind-utils'
     end
 
-    on default, puppet("resource package #{package_name} ensure=absent")
     on default, puppet("resource package #{utils} ensure=present")
-    on default, 'rm -rf /var/named /var/cache/bind'
   end
 
   context 'with views enabled' do
