@@ -19,7 +19,8 @@ define dns::zone (
     Optional[String] $contact                           = undef,
     Stdlib::Absolutepath $zonefilepath                  = $::dns::zonefilepath,
     String $filename                                    = "db.${title}",
-    Boolean $manage_file                                = true,
+    Boolean $manage_file                                = true,  # content, true value implies manage_file_name
+    Boolean $manage_file_name                           = false, # set file parameter in zonefile
     Enum['first', 'only'] $forward                      = 'first',
     Array $forwarders                                   = [],
     Optional[Enum['yes', 'no', 'explicit']] $dns_notify = undef,
@@ -63,7 +64,7 @@ define dns::zone (
     }
   }
 
-  if $manage_file and !defined(File[$zonefilename]) {
+  if $manage_file {
     file { $zonefilename:
       ensure  => file,
       owner   => $dns::user,
