@@ -4,107 +4,77 @@
 #
 # === Parameters:
 # $namedconf_path::             Path of the named config
-#                               type:Stdlib::Absolutepath
 #
 # $dnsdir::                     Directory holding the named configs
-#                               type:Stdlib::Absolutepath
 #
 # $dns_server_package::         Name of the package to install
-#                               type:String
 #
 # $rndckeypath::                Path of the RNDC key
-#                               type:Stdlib::Absolutepath
 #
 # $optionspath::                Path of the named options
-#                               type:Stdlib::Absolutepath
 #
 # $publicviewpath::             Path of the config file holding all the zones
-#                               type:Stdlib::Absolutepath
 #
 # $vardir::                     Directory holding the variable or working files
-#                               type:Stdlib::Absolutepath
 #
 # $namedservicename::           Name of the service
-#                               type:String
 #
 # $zonefilepath::               Directory containing zone files
-#                               type:Stdlib::Absolutepath
 #
 # $localzonepath::              File holding local zones like RFC1912 or RFC1918 files.
 #                               The special value 'unmanaged' can be used if one plans
 #                               to create custom RFC1912/RFC1918 zones via ::dns,
 #                               where the inclusion of package-shipped zone files is
 #                               not desired.
-#                               type:Optional[Variant[Enum['unmanaged'],Stdlib::Absolutepath]]
 #
 # $defaultzonepath::            File holding default zone includes like db.local.
-#                               type:Optional[Stdlib::Absolutepath]
 #
 # $forward::                    The forward option
-#                               type:Optional[Enum['only', 'first']]
 #
 # $forwarders::                 The forwarders option
-#                               type:Array[String]
 #
 # $listen_on_v6::               The listen-on-v6 option
-#                               type:Optional[Variant[String, Boolean]]
 #
 # $recursion::                  The recursion option
-#                               type:Enum[yes, no]
 #
 # $allow_recursion::            The allow-recursion option
-#                               type:Array[String]
 #
 # $allow_query::                The allow-query option
-#                               type:Array[String]
 #
 # $empty_zones_enable::         The empty-zones-enable option
-#                               type:Enum[yes, no]
 #
 # $dns_notify::                 The notify option in named.conf
-#                               type:Enum[yes, no, explicit]
 #
 # $dnssec_enable::              The dnssec-enable option
-#                               type:Enum[yes, no]
 #
 # $dnssec_validation::          The dnssec-validation option
-#                               type:Enum[yes, no, auto]
 #
 # $namedconf_template::         The template to be used for named.conf
-#                               type:String
 #
 # $acls::                       Specify a hash of ACLs. Each key is the
 #                               name of a network, and its value is
 #                               an array of subnet strings.
-#                               type:Hash[String, Array[String]]
 #
 # $optionsconf_template::       The template to be used for options.conf
-#                               type:String
 #
 # $controls::                   Specify a hash of controls. Each key is the
 #                               name of a network, and its value is a hash
 #                               containing 'port' => integer, 'keys' => array
 #                               and 'allowed_addresses' => array
-#                               type:Hash[String, Hash[String, Data]]
 #
 # $service_ensure::             The ensure attribute on the service
-#                               type:Enum[running, stopped]
 #
 # $service_enable::             Whether to enable the service (start at boot)
-#                               type:Boolean
 #
 # $additional_options::         Additional options
-#                               type:Hash[String, String]
 #
 # $additional_directives::      Additional directives. These are free form
 #                               strings that allow for full customization. Use
 #                               with caution.
-#                               type:Array[String]
 #
 # $enable_views::               Flag to indicate bind views support. Will remove
 #                               global zone configuration like localzonepath
 #                               inclusion.
-#                               type:Boolean
 #
 # === Usage:
 #
@@ -142,8 +112,8 @@ class dns (
   Hash[String, Hash[String, Data]] $controls                      = $::dns::params::controls,
   Variant[Enum['running', 'stopped'], Boolean] $service_ensure    = $::dns::params::service_ensure,
   Boolean $service_enable                                         = $::dns::params::service_enable,
-  Hash $additional_options                                        = $::dns::params::additional_options,
-  Array $additional_directives                                    = $::dns::params::additional_directives,
+  Hash[String, Data] $additional_options                          = $::dns::params::additional_options,
+  Array[String] $additional_directives                            = $::dns::params::additional_directives,
   Boolean $enable_views                                           = $::dns::params::enable_views,
 ) inherits dns::params {
 
