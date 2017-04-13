@@ -36,7 +36,7 @@ include "<%= scope.lookupvar('::dns::localzonepath') %>";
 <% end -%>
 <% end -%>
 <% if @include_defaultzones -%>
-<% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar("::dns::defaultzonepath")) -%>
+<% unless [nil, :undefined, :undef, 'unmanaged'].include?(scope.lookupvar("::dns::defaultzonepath")) -%>
 include "<%= scope.lookupvar('::dns::defaultzonepath') %>";
 <% end -%>
 <% end -%>

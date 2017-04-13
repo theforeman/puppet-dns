@@ -27,7 +27,12 @@
 #                               where the inclusion of package-shipped zone files is
 #                               not desired.
 #
-# $defaultzonepath::            File holding default zone includes like db.local.
+# $defaultzonepath::            File holding some RFC1912 zone includes on systems
+#                               like Debian.
+#                               The special value 'unmanaged' can be used if one plans
+#                               to create custom zones via ::dns,
+#                               where the inclusion of package-shipped zone files is
+#                               not desired.
 #
 # $forward::                    The forward option
 #
@@ -96,6 +101,10 @@ class dns (
     Variant[Enum['unmanaged'],
       Stdlib::Absolutepath]
     ] $localzonepath                                              = $::dns::params::localzonepath,
+  Optional[
+    Variant[Enum['unmanaged'],
+      Stdlib::Absolutepath]
+    ] $defaultzonepath                                            = $::dns::params::defaultzonepath,
   Optional[Enum['only', 'first']] $forward                        = $::dns::params::forward,
   Array[String] $forwarders                                       = $::dns::params::forwarders,
   Optional[Variant[String, Boolean]] $listen_on_v6                = $::dns::params::listen_on_v6,
