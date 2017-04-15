@@ -8,6 +8,9 @@ $TTL <%= @ttl %>
 )
 
 @ IN NS <%= @soa %>.
+
+_x-foreman._tcp IN SRV 0 5 443 <%= @soa %>.
+
 <% if ! @reverse %>
 <%= @soa %>. IN A <%= @soaip %>
 <% end %>
