@@ -19,7 +19,7 @@ describe 'dns::zone' do
   end
 
   it "should have valid zone configuration" do
-    verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_example.com.dns', [
+    verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
       'zone "example.com" {',
       '    type master;',
       '    file "/var/named/dynamic/db.example.com";',
@@ -78,7 +78,7 @@ describe 'dns::zone' do
     let(:params) {{ :allow_transfer => ['192.168.1.2'] }}
 
     it "should have valid zone configuration with allow-transfer" do
-      verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_example.com.dns', [
+      verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
         'zone "example.com" {',
         '    type master;',
         '    file "/var/named/dynamic/db.example.com";',
@@ -94,7 +94,7 @@ describe 'dns::zone' do
       let(:params) {{ :allow_transfer => ['192.168.1.2', '192.168.1.3'] }}
 
       it "should have valid zone configuration with allow-transfer" do
-        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_example.com.dns', [
+        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
           'zone "example.com" {',
           '    type master;',
           '    file "/var/named/dynamic/db.example.com";',
@@ -112,7 +112,7 @@ describe 'dns::zone' do
     let(:params) {{ :also_notify => ['192.168.1.2'] }}
 
     it "should have valid zone configuration with also-notify" do
-      verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_example.com.dns', [
+      verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
         'zone "example.com" {',
         '    type master;',
         '    file "/var/named/dynamic/db.example.com";',
@@ -128,7 +128,7 @@ describe 'dns::zone' do
       let(:params) {{ :also_notify => ['192.168.1.2', '192.168.1.3'] }}
 
       it "should have valid zone configuration with also-notify" do
-        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_example.com.dns', [
+        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
           'zone "example.com" {',
           '    type master;',
           '    file "/var/named/dynamic/db.example.com";',
@@ -146,7 +146,7 @@ describe 'dns::zone' do
     let(:params) {{ :zonetype => 'slave', :masters  => ['192.168.1.1'] }}
 
     it "should have valid slave zone configuration" do
-      verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_example.com.dns', [
+      verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
         'zone "example.com" {',
         '    type slave;',
         '    file "/var/named/dynamic/db.example.com";',
@@ -160,7 +160,7 @@ describe 'dns::zone' do
       let(:params) {{ :zonetype => 'slave', :masters  => ['192.168.1.1', '192.168.1.2'] }}
 
       it "should have valid slave zone configuration" do
-        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_example.com.dns', [
+        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
           'zone "example.com" {',
           '    type slave;',
           '    file "/var/named/dynamic/db.example.com";',
@@ -175,7 +175,7 @@ describe 'dns::zone' do
       let(:params) {{ :dns_notify => 'no' }}
 
       it "should have valid slave zone configuration" do
-        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_example.com.dns', [
+        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
           'zone "example.com" {',
           '    type master;',
           '    file "/var/named/dynamic/db.example.com";',
@@ -192,7 +192,7 @@ describe 'dns::zone' do
         let(:params) {{ :zonetype => 'slave', :masters  => ['192.168.1.1', '192.168.1.2'], :allow_query => ['1.2.3.4'] }}
 
       it "should have valid slave zone configuration" do
-        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_example.com.dns', [
+        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
           'zone "example.com" {',
           '    type slave;',
           '    file "/var/named/dynamic/db.example.com";',
@@ -204,6 +204,60 @@ describe 'dns::zone' do
       end
     end
 
+    context 'views enabled with nonexisting view' do
+      let(:params) {{ :target_views => ['nonexistent'] }}
+      let :pre_condition do
+        'class { "::dns": enable_views => true }'
+      end
+      it { is_expected.to_not compile }
+    end
+
+    context 'views enabled with existing view' do
+      let(:params) {{ :target_views => ['existing'] }}
+      let :pre_condition do
+        'class { "::dns": enable_views => true }
+         dns::view { "existing": }
+        '
+      end
+      it { is_expected.to compile }
+    end
+
+    context 'views feature with two views' do
+      let(:params) {{ :target_views => ['office', 'dmz'] }}
+
+      let :pre_condition do
+        'class { "::dns": enable_views => true }
+         dns::view { "office": }
+         dns::view { "dmz": }
+        '
+      end
+      it "should have valid slave zone configuration in office view" do
+        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_office_example.com.dns', [
+          'zone "example.com" {',
+          '    type master;',
+          '    file "/var/named/dynamic/db.example.com";',
+          '    update-policy {',
+          '            grant rndc-key zonesub ANY;',
+          '    };',
+          '};',
+        ])
+      end
+
+      it "should have valid slave zone configuration in dmz view" do
+        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10_dmz_example.com.dns', [
+          'zone "example.com" {',
+          '    type master;',
+          '    file "/var/named/dynamic/db.example.com";',
+          '    update-policy {',
+          '            grant rndc-key zonesub ANY;',
+          '    };',
+          '};',
+        ])
+      end
+
+      it { should_not contain_concat__fragment('dns_zones+10__GLOBAL__example.com.dns') }
+
+    end
 
   end
 

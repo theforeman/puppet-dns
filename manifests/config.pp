@@ -8,6 +8,13 @@ class dns::config {
     mode  => '0640',
   }
 
+  file { $::dns::viewconfigpath:
+    ensure => directory,
+    owner  => root,
+    group  => $dns::params::group,
+    mode   => '0755',
+  }
+
   concat::fragment { 'dns_zones+01-header.dns':
     target  => $::dns::publicviewpath,
     content => ' ',
