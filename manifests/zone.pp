@@ -1,5 +1,13 @@
 # Define new zone for the dns
+#
+# === Parameters:
+#
+# $manage_file::                Whether the manage the file resource. When true $manage_file_name is implied.
+#
+# $manage_file_name::           Whether to set the file parameter in the zone file.
+#
 define dns::zone (
+  Array[String] $target_views                         = [],
   String $zonetype                                    = 'master',
   String $soa                                         = $::fqdn,
   Boolean $reverse                                    = false,
@@ -15,16 +23,30 @@ define dns::zone (
   Array $allow_query                                  = [],
   Array $also_notify                                  = [],
   String $zone                                        = $title,
-  String $contact                                     = "root.${title}.",
+  Optional[String] $contact                           = undef,
   Stdlib::Absolutepath $zonefilepath                  = $::dns::zonefilepath,
   String $filename                                    = "db.${title}",
   Boolean $manage_file                                = true,
+  Boolean $manage_file_name                           = false,
   Enum['first', 'only'] $forward                      = 'first',
   Array $forwarders                                   = [],
   Optional[Enum['yes', 'no', 'explicit']] $dns_notify = undef,
 ) {
 
+  $_contact = pick($contact, "root.${zone}.")
+
   $zonefilename = "${zonefilepath}/${filename}"
+
+  if $::dns::enable_views {
+    if $target_views == [] {
+      warning('You seem to mix BIND views with global zones, which will probably fail')
+      $_target_views = ['_GLOBAL_']
+    } else {
+      $_target_views = $target_views
+    }
+  } else {
+    $_target_views = ['_GLOBAL_']
+  }
 
   if $zonetype == 'slave' {
     $_dns_notify = pick($dns_notify, 'no')
@@ -32,10 +54,21 @@ define dns::zone (
     $_dns_notify = $dns_notify
   }
 
-  concat::fragment { "dns_zones+10_${zone}.dns":
-    target  => $::dns::publicviewpath,
-    content => template('dns/named.zone.erb'),
-    order   => "10-${zone}",
+  $_target_views.each |$view| {
+    $target = $view ? {
+      '_GLOBAL_' => $::dns::publicviewpath,
+      default    => "${::dns::viewconfigpath}/${view}.conf",
+    }
+
+    concat::fragment { "dns_zones+10_${view}_${title}.dns":
+      target  => $target,
+      content => template('dns/named.zone.erb'),
+      order   => "${view}-11-${zone}-1",
+    }
+
+    unless ($view == '_GLOBAL_' or defined(Dns::View[$view])) {
+      fail("Please define a dns::view '${view}' before using it as a dns::zone target")
+    }
   }
 
   if $manage_file {

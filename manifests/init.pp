@@ -22,6 +22,17 @@
 # $zonefilepath::               Directory containing zone files
 #
 # $localzonepath::              File holding local zones like RFC1912 or RFC1918 files.
+#                               The special value 'unmanaged' can be used if one plans
+#                               to create custom RFC1912/RFC1918 zones via ::dns,
+#                               where the inclusion of package-shipped zone files is
+#                               not desired.
+#
+# $defaultzonepath::            File holding some RFC1912 zone includes on systems
+#                               like Debian.
+#                               The special value 'unmanaged' can be used if one plans
+#                               to create custom zones via ::dns,
+#                               where the inclusion of package-shipped zone files is
+#                               not desired.
 #
 # $forward::                    The forward option
 #
@@ -66,6 +77,10 @@
 #                               strings that allow for full customization. Use
 #                               with caution.
 #
+# $enable_views::               Flag to indicate bind views support. Will remove
+#                               global zone configuration like localzonepath
+#                               inclusion.
+#
 # === Usage:
 #
 # * Simple usage:
@@ -82,7 +97,14 @@ class dns (
   Stdlib::Absolutepath $vardir                                    = $::dns::params::vardir,
   String $namedservicename                                        = $::dns::params::namedservicename,
   Stdlib::Absolutepath $zonefilepath                              = $::dns::params::zonefilepath,
-  Optional[Stdlib::Absolutepath] $localzonepath                   = $::dns::params::localzonepath,
+  Optional[
+    Variant[Enum['unmanaged'],
+      Stdlib::Absolutepath]
+    ] $localzonepath                                              = $::dns::params::localzonepath,
+  Optional[
+    Variant[Enum['unmanaged'],
+      Stdlib::Absolutepath]
+    ] $defaultzonepath                                            = $::dns::params::defaultzonepath,
   Optional[Enum['only', 'first']] $forward                        = $::dns::params::forward,
   Array[String] $forwarders                                       = $::dns::params::forwarders,
   Optional[Variant[String, Boolean]] $listen_on_v6                = $::dns::params::listen_on_v6,
@@ -101,6 +123,7 @@ class dns (
   Boolean $service_enable                                         = $::dns::params::service_enable,
   Hash[String, Data] $additional_options                          = $::dns::params::additional_options,
   Array[String] $additional_directives                            = $::dns::params::additional_directives,
+  Boolean $enable_views                                           = $::dns::params::enable_views,
 ) inherits dns::params {
 
   class { '::dns::install': }
