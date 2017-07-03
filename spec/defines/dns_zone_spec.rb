@@ -12,6 +12,8 @@ describe 'dns::zone' do
     }
   end
 
+  let(:node) { 'puppetmaster.example.com' }
+
   let(:title) { "example.com" }
 
   let :pre_condition do
