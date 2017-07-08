@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.0
+
+* Drop Puppet 3 support
+* Add BIND views support 
+
 ## 4.1.0
 
 * Add `$allow_query` parameter for zones.
