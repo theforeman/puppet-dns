@@ -106,4 +106,6 @@ class dns::params {
 
   $additional_options    = {}
   $additional_directives = []
+
+  $zones                 = {}
 }
