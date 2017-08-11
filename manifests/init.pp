@@ -81,6 +81,9 @@
 #                               global zone configuration like localzonepath
 #                               inclusion.
 #
+# $zones::                      A hash of zones to be created. See dns::zone
+#                               for options.
+#
 # === Usage:
 #
 # * Simple usage:
@@ -124,10 +127,13 @@ class dns (
   Hash[String, Data] $additional_options                          = $::dns::params::additional_options,
   Array[String] $additional_directives                            = $::dns::params::additional_directives,
   Boolean $enable_views                                           = $::dns::params::enable_views,
+  Hash[String, Hash] $zones                                       = $::dns::params::zones,
 ) inherits dns::params {
 
   class { '::dns::install': }
   ~> class { '::dns::config': }
   ~> class { '::dns::service': }
   ~> Class['dns']
+
+  create_resources('dns::zone', $zones)
 }

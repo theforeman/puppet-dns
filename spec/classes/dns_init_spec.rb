@@ -10,6 +10,7 @@ describe 'dns' do
          :concat_basedir => '/doesnotexist',
          :fqdn           => 'puppetmaster.example.com',
          :osfamily       => 'RedHat',
+         :ipaddress      => '192.0.2.1',
       }
     end
 
@@ -215,6 +216,18 @@ describe 'dns' do
           'max-cache-ttl 3600;',
           'max-ncache-ttl 3600;'
       ])}
+    end
+
+    describe 'with zones' do
+      let :params do
+        {
+          :zones => {
+            'example.com' => {},
+          },
+        }
+      end
+
+      it { should contain_dns__zone('example.com') }
     end
   end
 
