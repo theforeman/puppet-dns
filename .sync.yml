@@ -6,7 +6,3 @@
 Rakefile:
   param_docs_pattern:
     - manifests/init.pp
-spec/spec_helper_acceptance.rb:
-  modules:
-    - puppetlabs-stdlib
-    - puppetlabs-concat
