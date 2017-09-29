@@ -227,6 +227,7 @@ describe 'dns' do
         }
       end
 
+      it { should compile.with_all_deps }
       it { should contain_dns__zone('example.com') }
     end
   end
