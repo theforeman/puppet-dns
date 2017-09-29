@@ -130,10 +130,11 @@ class dns (
   Hash[String, Hash] $zones                                       = $::dns::params::zones,
 ) inherits dns::params {
 
-  class { '::dns::install': }
-  ~> class { '::dns::config': }
-  ~> class { '::dns::service': }
-  ~> Class['dns']
+  include ::dns::install
+  include ::dns::config
+  contain ::dns::service
+
+  Class['dns::install'] ~> Class['dns::config'] ~> Class['dns::service']
 
   create_resources('dns::zone', $zones)
 }
