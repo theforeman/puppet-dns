@@ -22,7 +22,7 @@ class dns::params {
       $optionspath        = '/etc/named/options.conf'
       $zonefilepath       = "${vardir}/dynamic"
       $localzonepath      = "${dnsdir}/named.rfc1912.zones"
-      $defaultzonepath    = undef
+      $defaultzonepath    = 'unmanaged'
       $publicviewpath     = "${dnsdir}/named/zones.conf"
       $viewconfigpath     = "${dnsdir}/named/views"
       $dns_server_package = 'bind'
@@ -36,8 +36,8 @@ class dns::params {
       $vardir             = '/usr/local/etc/namedb/working'
       $optionspath        = '/usr/local/etc/namedb/options.conf'
       $zonefilepath       = "${dnsdir}/dynamic"
-      $localzonepath      = undef # "${dnsdir}/master/empty.db"
-      $defaultzonepath    = undef
+      $localzonepath      = 'unmanaged' # "${dnsdir}/master/empty.db"
+      $defaultzonepath    = 'unmanaged'
       $publicviewpath     = "${dnsdir}/zones.conf"
       $viewconfigpath     = "${dnsdir}/named/views"
       $dns_server_package = 'bind910'
@@ -51,8 +51,8 @@ class dns::params {
       $vardir             = '/var/named'
       $optionspath        = '/etc/named.options.conf'
       $zonefilepath       = "${vardir}/dynamic"
-      $localzonepath      = undef # "${dnsdir}/named.local.conf"
-      $defaultzonepath    = undef
+      $localzonepath      = 'unmanaged' # "${dnsdir}/named.local.conf"
+      $defaultzonepath    = 'unmanaged'
       $publicviewpath     = "${dnsdir}/zones.conf"
       $viewconfigpath     = "${dnsdir}/views"
       $dns_server_package = 'bind'

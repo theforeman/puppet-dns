@@ -31,12 +31,12 @@ view "<%= @title %>" {
     dnssec-validation <%= @dnssec_validation %>;
 
 <% if @include_localzones -%>
-<% unless [nil, :undefined, :undef, 'unmanaged'].include?(scope.lookupvar("::dns::localzonepath")) -%>
+<% if scope.lookupvar("::dns::localzonepath") != 'unmanaged' -%>
 include "<%= scope.lookupvar('::dns::localzonepath') %>";
 <% end -%>
 <% end -%>
 <% if @include_defaultzones -%>
-<% unless [nil, :undefined, :undef, 'unmanaged'].include?(scope.lookupvar("::dns::defaultzonepath")) -%>
+<% if scope.lookupvar("::dns::defaultzonepath") != 'unmanaged' -%>
 include "<%= scope.lookupvar('::dns::defaultzonepath') %>";
 <% end -%>
 <% end -%>
