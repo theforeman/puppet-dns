@@ -13,7 +13,7 @@ options  {
 };
 
 <% unless scope.lookupvar("::dns::enable_views") -%>
-<% unless [nil, :undefined, :undef, 'unmanaged'].include?(scope.lookupvar("::dns::localzonepath")) -%>
+<% if scope.lookupvar("::dns::localzonepath") != 'unmanaged' -%>
 include "<%= scope.lookupvar('::dns::localzonepath') %>";
 <% end -%>
 <% end -%>
