@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.0.1
+
+* Add a zones parameter
+* Disallow undef values for `$localzonepath` and `$defaultzonepath` in favor of `'unmanaged'` (default parameter)
+
 ## 5.0.0
 
 * Drop Puppet 3 support
