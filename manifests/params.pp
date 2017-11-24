@@ -73,6 +73,7 @@ class dns::params {
 
   #pertaining to rndc
   $rndckeypath           = "${dnsdir}/rndc.key"
+  $rndchashalgorithm     = 'hmac-md5'
 
   $enable_views          = false
 

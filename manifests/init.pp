@@ -9,6 +9,8 @@
 #
 # $dns_server_package::         Name of the package to install
 #
+# $rndchashalgorithm::          Hash algorithm to use for the RNDC key
+#
 # $rndckeypath::                Path of the RNDC key
 #
 # $optionspath::                Path of the named options
@@ -94,6 +96,7 @@ class dns (
   Stdlib::Absolutepath $namedconf_path                              = $::dns::params::namedconf_path,
   Stdlib::Absolutepath $dnsdir                                      = $::dns::params::dnsdir,
   String $dns_server_package                                        = $::dns::params::dns_server_package,
+  String $rndchashalgorithm                                         = $::dns::params::rndchashalgorithm,
   Stdlib::Absolutepath $rndckeypath                                 = $::dns::params::rndckeypath,
   Stdlib::Absolutepath $optionspath                                 = $::dns::params::optionspath,
   Stdlib::Absolutepath $publicviewpath                              = $::dns::params::publicviewpath,
