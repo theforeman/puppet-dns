@@ -1,5 +1,10 @@
 # Changelog
 
+## 5.1.0
+
+* Stop shipping development code in releases
+* Remove EOL operating systems and add new ones
+
 ## 5.0.1
 
 * Add a zones parameter
