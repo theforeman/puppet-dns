@@ -84,6 +84,8 @@
 # $zones::                      A hash of zones to be created. See dns::zone
 #                               for options.
 #
+# $dns_update_key:              key to allow ddns updates of zones (mac-md5).   
+# 
 # === Usage:
 #
 # * Simple usage:
