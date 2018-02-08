@@ -124,7 +124,7 @@ class dns (
   Array[String] $additional_directives                              = $::dns::params::additional_directives,
   Boolean $enable_views                                             = $::dns::params::enable_views,
   Hash[String, Hash] $zones                                         = $::dns::params::zones,
-  String $dns_update_key                                            = $::dns::params::dns_update_key
+  Optional[String] $dns_update_key                                  = $::dns::params::dns_update_key
 ) inherits dns::params {
 
   include ::dns::install
