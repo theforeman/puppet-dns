@@ -24,10 +24,10 @@ listen-on-v6 { <%= scope.lookupvar('::dns::listen_on_v6') %>; };
 allow-recursion { <%= scope.lookupvar('::dns::allow_recursion').join("; ") %>; };
 <% end -%>
 
-<% if @dns_update_key -%>
+<% unless scope.lookupvar('::dns::dns_update_key).empty? -%>
 key dns_update {
   algorithm hmac-md5;
-  secret "<%= @dns_update_key %>";
+  secret "<%= scope.lookupvar('::dns::dns_update_key') %>";
 };
 <% end -%>
 
