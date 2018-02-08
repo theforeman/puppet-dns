@@ -72,7 +72,7 @@ define dns::zone (
     }
   }
   if $allow_dns_update {
-    unless ($::dns::dns_update_key)) { fail("Please define a dns:: '${dns_update_key} before setting updates in dns::zone") }
+    unless $::dns::dns_update_key { fail("Please define a dns:: '${dns_update_key} before setting updates in dns::zone") }
   }
 
   if $manage_file {
