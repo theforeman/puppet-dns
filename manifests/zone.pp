@@ -71,8 +71,8 @@ define dns::zone (
       fail("Please define a dns::view '${view}' before using it as a dns::zone target")
     }
   }
-  if ($allow_dns_update and undefined($::dns::dns_update_key)) {
-    fail("Please define a dns:: '${dns_update_key} before setting updates in dns::zone")
+  if $allow_dns_update {
+    unless ($::dns::dns_update_key)) { fail("Please define a dns:: '${dns_update_key} before setting updates in dns::zone") }
   }
 
   if $manage_file {
