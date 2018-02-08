@@ -32,7 +32,6 @@ define dns::zone (
   Array $forwarders                                   = [],
   Optional[Enum['yes', 'no', 'explicit']] $dns_notify = undef,
   Boolean $allow_dns_update                           = false,
-  Optional[String] $dns_update_key                    = $::dns::dns_update_key
 ) {
 
   $_contact = pick($contact, "root.${zone}.")
@@ -72,7 +71,7 @@ define dns::zone (
       fail("Please define a dns::view '${view}' before using it as a dns::zone target")
     }
   }
-  if ($allow_dns_update and undefined($dns_update_key)) {
+  if ($allow_dns_update and undefined($::dns::dns_update_key)) {
     fail("Please define a dns:: '${dns_update_key} before setting updates in dns::zone")
   }
 
