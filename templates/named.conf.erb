@@ -32,5 +32,12 @@ acl "<%= acl_name %>"  {
 <%- end -%>
 <%- end -%>
 
+<% unless scope.lookupvar('::dns::dns_update_key').empty? -%>
+key dns_update {
+  algorithm hmac-md5;
+  secret "<%= scope.lookupvar('::dns::dns_update_key') %>";
+};
+<% end -%>
+
 // Public view read by Server Admin
 include "<%= scope.lookupvar('::dns::publicviewpath') %>";
