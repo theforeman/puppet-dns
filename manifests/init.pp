@@ -84,6 +84,8 @@
 # $zones::                      A hash of zones to be created. See dns::zone
 #                               for options.
 #
+# $dns_update_key:              key to allow ddns updates of zones (mac-md5).   
+# 
 # === Usage:
 #
 # * Simple usage:
@@ -122,6 +124,7 @@ class dns (
   Array[String] $additional_directives                              = $::dns::params::additional_directives,
   Boolean $enable_views                                             = $::dns::params::enable_views,
   Hash[String, Hash] $zones                                         = $::dns::params::zones,
+  Optional[String] $dns_update_key                                  = $::dns::params::dns_update_key
 ) inherits dns::params {
 
   include ::dns::install

@@ -29,4 +29,7 @@ zone "<%= @zone %>" {
 <% if @_dns_notify -%>
     notify <%= @_dns_notify %>;
 <% end -%>
+<% if @allow_dns_update -%>
+    allow-updates { key dns_update; };
+<% end -%>
 };

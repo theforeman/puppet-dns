@@ -31,6 +31,7 @@ define dns::zone (
   Enum['first', 'only'] $forward                      = 'first',
   Array $forwarders                                   = [],
   Optional[Enum['yes', 'no', 'explicit']] $dns_notify = undef,
+  Boolean $allow_dns_update                           = false,
 ) {
 
   $_contact = pick($contact, "root.${zone}.")
@@ -69,6 +70,9 @@ define dns::zone (
     unless ($view == '_GLOBAL_' or defined(Dns::View[$view])) {
       fail("Please define a dns::view '${view}' before using it as a dns::zone target")
     }
+  }
+  if $allow_dns_update {
+    unless $::dns::dns_update_key { fail("Please define a '${dns_update_key}' before setting allow_update in dns::zone") }
   }
 
   if $manage_file {
