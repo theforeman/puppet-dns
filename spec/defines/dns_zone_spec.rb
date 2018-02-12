@@ -263,4 +263,20 @@ describe 'dns::zone' do
 
   end
 
+  context 'update_policy_rules is set' do
+    let(:params) { {
+      :update_policy_rules => {
+        'foreman_key' => {
+          'matchtype' => 'zonesub',
+          'tname' => '*',
+          'rr' => 'ANY'
+        }
+      }
+    } }
+
+    it "should have valid slave zone configuration" do
+      is_expected.to compile
+    end
+  end
+
 end

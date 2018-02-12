@@ -6,31 +6,37 @@
 #
 # $manage_file_name::           Whether to set the file parameter in the zone file.
 #
+# $update_policy_rules::        This can be used to specifiy additional update policy rules in the following format
+#                               { '<KEY_NAME' => {'matchtype' => '<VALUE>', 'tname' => '<VALUE>', 'rr' => 'VALUE' } }
+#                               Example {'foreman_key' => {'matchtype' => 'zonesub', 'rr' => 'ANY'}}
+#                               tname and rr are optional
+#
 define dns::zone (
-  Array[String] $target_views                         = [],
-  String $zonetype                                    = 'master',
-  String $soa                                         = $::fqdn,
-  Boolean $reverse                                    = false,
-  String $ttl                                         = '10800',
-  Stdlib::Compat::Ip_address $soaip                   = $::ipaddress,
-  Integer $refresh                                    = 86400,
-  Integer $update_retry                               = 3600,
-  Integer $expire                                     = 604800,
-  Integer $negttl                                     = 3600,
-  Integer $serial                                     = 1,
-  Array $masters                                      = [],
-  Array $allow_transfer                               = [],
-  Array $allow_query                                  = [],
-  Array $also_notify                                  = [],
-  String $zone                                        = $title,
-  Optional[String] $contact                           = undef,
-  Stdlib::Absolutepath $zonefilepath                  = $::dns::zonefilepath,
-  String $filename                                    = "db.${title}",
-  Boolean $manage_file                                = true,
-  Boolean $manage_file_name                           = false,
-  Enum['first', 'only'] $forward                      = 'first',
-  Array $forwarders                                   = [],
-  Optional[Enum['yes', 'no', 'explicit']] $dns_notify = undef,
+  Array[String] $target_views                           = [],
+  String $zonetype                                      = 'master',
+  String $soa                                           = $::fqdn,
+  Boolean $reverse                                      = false,
+  String $ttl                                           = '10800',
+  Stdlib::Compat::Ip_address $soaip                     = $::ipaddress,
+  Integer $refresh                                      = 86400,
+  Integer $update_retry                                 = 3600,
+  Integer $expire                                       = 604800,
+  Integer $negttl                                       = 3600,
+  Integer $serial                                       = 1,
+  Array $masters                                        = [],
+  Array $allow_transfer                                 = [],
+  Array $allow_query                                    = [],
+  Array $also_notify                                    = [],
+  String $zone                                          = $title,
+  Optional[String] $contact                             = undef,
+  Stdlib::Absolutepath $zonefilepath                    = $::dns::zonefilepath,
+  String $filename                                      = "db.${title}",
+  Boolean $manage_file                                  = true,
+  Boolean $manage_file_name                             = false,
+  Enum['first', 'only'] $forward                        = 'first',
+  Array $forwarders                                     = [],
+  Optional[Enum['yes', 'no', 'explicit']] $dns_notify   = undef,
+  Hash[String, Hash[String, Data]] $update_policy_rules = {},
 ) {
 
   $_contact = pick($contact, "root.${zone}.")
