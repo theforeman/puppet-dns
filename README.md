@@ -19,6 +19,10 @@ Zones can be created with the `dns::zone` resource:
 
     dns::zone { 'example.com': }
 
+Keys can be created with the `dns::key` resource:
+
+    dns::key {'dns-key':}
+
 Slaves can also be configured by setting `allow_transfer` in the master's zone
 and setting `zonetype => 'slave'` in the slave's zone.
 

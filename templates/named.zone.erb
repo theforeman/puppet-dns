@@ -12,6 +12,9 @@ zone "<%= @zone %>" {
 <% if @zonetype == 'master' -%>
     update-policy {
             grant rndc-key zonesub ANY;
+            <%- @update_policy_rules.sort_by {|k, v| k}.each do |key, key_hash| -%>
+            grant <%= key %> <%= key_hash['matchtype'] %> <% if key_hash['tname'] %><%= key_hash['tname'] %> <% end %><% if key_hash['rr'] %><%= key_hash['rr'] %><% end %>;
+            <%- end -%>
     };
 <% end -%>
 <% unless @allow_transfer.empty? -%>
