@@ -62,11 +62,11 @@ describe 'Scenario: install bind with views enabled' do
       it { is_expected.to be_listening }
     end
 
-    describe command('dig +short SOA example.com @127.0.0.1') do
+    describe command('dig +short +subnet=0.0.0.0/0 SOA example.com @localhost') do
       its(:stdout) { is_expected.to match("ns1-v4.example.com. root.example.com. 1 86400 3600 604800 3600\n") }
     end
 
-    describe command('dig +short SOA example.com @::1') do
+    describe command('dig +short +subnet=::/0 SOA example.com @localhost') do
       its(:stdout) { is_expected.to match("ns1-v6.example.com. root.example.com. 1 86400 3600 604800 3600\n") }
     end
   end
