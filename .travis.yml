@@ -3,6 +3,6 @@ rvm: 2.3.1
 dist: trusty
 env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/debian-9
 script: bundle exec rake beaker
-before_script: for file in $(find /proc/sys/net/ipv6/conf -name disable_ipv6) ; do ; echo -n "$file " ; echo 0 | sudo tee $file ; done
+before_script: for file in $(find /proc/sys/net/ipv6/conf -name disable_ipv6) ; do echo -n "$file " ; cat $file ; echo 0 | sudo tee $file ; done
 services: docker
 bundler_args: --without development
