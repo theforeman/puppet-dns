@@ -1,37 +1,16 @@
 ---
-# This file is managed centrally by modulesync
-#   https://github.com/theforeman/foreman-installer-modulesync
-rvm:
-  - 2.1.9
-  - 2.2.6
-  - 2.3.0
-  - 2.4.1
-env:
-  matrix:
-    - PUPPET_VERSION=4.9
-matrix:
-  fast_finish: true
-  include:
-    - rvm: 2.4.1
-      env: PUPPET_VERSION=5.0
-    # Acceptance tests
-    - rvm: 2.3.1
-      dist: trusty
-      env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/centos-7
-      script: bundle exec rake beaker
-      services: docker
-      bundler_args: --without development
-    - rvm: 2.3.1
-      dist: trusty
-      env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/debian-8
-      script: bundle exec rake beaker
-      services: docker
-      bundler_args: --without development
-    - rvm: 2.3.1
-      dist: trusty
-      env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/debian-9
-      script: bundle exec rake beaker
-      services: docker
-      bundler_args: --without development
-bundler_args: --without system_tests development
-sudo: false
+rvm: 2.4.1
+dist: trusty
+env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/debian-9
+script: bundle exec rake beaker
+before_script:
+  - sudo sysctl net.ipv6.conf.all.disable_ipv6=0
+  - sudo sysctl net.ipv6.conf.docker0.disable_ipv6=0
+  - sudo ps auxf | grep docker
+  - sudo mkdir -p /etc/docker
+  - echo '{"ipv6":true}' | sudo tee /etc/docker/daemon.json
+  - sudo service docker restart
+  - sudo ip a
+  - sudo ps auxf | grep docker
+services: docker
+bundler_args: --without development
