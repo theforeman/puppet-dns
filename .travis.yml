@@ -1,8 +1,10 @@
 ---
-rvm: 2.3.1
+rvm: 2.4.1
 dist: trusty
 env: PUPPET_INSTALL_TYPE=agent BEAKER_debug=true BEAKER_set=docker/debian-9
 script: bundle exec rake beaker
-before_script: sudo sysctl net.ipv6.conf.all.disable_ipv6=0
+before_script:
+  - sudo sysctl net.ipv6.conf.all.disable_ipv6=0
+  - sudo ip a
 services: docker
 bundler_args: --without development
