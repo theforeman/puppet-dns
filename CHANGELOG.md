@@ -1,5 +1,18 @@
 # Changelog
 
+## [5.2.0](https://github.com/theforeman/puppet-dns/tree/5.2.0) (2018-05-21)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.1.0...5.2.0)
+
+**Implemented enhancements:**
+
+- Adds control keys and specifying update policy [\#108](https://github.com/theforeman/puppet-dns/pull/108) ([zyronix](https://github.com/zyronix))
+
+**Closed issues:**
+
+- Fails with puppetlabs/concat 4.1.1 [\#107](https://github.com/theforeman/puppet-dns/issues/107)
+- Add support for adding keys for nsupdate [\#94](https://github.com/theforeman/puppet-dns/issues/94)
+
 ## 5.1.0
 
 * Stop shipping development code in releases
