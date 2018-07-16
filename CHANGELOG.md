@@ -1,6 +1,14 @@
 # Changelog
 
-## [5.2.0](https://github.com/theforeman/puppet-dns/tree/5.2.0) (2018-05-21)
+## [5.3.0](https://github.com/theforeman/puppet-dns/tree/5.3.0) (2018-07-16)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.2.0...5.3.0)
+
+**Implemented enhancements:**
+
+- Support Ubuntu/bionic, drop Fedora 25 [\#115](https://github.com/theforeman/puppet-dns/pull/115) ([mmoll](https://github.com/mmoll))
+
+## [5.2.0](https://github.com/theforeman/puppet-dns/tree/5.2.0) (2018-05-22)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.1.0...5.2.0)
 
