@@ -6,6 +6,8 @@
 #
 # $manage_file_name::           Whether to set the file parameter in the zone file.
 #
+# $replace::                    Whether to replace the file if it already exists. Only relevant when $manage_file is true.
+#
 # $update_policy_rules::        This can be used to specifiy additional update policy rules in the following format
 #                               { '<KEY_NAME' => {'matchtype' => '<VALUE>', 'tname' => '<VALUE>', 'rr' => 'VALUE' } }
 #                               Example {'foreman_key' => {'matchtype' => 'zonesub', 'rr' => 'ANY'}}
@@ -28,6 +30,7 @@ define dns::zone (
   Array $allow_query                                    = [],
   Array $also_notify                                    = [],
   String $zone                                          = $title,
+  Boolean $replace                                      = false,
   Optional[String] $contact                             = undef,
   Stdlib::Absolutepath $zonefilepath                    = $::dns::zonefilepath,
   String $filename                                      = "db.${title}",
@@ -84,7 +87,7 @@ define dns::zone (
       group   => $dns::group,
       mode    => '0644',
       content => template('dns/zone.header.erb'),
-      replace => false,
+      replace => $replace,
       notify  => Service[$::dns::namedservicename],
     }
   }
