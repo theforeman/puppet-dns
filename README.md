@@ -1,4 +1,4 @@
-[![Puppet Forge](http://img.shields.io/puppetforge/v/theforeman/dns.svg)](https://forge.puppetlabs.com/theforeman/dns)
+[![Puppet Forge](https://img.shields.io/puppetforge/v/theforeman/dns.svg)](https://forge.puppetlabs.com/theforeman/dns)
 [![Build Status](https://travis-ci.org/theforeman/puppet-dns.svg?branch=master)](https://travis-ci.org/theforeman/puppet-dns)
 
 # DNS module for Puppet
@@ -10,18 +10,24 @@ Foreman.
 
 Include the top level `dns` class to fully configure the service.
 
-    include ::dns
+```puppet
+include ::dns
+```
 
 A key is set up to allow dynamic DNS updates, stored in rndc.key.  This is used
 by Foreman's smart proxy to add and remove records on the fly.
 
 Zones can be created with the `dns::zone` resource:
 
-    dns::zone { 'example.com': }
+```puppet
+dns::zone { 'example.com': }
+```
 
 Keys can be created with the `dns::key` resource:
 
-    dns::key {'dns-key':}
+```puppet
+dns::key {'dns-key':}
+```
 
 Slaves can also be configured by setting `allow_transfer` in the master's zone
 and setting `zonetype => 'slave'` in the slave's zone.
@@ -41,7 +47,7 @@ See the CONTRIBUTING.md file for much more information.
 
 # More info
 
-See http://theforeman.org or at #theforeman irc channel on freenode
+See https://theforeman.org or at #theforeman irc channel on freenode
 
 Copyright (c) 2010-2016 Foreman developers and Zach Leslie
 
@@ -49,7 +55,7 @@ Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 
-http://www.apache.org/licenses/LICENSE-2.0
+https://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
 distributed under the License is distributed on an "AS IS" BASIS,
