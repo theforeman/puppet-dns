@@ -1,6 +1,6 @@
 # Default parameters
 class dns::params {
-  case $::osfamily {
+  case $facts['osfamily'] {
     'Debian': {
       $dnsdir             = '/etc/bind'
       $vardir             = '/var/cache/bind'
@@ -62,7 +62,7 @@ class dns::params {
       $rndcconfgen        = '/usr/sbin/rndc-confgen'
     }
     default: {
-      fail ("Unsupported operating system family ${::osfamily}")
+      fail ("Unsupported operating system family ${facts['osfamily']}")
     }
   }
 
