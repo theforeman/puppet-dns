@@ -14,10 +14,10 @@
 define dns::zone (
   Array[String] $target_views                           = [],
   String $zonetype                                      = 'master',
-  String $soa                                           = $::fqdn,
+  String $soa                                           = $fqdn,
   Boolean $reverse                                      = false,
   String $ttl                                           = '10800',
-  Stdlib::Compat::Ip_address $soaip                     = $::ipaddress,
+  Stdlib::Compat::Ip_address $soaip                     = $ipaddress,
   Integer $refresh                                      = 86400,
   Integer $update_retry                                 = 3600,
   Integer $expire                                       = 604800,
@@ -29,7 +29,7 @@ define dns::zone (
   Array $also_notify                                    = [],
   String $zone                                          = $title,
   Optional[String] $contact                             = undef,
-  Stdlib::Absolutepath $zonefilepath                    = $::dns::zonefilepath,
+  Stdlib::Absolutepath $zonefilepath                    = $dns::zonefilepath,
   String $filename                                      = "db.${title}",
   Boolean $manage_file                                  = true,
   Boolean $manage_file_name                             = false,
@@ -43,7 +43,7 @@ define dns::zone (
 
   $zonefilename = "${zonefilepath}/${filename}"
 
-  if $::dns::enable_views {
+  if $dns::enable_views {
     if $target_views == [] {
       warning('You seem to mix BIND views with global zones, which will probably fail')
       $_target_views = ['_GLOBAL_']
@@ -62,8 +62,8 @@ define dns::zone (
 
   $_target_views.each |$view| {
     $target = $view ? {
-      '_GLOBAL_' => $::dns::publicviewpath,
-      default    => "${::dns::viewconfigpath}/${view}.conf",
+      '_GLOBAL_' => $dns::publicviewpath,
+      default    => "${dns::viewconfigpath}/${view}.conf",
     }
 
     concat::fragment { "dns_zones+10_${view}_${title}.dns":
@@ -85,7 +85,7 @@ define dns::zone (
       mode    => '0644',
       content => template('dns/zone.header.erb'),
       replace => false,
-      notify  => Service[$::dns::namedservicename],
+      notify  => Service[$dns::namedservicename],
     }
   }
 }

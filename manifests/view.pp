@@ -19,14 +19,14 @@ define dns::view (
   String               $order                = '-',
 ) {
 
-  unless $::dns::enable_views {
+  unless $dns::enable_views {
     fail('Must set $dns::enable_views to true in order to use dns::view')
   }
 
-  $viewconfigfile = "${::dns::viewconfigpath}/${title}.conf"
+  $viewconfigfile = "${dns::viewconfigpath}/${title}.conf"
 
   concat::fragment { "dns_view_include_${title}.dns":
-    target  => $::dns::publicviewpath,
+    target  => $dns::publicviewpath,
     content => "include \"${viewconfigfile}\";\n",
     order   => $order,
   }
@@ -35,7 +35,7 @@ define dns::view (
     owner  => root,
     group  => $dns::params::group,
     mode   => '0640',
-    notify => Service[$::dns::namedservicename],
+    notify => Service[$dns::namedservicename],
   }
 
   concat::fragment { "dns_view_header_${title}.dns":

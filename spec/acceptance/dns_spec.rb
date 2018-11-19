@@ -14,7 +14,7 @@ describe 'Scenario: install bind' do
 
   let(:pp) do
     <<-EOS
-    include ::dns
+    include dns
 
     dns::zone { 'example.com':
       soa => 'ns1.example.com',

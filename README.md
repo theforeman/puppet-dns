@@ -11,7 +11,7 @@ Foreman.
 Include the top level `dns` class to fully configure the service.
 
 ```puppet
-include ::dns
+include dns
 ```
 
 A key is set up to allow dynamic DNS updates, stored in rndc.key.  This is used
