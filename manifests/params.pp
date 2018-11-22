@@ -108,4 +108,5 @@ class dns::params {
   $additional_directives = []
 
   $zones                 = {}
+  $keys                  = {}
 }

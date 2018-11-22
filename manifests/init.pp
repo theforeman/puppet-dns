@@ -84,6 +84,9 @@
 # $zones::                      A hash of zones to be created. See dns::zone
 #                               for options.
 #
+# $keys::                       A hash of keys to be created. See dns::key for
+#                               options.
+#
 # === Usage:
 #
 # * Simple usage:
@@ -122,6 +125,7 @@ class dns (
   Array[String] $additional_directives                              = $dns::params::additional_directives,
   Boolean $enable_views                                             = $dns::params::enable_views,
   Hash[String, Hash] $zones                                         = $dns::params::zones,
+  Hash[String, Hash] $keys                                          = $dns::params::keys,
 ) inherits dns::params {
 
   include dns::install
@@ -130,5 +134,6 @@ class dns (
 
   Class['dns::install'] ~> Class['dns::config'] ~> Class['dns::service']
 
+  create_resources('dns::key', $keys)
   create_resources('dns::zone', $zones)
 }

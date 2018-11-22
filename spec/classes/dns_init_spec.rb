@@ -230,6 +230,19 @@ describe 'dns' do
       it { should compile.with_all_deps }
       it { should contain_dns__zone('example.com') }
     end
+
+    describe 'with keys' do
+      let :params do
+        {
+          :keys => {
+            'dns-key' => {},
+          },
+        }
+      end
+
+      it { should compile.with_all_deps }
+      it { should contain_dns__key('dns-key') }
+    end
   end
 
   describe 'on FreeBSD with no custom parameters' do
