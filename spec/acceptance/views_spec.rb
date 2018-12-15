@@ -67,10 +67,7 @@ describe 'Scenario: install bind with views enabled' do
     end
 
     describe command('dig +short SOA example.com @::1') do
-      its(:stdout) do
-        pending("IPv6 support in docker containers on Travis is broken") if ENV['TRAVIS'] == 'true'
-        is_expected.to match("ns1-v6.example.com. root.example.com. 1 86400 3600 604800 3600\n")
-      end
+      its(:stdout) { is_expected.to match("ns1-v6.example.com. root.example.com. 1 86400 3600 604800 3600\n") }
     end
   end
 end
