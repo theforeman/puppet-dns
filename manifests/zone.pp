@@ -1,15 +1,17 @@
 # Define new zone for the dns
 #
-# === Parameters:
+# @param manage_file
+#   Whether the manage the file resource. When true $manage_file_name is implied.
 #
-# $manage_file::                Whether the manage the file resource. When true $manage_file_name is implied.
+# @param manage_file_name
+#   Whether to set the file parameter in the zone file.
 #
-# $manage_file_name::           Whether to set the file parameter in the zone file.
-#
-# $update_policy_rules::        This can be used to specifiy additional update policy rules in the following format
-#                               { '<KEY_NAME' => {'matchtype' => '<VALUE>', 'tname' => '<VALUE>', 'rr' => 'VALUE' } }
-#                               Example {'foreman_key' => {'matchtype' => 'zonesub', 'rr' => 'ANY'}}
-#                               tname and rr are optional
+# @param update_policy_rules
+#   This can be used to specifiy additional update policy rules in the
+#   following format
+#   { '<KEY_NAME' => {'matchtype' => '<VALUE>', 'tname' => '<VALUE>', 'rr' => 'VALUE' } }
+#   Example {'foreman_key' => {'matchtype' => 'zonesub', 'rr' => 'ANY'}}
+#   tname and rr are optional
 #
 define dns::zone (
   Array[String] $target_views                           = [],

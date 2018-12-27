@@ -1,8 +1,21 @@
 # Generate a new key for the dns
 #
-# === Parameters:
+# @param algorithm
+#   The algorithm used to generate the secret key
 #
-# $secret::                     This is the secret to be place inside the keyfile, if left empty the key will be generated
+# @param filename
+#   The filename to store the key. This is placed in the key directory.
+#
+# @param secret
+#   This is the secret to be place inside the keyfile, if left empty the key
+#   will be generated
+#
+# @param keydir
+#   The directory to store the key in. Inherited from the main dns class by default.
+#
+# @param keysize
+#   The size of the key to generate. Only used when generating the key. It's
+#   ignored if when a key is specified.
 #
 define dns::key(
   String               $algorithm    = 'hmac-md5',

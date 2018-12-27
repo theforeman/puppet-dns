@@ -1,4 +1,5 @@
 # Enable and start dns service
+# @api private
 class dns::service {
   service { $dns::namedservicename:
     ensure     => $dns::service_ensure,

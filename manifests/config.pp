@@ -1,4 +1,5 @@
 # Configure dns
+# @api private
 class dns::config {
   group { $dns::params::group: }
 

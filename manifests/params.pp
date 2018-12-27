@@ -1,4 +1,5 @@
 # Default parameters
+# @api private
 class dns::params {
   case $facts['osfamily'] {
     'Debian': {
