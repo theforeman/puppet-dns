@@ -1,98 +1,82 @@
-# == Class: dns
+# Manage an ISC BIND nameserver
 #
-# Install, configure and start dns service
+# @param namedconf_path
+#   Path of the named config
+# @param dnsdir
+#   Directory holding the named configs
+# @param dns_server_package
+#   Name of the package to install
+# @param rndckeypath
+#   Path of the RNDC key
+# @param optionspath
+#   Path of the named options
+# @param publicviewpath
+#   Path of the config file holding all the zones
+# @param vardir
+#   Directory holding the variable or working files
+# @param namedservicename
+#   Name of the service
+# @param zonefilepath
+#   Directory containing zone files
+# @param localzonepath
+#   File holding local zones like RFC1912 or RFC1918 files.  The special value
+#   'unmanaged' can be used if one plans to create custom RFC1912/RFC1918 zones
+#   via dns, where the inclusion of package-shipped zone files is not desired.
+# @param defaultzonepath
+#   File holding some RFC1912 zone includes on systems like Debian.
+#   The special value 'unmanaged' can be used if one plans to create custom
+#   zones via dns, where the inclusion of package-shipped zone files is not
+#   desired.
+# @param forward
+#   The forward option
+# @param forwarders
+#   The forwarders option
+# @param listen_on_v6
+#   The listen-on-v6 option
+# @param recursion
+#   The recursion option
+# @param allow_recursion
+#   The allow-recursion option
+# @param allow_query
+#   The allow-query option
+# @param empty_zones_enable
+#   The empty-zones-enable option
+# @param dns_notify
+#   The notify option in named.conf
+# @param dnssec_enable
+#   The dnssec-enable option
+# @param dnssec_validation
+#   The dnssec-validation option
+# @param namedconf_template
+#   The template to be used for named.conf
+# @param acls
+#   Specify a hash of ACLs. Each key is the name of a network, and its value is
+#   an array of subnet strings.
+# @param optionsconf_template
+#   The template to be used for options.conf
+# @param controls
+#   Specify a hash of controls. Each key is the name of a network, and its
+#   value is a hash containing 'port' => integer, 'keys' => array and
+#   'allowed_addresses' => array
+# @param service_ensure
+#   The ensure attribute on the service
+# @param service_enable
+#   Whether to enable the service (start at boot)
+# @param additional_options
+#   Additional options
+# @param additional_directives
+#   Additional directives. These are free form strings that allow for full
+#   customization. Use with caution.
+# @param enable_views
+#   Flag to indicate bind views support. Will remove global zone configuration
+#   like localzonepath inclusion.
+# @param zones
+#   A hash of zones to be created. See dns::zone for options.
+# @param keys
+#   A hash of keys to be created. See dns::key for options.
 #
-# === Parameters:
-# $namedconf_path::             Path of the named config
-#
-# $dnsdir::                     Directory holding the named configs
-#
-# $dns_server_package::         Name of the package to install
-#
-# $rndckeypath::                Path of the RNDC key
-#
-# $optionspath::                Path of the named options
-#
-# $publicviewpath::             Path of the config file holding all the zones
-#
-# $vardir::                     Directory holding the variable or working files
-#
-# $namedservicename::           Name of the service
-#
-# $zonefilepath::               Directory containing zone files
-#
-# $localzonepath::              File holding local zones like RFC1912 or RFC1918 files.
-#                               The special value 'unmanaged' can be used if one plans
-#                               to create custom RFC1912/RFC1918 zones via ::dns,
-#                               where the inclusion of package-shipped zone files is
-#                               not desired.
-#
-# $defaultzonepath::            File holding some RFC1912 zone includes on systems
-#                               like Debian.
-#                               The special value 'unmanaged' can be used if one plans
-#                               to create custom zones via ::dns,
-#                               where the inclusion of package-shipped zone files is
-#                               not desired.
-#
-# $forward::                    The forward option
-#
-# $forwarders::                 The forwarders option
-#
-# $listen_on_v6::               The listen-on-v6 option
-#
-# $recursion::                  The recursion option
-#
-# $allow_recursion::            The allow-recursion option
-#
-# $allow_query::                The allow-query option
-#
-# $empty_zones_enable::         The empty-zones-enable option
-#
-# $dns_notify::                 The notify option in named.conf
-#
-# $dnssec_enable::              The dnssec-enable option
-#
-# $dnssec_validation::          The dnssec-validation option
-#
-# $namedconf_template::         The template to be used for named.conf
-#
-# $acls::                       Specify a hash of ACLs. Each key is the
-#                               name of a network, and its value is
-#                               an array of subnet strings.
-#
-# $optionsconf_template::       The template to be used for options.conf
-#
-# $controls::                   Specify a hash of controls. Each key is the
-#                               name of a network, and its value is a hash
-#                               containing 'port' => integer, 'keys' => array
-#                               and 'allowed_addresses' => array
-#
-# $service_ensure::             The ensure attribute on the service
-#
-# $service_enable::             Whether to enable the service (start at boot)
-#
-# $additional_options::         Additional options
-#
-# $additional_directives::      Additional directives. These are free form
-#                               strings that allow for full customization. Use
-#                               with caution.
-#
-# $enable_views::               Flag to indicate bind views support. Will remove
-#                               global zone configuration like localzonepath
-#                               inclusion.
-#
-# $zones::                      A hash of zones to be created. See dns::zone
-#                               for options.
-#
-# $keys::                       A hash of keys to be created. See dns::key for
-#                               options.
-#
-# === Usage:
-#
-# * Simple usage:
-#
-#     include dns
-#
+# @see dns::zone
+# @see dns::key
 class dns (
   Stdlib::Absolutepath $namedconf_path                              = $dns::params::namedconf_path,
   Stdlib::Absolutepath $dnsdir                                      = $dns::params::dnsdir,
