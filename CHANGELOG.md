@@ -1,5 +1,15 @@
 # Changelog
 
+## [5.4.0](https://github.com/theforeman/puppet-dns/tree/5.4.0) (2019-01-10)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.3.1...5.4.0)
+
+**Implemented enhancements:**
+
+- Convert documentation to puppet-strings [\#133](https://github.com/theforeman/puppet-dns/pull/133) ([ekohl](https://github.com/ekohl))
+- Add keys parameter and create\_resources accordingly [\#130](https://github.com/theforeman/puppet-dns/pull/130) ([marcdeop](https://github.com/marcdeop))
+- Add Puppet 6 support [\#129](https://github.com/theforeman/puppet-dns/pull/129) ([ekohl](https://github.com/ekohl))
+
 ## [5.3.1](https://github.com/theforeman/puppet-dns/tree/5.3.1) (2018-10-04)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.3.0...5.3.1)
