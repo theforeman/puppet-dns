@@ -1,5 +1,14 @@
 # Changelog
 
+## [6.0.0](https://github.com/theforeman/puppet-dns/tree/6.0.0) (2019-04-15)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.4.0...6.0.0)
+
+**Breaking changes:**
+
+- drop Puppet 4 [\#137](https://github.com/theforeman/puppet-dns/pull/137) ([mmoll](https://github.com/mmoll))
+- drop EOL OSes [\#136](https://github.com/theforeman/puppet-dns/pull/136) ([mmoll](https://github.com/mmoll))
+
 ## [5.4.0](https://github.com/theforeman/puppet-dns/tree/5.4.0) (2019-01-10)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.3.1...5.4.0)
