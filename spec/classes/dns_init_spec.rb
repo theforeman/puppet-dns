@@ -20,6 +20,7 @@ describe 'dns' do
       it { should contain_class('dns::service') }
 
       it { should contain_package('bind').with_ensure('present') }
+      it { should contain_group('named') }
 
       it { should contain_concat('/etc/named/options.conf') }
       it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
@@ -181,6 +182,11 @@ describe 'dns' do
       it { should contain_service('named').with_ensure('running').with_enable(false) }
     end
 
+    describe 'with group_manage false' do
+      let(:params) { {:group_manage => false} }
+      it { should_not contain_group('named') }
+    end
+
     describe 'with acls set' do
       let(:params) { {:acls => { 'trusted_nets' => [ '127.0.0.1/24', '127.0.1.0/24' ] } } }
       it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
@@ -262,6 +268,7 @@ describe 'dns' do
       it { should contain_class('dns::service') }
 
       it { should contain_package('bind910').with_ensure('present') }
+      it { should contain_group('bind') }
 
       it { should contain_concat('/usr/local/etc/namedb/options.conf') }
       it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
@@ -303,6 +310,11 @@ describe 'dns' do
     describe 'with service_enable false' do
       let(:params) { {:service_enable => false} }
       it { should contain_service('named').with_ensure('running').with_enable(false) }
+    end
+
+    describe 'with group_manage false' do
+      let(:params) { {:group_manage => false} }
+      it { should_not contain_group('bind') }
     end
   end
 end

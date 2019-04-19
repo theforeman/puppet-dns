@@ -67,6 +67,9 @@ class dns::params {
     }
   }
 
+  # This module will manage the system group by default
+  $group_manage = true
+
   $namedconf_template    = 'dns/named.conf.erb'
   $optionsconf_template  = 'dns/options.conf.erb'
 

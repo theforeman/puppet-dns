@@ -14,6 +14,10 @@
 #   Path of the config file holding all the zones
 # @param vardir
 #   Directory holding the variable or working files
+# @param group_manage
+#   Should this module manage the Unix system group under which BIND runs (see
+#   dns::params)?  Defaults to true. Set to false if you want to manage the
+#   system group yourself.
 # @param namedservicename
 #   Name of the service
 # @param zonefilepath
@@ -85,6 +89,7 @@ class dns (
   Stdlib::Absolutepath $optionspath                                 = $dns::params::optionspath,
   Stdlib::Absolutepath $publicviewpath                              = $dns::params::publicviewpath,
   Stdlib::Absolutepath $vardir                                      = $dns::params::vardir,
+  Boolean $group_manage                                             = $dns::params::group_manage,
   String $namedservicename                                          = $dns::params::namedservicename,
   Stdlib::Absolutepath $zonefilepath                                = $dns::params::zonefilepath,
   Variant[Enum['unmanaged'], Stdlib::Absolutepath] $localzonepath   = $dns::params::localzonepath,
