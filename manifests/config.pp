@@ -1,7 +1,9 @@
 # Configure dns
 # @api private
 class dns::config {
-  group { $dns::params::group: }
+  if $dns::group_manage {
+    group { $dns::params::group: }
+  }
 
   concat { $dns::publicviewpath:
     owner => root,
