@@ -6,9 +6,10 @@ class dns::config {
   }
 
   concat { $dns::publicviewpath:
-    owner => root,
-    group => $dns::params::group,
-    mode  => '0640',
+    owner        => root,
+    group        => $dns::params::group,
+    mode         => '0640',
+    validate_cmd => "${dns::named_checkconf} %",
   }
 
   if $dns::enable_views {
@@ -19,13 +20,24 @@ class dns::config {
       mode   => '0755',
     }
   }
+
   concat::fragment { 'dns_zones+01-header.dns':
     target  => $dns::publicviewpath,
     content => ' ',
     order   => '01',
   }
 
-  concat { [$dns::namedconf_path, $dns::optionspath]:
+  concat { $dns::namedconf_path:
+    owner        => root,
+    group        => $dns::params::group,
+    mode         => '0640',
+    require      => Concat[$dns::optionspath],
+    validate_cmd => "${dns::named_checkconf} %",
+  }
+
+  # This file cannot be checked by named-checkconf because its content is only
+  # valid inside an "options { };" directive.
+  concat { $dns::optionspath:
     owner => root,
     group => $dns::params::group,
     mode  => '0640',

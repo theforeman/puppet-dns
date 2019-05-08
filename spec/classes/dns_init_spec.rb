@@ -34,7 +34,8 @@ describe 'dns' do
           'allow-recursion { localnets; localhost; };'
       ])}
 
-      it { should contain_concat('/etc/named.conf') }
+      it { should contain_concat('/etc/named/zones.conf').with_validate_cmd('/usr/sbin/named-checkconf %') }
+      it { should contain_concat('/etc/named.conf').with_validate_cmd('/usr/sbin/named-checkconf %') }
       it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
           '// named.conf',
           'include "/etc/rndc.key";',
@@ -406,7 +407,8 @@ export SOMETHING="other"
            'allow-recursion { localnets; localhost; };'
       ])}
 
-      it { should contain_concat('/usr/local/etc/namedb/named.conf') }
+      it { should contain_concat('/usr/local/etc/namedb/zones.conf').with_validate_cmd('/usr/local/sbin/named-checkconf %') }
+      it { should contain_concat('/usr/local/etc/namedb/named.conf').with_validate_cmd('/usr/local/sbin/named-checkconf %') }
       it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
           '// named.conf',
           'include "/usr/local/etc/namedb/rndc.key";',
