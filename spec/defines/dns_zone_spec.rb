@@ -263,6 +263,45 @@ describe 'dns::zone' do
 
   end
 
+  context 'when zonetype => forward' do
+    let(:params) {{ :zonetype => 'forward', :forward => 'only', :forwarders => ['192.168.3.4', '192.168.5.6'] }}
+
+    it "should have valid forward zone configuration" do
+      verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
+        'zone "example.com" {',
+        '    type forward;',
+        '    forward only;',
+        '    forwarders { 192.168.3.4; 192.168.5.6; };',
+        '};',
+      ])
+    end
+
+    context 'when parameters are set that are not allowed options for zonetype => forward' do
+      let(:params) {{
+        :zonetype => 'forward',
+        :forwarders => ['192.168.3.4', '192.168.5.6'],
+        :manage_file => true,
+        :manage_file_name => true,
+        :masters  => ['192.168.1.1', '192.168.1.2'],
+        :allow_transfer => ['192.168.100.1'],
+        :allow_query => ['192.168.100.1'],
+        :also_notify => ['192.168.100.1'],
+        :dns_notify => 'explicit'
+      }}
+
+      it "should have valid forward zone configuration without options that are not allowed" do
+        verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
+          'zone "example.com" {',
+          '    type forward;',
+          '    forward first;',
+          '    forwarders { 192.168.3.4; 192.168.5.6; };',
+          '};',
+        ])
+      end
+    end
+
+  end
+
   context 'update_policy_rules is set' do
     let(:params) { {
       :update_policy_rules => {
