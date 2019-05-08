@@ -96,6 +96,11 @@ class dns::params {
   # This module will manage the system group by default
   $group_manage = true
 
+  # Don't set any restart command by default, let Puppet use the
+  # platform-dependent service resource default when handling the service
+  # restart.
+  $service_restart_command = undef
+
   $namedconf_template    = 'dns/named.conf.erb'
   $optionsconf_template  = 'dns/options.conf.erb'
 

@@ -83,7 +83,7 @@ describe 'dns' do
         )
       }
 
-      it { should contain_service('named').with_ensure('running').with_enable(true) }
+      it { should contain_service('named').with_ensure('running').with_enable(true).with_restart(nil) }
     end
 
     describe 'with unmanaged localzonepath' do
@@ -210,6 +210,16 @@ describe 'dns' do
     describe 'with service_enable false' do
       let(:params) { {:service_enable => false} }
       it { should contain_service('named').with_ensure('running').with_enable(false) }
+    end
+
+    describe 'with service_restart_command set to "/usr/sbin/service bind9 reload' do
+      let(:params) { {:service_restart_command => '/usr/sbin/service bind9 reload'} }
+      it {
+        should contain_service('named')
+          .with_ensure('running')
+          .with_enable(true)
+          .with_restart('/usr/sbin/service bind9 reload')
+      }
     end
 
     describe 'with group_manage false' do

@@ -6,5 +6,6 @@ class dns::service {
     enable     => $dns::service_enable,
     hasstatus  => true,
     hasrestart => true,
+    restart    => $dns::service_restart_command,
   }
 }
