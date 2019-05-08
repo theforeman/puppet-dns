@@ -16,6 +16,7 @@ class dns::params {
       $user               = 'bind'
       $group              = 'bind'
       $rndcconfgen        = '/usr/sbin/rndc-confgen'
+      $named_checkconf    = '/usr/sbin/named-checkconf'
       $sysconfig_file     = '/etc/default/bind9'
       $sysconfig_template = "dns/sysconfig.${facts['osfamily']}.erb"
       $sysconfig_startup_options = '-u bind'
@@ -38,6 +39,7 @@ class dns::params {
       $user               = 'named'
       $group              = 'named'
       $rndcconfgen        = '/usr/sbin/rndc-confgen'
+      $named_checkconf    = '/usr/sbin/named-checkconf'
       $sysconfig_file     = '/etc/sysconfig/named'
       $sysconfig_template = "dns/sysconfig.${facts['osfamily']}.erb"
       $sysconfig_startup_options = undef
@@ -60,6 +62,7 @@ class dns::params {
       $user               = 'bind'
       $group              = 'bind'
       $rndcconfgen        = '/usr/local/sbin/rndc-confgen'
+      $named_checkconf    = '/usr/local/sbin/named-checkconf'
       # The sysconfig settings are not relevant for FreeBSD
       $sysconfig_file     = undef
       $sysconfig_template = undef
@@ -81,6 +84,7 @@ class dns::params {
       $user               = 'named'
       $group              = 'named'
       $rndcconfgen        = '/usr/sbin/rndc-confgen'
+      $named_checkconf    = '/usr/sbin/named-checkconf'
       # The sysconfig settings are not relevant for ArchLinux
       $sysconfig_file     = undef
       $sysconfig_template = undef

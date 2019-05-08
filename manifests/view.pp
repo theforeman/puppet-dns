@@ -36,6 +36,7 @@ define dns::view (
     group  => $dns::params::group,
     mode   => '0640',
     notify => Service[$dns::namedservicename],
+    before => Concat[$dns::publicviewpath],
   }
 
   concat::fragment { "dns_view_header_${title}.dns":
