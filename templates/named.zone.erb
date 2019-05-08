@@ -6,7 +6,7 @@ zone "<%= @zone %>" {
     forwarders { <%= @forwarders.join('; ') %>; };
 <% end -%>
 <% end -%>
-<% if @manage_file or @manage_file_name -%>
+<% if (@manage_file || @manage_file_name) && @zonetype != 'forward' -%>
     file "<%= @zonefilename %>";
 <% end -%>
 <% if @zonetype == 'master' -%>
@@ -17,6 +17,7 @@ zone "<%= @zone %>" {
             <%- end -%>
     };
 <% end -%>
+<% unless @zonetype == 'forward' -%>
 <% unless @allow_transfer.empty? -%>
     allow-transfer { <%= @allow_transfer.join('; ') %>; };
 <% end -%>
@@ -31,5 +32,6 @@ zone "<%= @zone %>" {
 <% end -%>
 <% if @_dns_notify -%>
     notify <%= @_dns_notify %>;
+<% end -%>
 <% end -%>
 };
