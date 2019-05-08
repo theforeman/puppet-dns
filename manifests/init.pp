@@ -93,6 +93,14 @@
 #   The ensure attribute on the service
 # @param service_enable
 #   Whether to enable the service (start at boot)
+# @param service_restart_command
+#   Custom command to use when the service will be restarted (notified by
+#   configuration changes). Will be passed directly to the restart parameter of
+#   the contained service resource. This is useful when you want BIND to reload
+#   its configuration instead of restarting the whole process, for example by
+#   setting `service_restart_command` to `/usr/sbin/service bind9 reload` or
+#   `/usr/sbin/rndc reload` or even `/usr/bin/systemctl try-reload-or-restart bind9`.
+#   Default is 'undef' so the service resource default is used.
 # @param additional_options
 #   Additional options
 # @param additional_directives
@@ -143,6 +151,7 @@ class dns (
   Hash[String, Hash[String, Data]] $controls                        = $dns::params::controls,
   Variant[Enum['running', 'stopped'], Boolean] $service_ensure      = $dns::params::service_ensure,
   Boolean $service_enable                                           = $dns::params::service_enable,
+  Optional[String[1]] $service_restart_command                      = $dns::params::service_restart_command,
   Hash[String, Data] $additional_options                            = $dns::params::additional_options,
   Array[String] $additional_directives                              = $dns::params::additional_directives,
   Boolean $enable_views                                             = $dns::params::enable_views,
