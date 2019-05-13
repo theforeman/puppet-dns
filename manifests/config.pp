@@ -59,4 +59,18 @@ class dns::config {
     group => $dns::params::group,
     mode  => '0640',
   }
+
+  # Only Debian and RedHat OS provide a sysconfig or default file where we can
+  # set startup options and other environment settings for named. In FreeBSD
+  # such settings must be set in the global, common /etc/rc.conf file and under
+  # ArchLinux we must use systemd override files to change the startup
+  # commandline. These cases are outside of this module's scope.
+  if $facts['osfamily'] in ['Debian', 'RedHat'] {
+    file { $dns::sysconfig_file:
+      owner   => 'root',
+      group   => 'root',
+      mode    => '0644',
+      content => template($dns::sysconfig_template),
+    }
+  }
 }

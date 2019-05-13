@@ -1,0 +1,32 @@
+# This file is managed by Puppet.
+#
+# BIND named process options
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# OPTIONS="whatever"     --  These additional options will be passed to named
+#                            at startup. Don't add -t here, enable proper
+#                            -chroot.service unit file.
+#                            Use of parameter -c is not supported here. Extend
+#                            systemd named*.service instead. For more
+#                            information please read the following KB article:
+#                            https://access.redhat.com/articles/2986001
+#
+# DISABLE_ZONE_CHECKING  --  By default, service file calls named-checkzone
+#                            utility for every zone to ensure all zones are
+#                            valid before named starts. If you set this option
+#                            to 'yes' then service file doesn't perform those
+#                            checks.
+<%- unless scope['dns::sysconfig_startup_options'].nil? -%>
+
+OPTIONS="<%= scope['dns::sysconfig_startup_options'] %>"
+<%- end -%>
+<%- unless scope['dns::sysconfig_disable_zone_checking'].nil? -%>
+<%- v = scope['dns::sysconfig_disable_zone_checking'] ? 'yes' : 'no' -%>
+DISABLE_ZONE_CHECKING="<%= v %>"
+<%- end -%>
+<%- unless scope['dns::sysconfig_additional_settings'].empty? -%>
+
+<%- scope['dns::sysconfig_additional_settings'].sort.map do |param, value| -%>
+<%= param %>="<%= value %>"
+<%- end -%>
+<%- end -%>
