@@ -53,6 +53,36 @@ describe 'dns' do
       it { should contain_exec('create-rndc.key').
                   with_command("/usr/sbin/rndc-confgen -r /dev/urandom -a -c /etc/rndc.key") }
 
+      sysconfig_named_content = <<-SYSCONFIG
+# This file is managed by Puppet.
+#
+# BIND named process options
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# OPTIONS="whatever"     --  These additional options will be passed to named
+#                            at startup. Don't add -t here, enable proper
+#                            -chroot.service unit file.
+#                            Use of parameter -c is not supported here. Extend
+#                            systemd named*.service instead. For more
+#                            information please read the following KB article:
+#                            https://access.redhat.com/articles/2986001
+#
+# DISABLE_ZONE_CHECKING  --  By default, service file calls named-checkzone
+#                            utility for every zone to ensure all zones are
+#                            valid before named starts. If you set this option
+#                            to 'yes' then service file doesn't perform those
+#                            checks.
+      SYSCONFIG
+
+      it {
+        should contain_file('/etc/sysconfig/named').with(
+          owner: 'root',
+          group: 'root',
+          mode: '0644',
+          content: sysconfig_named_content
+        )
+      }
+
       it { should contain_service('named').with_ensure('running').with_enable(true) }
     end
 
@@ -249,6 +279,101 @@ describe 'dns' do
       it { should compile.with_all_deps }
       it { should contain_dns__key('dns-key') }
     end
+
+    describe 'with sysconfig settings' do
+      let :params do
+        {
+          sysconfig_startup_options: '-u named -4',
+          sysconfig_disable_zone_checking: true
+        }
+      end
+
+      sysconfig_named_content = <<-SYSCONFIG
+# This file is managed by Puppet.
+#
+# BIND named process options
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# OPTIONS="whatever"     --  These additional options will be passed to named
+#                            at startup. Don't add -t here, enable proper
+#                            -chroot.service unit file.
+#                            Use of parameter -c is not supported here. Extend
+#                            systemd named*.service instead. For more
+#                            information please read the following KB article:
+#                            https://access.redhat.com/articles/2986001
+#
+# DISABLE_ZONE_CHECKING  --  By default, service file calls named-checkzone
+#                            utility for every zone to ensure all zones are
+#                            valid before named starts. If you set this option
+#                            to 'yes' then service file doesn't perform those
+#                            checks.
+
+OPTIONS="-u named -4"
+DISABLE_ZONE_CHECKING="yes"
+      SYSCONFIG
+
+      it {
+        should contain_file('/etc/sysconfig/named').with(
+          owner: 'root',
+          group: 'root',
+          mode: '0644',
+          content: sysconfig_named_content
+        )
+      }
+
+    end
+
+    describe 'with additional sysconfig settings' do
+      let :params do
+        {
+          sysconfig_startup_options: '-u named -4',
+          sysconfig_disable_zone_checking: true,
+          sysconfig_additional_settings: {
+            'FOO' => 'bar',
+            'export SOMETHING' => 'other',
+            'BAZ' => 'quux'
+          }
+        }
+      end
+
+      sysconfig_named_content = <<-SYSCONFIG
+# This file is managed by Puppet.
+#
+# BIND named process options
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~
+#
+# OPTIONS="whatever"     --  These additional options will be passed to named
+#                            at startup. Don't add -t here, enable proper
+#                            -chroot.service unit file.
+#                            Use of parameter -c is not supported here. Extend
+#                            systemd named*.service instead. For more
+#                            information please read the following KB article:
+#                            https://access.redhat.com/articles/2986001
+#
+# DISABLE_ZONE_CHECKING  --  By default, service file calls named-checkzone
+#                            utility for every zone to ensure all zones are
+#                            valid before named starts. If you set this option
+#                            to 'yes' then service file doesn't perform those
+#                            checks.
+
+OPTIONS="-u named -4"
+DISABLE_ZONE_CHECKING="yes"
+
+BAZ="quux"
+FOO="bar"
+export SOMETHING="other"
+      SYSCONFIG
+
+      it {
+        should contain_file('/etc/sysconfig/named').with(
+          owner: 'root',
+          group: 'root',
+          mode: '0644',
+          content: sysconfig_named_content
+        )
+      }
+
+    end
   end
 
   describe 'on FreeBSD with no custom parameters' do
@@ -315,6 +440,144 @@ describe 'dns' do
     describe 'with group_manage false' do
       let(:params) { {:group_manage => false} }
       it { should_not contain_group('bind') }
+    end
+  end
+
+  describe 'on Debian' do
+
+    let(:facts) do
+      {
+         :clientcert     => 'puppetmaster.example.com',
+         :concat_basedir => '/doesnotexist',
+         :fqdn           => 'puppetmaster.example.com',
+         :osfamily       => 'Debian',
+         :ipaddress      => '192.0.2.1',
+      }
+    end
+
+    describe 'with no custom parameters' do
+      it { should contain_class('dns::install') }
+      it { should contain_class('dns::config') }
+      it { should contain_class('dns::service') }
+
+      it { should contain_package('bind9').with_ensure('present') }
+      it { should contain_group('bind') }
+
+      it { should contain_concat('/etc/bind/named.conf.options') }
+      it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+          'directory "/var/cache/bind";',
+          'recursion yes;',
+          'allow-query { any; };',
+          'dnssec-enable yes;',
+          'dnssec-validation yes;',
+          'empty-zones-enable yes;',
+          'listen-on-v6 { any; };',
+          'allow-recursion { localnets; localhost; };'
+      ])}
+
+      it { should contain_concat('/etc/bind/named.conf') }
+      it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
+          '// named.conf',
+          'include "/etc/bind/rndc.key";',
+          'controls  {',
+          '        inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; };',
+          '};',
+          'options  {',
+          '        include "/etc/bind/named.conf.options";',
+          '};',
+          'include "/etc/bind/zones.rfc1918";',
+          '// Public view read by Server Admin',
+          'include "/etc/bind/zones.conf";'
+      ])}
+
+      it { should contain_file('/var/cache/bind/zones').with_ensure('directory') }
+      it { should contain_exec('create-rndc.key').
+                  with_command("/usr/sbin/rndc-confgen -r /dev/urandom -a -c /etc/bind/rndc.key") }
+
+      sysconfig_named_content = <<-SYSCONFIG
+# This file is managed by Puppet.
+#
+# run resolvconf?
+RESOLVCONF=no
+
+# startup options for the server
+OPTIONS="-u bind"
+      SYSCONFIG
+
+      it {
+        should contain_file('/etc/default/bind9').with(
+          owner: 'root',
+          group: 'root',
+          mode: '0644',
+          content: sysconfig_named_content
+        )
+      }
+
+      it { should contain_service('bind9').with_ensure('running').with_enable(true) }
+    end
+
+    describe 'with sysconfig settings' do
+      let :params do
+        {
+          sysconfig_startup_options: '-u bind -4',
+          sysconfig_resolvconf_integration: true,
+        }
+      end
+
+      sysconfig_named_content = <<-SYSCONFIG
+# This file is managed by Puppet.
+#
+# run resolvconf?
+RESOLVCONF=yes
+
+# startup options for the server
+OPTIONS="-u bind -4"
+      SYSCONFIG
+
+      it {
+        should contain_file('/etc/default/bind9').with(
+          owner: 'root',
+          group: 'root',
+          mode: '0644',
+          content: sysconfig_named_content
+        )
+      }
+    end
+
+    describe 'with additional sysconfig settings' do
+      let :params do
+        {
+          sysconfig_startup_options: '-u bind -4',
+          sysconfig_additional_settings: {
+            'FOO' => 'bar',
+            'export SOMETHING' => 'other',
+            'BAZ' => 'quux'
+          }
+        }
+      end
+
+      sysconfig_named_content = <<-SYSCONFIG
+# This file is managed by Puppet.
+#
+# run resolvconf?
+RESOLVCONF=no
+
+# startup options for the server
+OPTIONS="-u bind -4"
+
+BAZ="quux"
+FOO="bar"
+export SOMETHING="other"
+      SYSCONFIG
+
+      it {
+        should contain_file('/etc/default/bind9').with(
+          owner: 'root',
+          group: 'root',
+          mode: '0644',
+          content: sysconfig_named_content
+        )
+      }
     end
   end
 end

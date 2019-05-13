@@ -1,0 +1,14 @@
+# This file is managed by Puppet.
+#
+# run resolvconf?
+<%- v = scope['dns::sysconfig_resolvconf_integration'] ? 'yes' : 'no' -%>
+RESOLVCONF=<%= v %>
+
+# startup options for the server
+OPTIONS="<%= scope['dns::sysconfig_startup_options'] %>"
+<%- unless scope['dns::sysconfig_additional_settings'].empty? -%>
+
+<%- scope['dns::sysconfig_additional_settings'].sort.map do |param, value| -%>
+<%= param %>="<%= value %>"
+<%- end -%>
+<%- end -%>

@@ -58,6 +58,33 @@
 #   an array of subnet strings.
 # @param optionsconf_template
 #   The template to be used for options.conf
+# @param sysconfig_file
+#   Path to the sysconfig or default file used to set startup options for
+#   named. Under Debian this is /etc/default/bind9, under RedHat this is
+#   /etc/sysconfig/named. FreeBSD/DragonFly and ArchLinux do not feature such
+#   files, thus the sysconfig parameters are not relevant for these operating
+#   systems.
+# @param sysconfig_template
+#   The template used to model /etc/default/bind9 or /etc/sysconfig/named.
+#   Default is "dns/sysconfig.${facts[osfamily]}.erb" for Debian and RedHat,
+#   and undef for others.
+# @param sysconfig_startup_options
+#   Startup options for the `named` process, rendered as the `OPTIONS` string
+#   in the sysconfig file (see above). Use this to set commandline flags and
+#   options for `named`. For example, to use IPv4 only and disable IPv6 support
+#   in named on Debian set this parameter to `-u bind -4`. The default value
+#   depends on the underlying OS.
+# @param sysconfig_resolvconf_integration
+#   Should named integrate with resolvconf upon startup? Default is false, and
+#   this only pertains to the Debian OS family.
+# @param sysconfig_disable_zone_checking
+#   Should zone checking be disabled upon named startup? Default is undef, and
+#   this only pertains to the RedHat OS family.
+# @param sysconfig_additional_settings
+#   Additional settings to add to the sysconfig file. This is a simple hash of
+#   key-value strings that will be rendered as `KEY="value"` in the sysconfig
+#   file. Use this to add custom (environment) variables relevant for named.
+#   Default is empty.
 # @param controls
 #   Specify a hash of controls. Each key is the name of a network, and its
 #   value is a hash containing 'port' => integer, 'keys' => array and
@@ -107,6 +134,12 @@ class dns (
   String $namedconf_template                                        = $dns::params::namedconf_template,
   Hash[String, Array[String]] $acls                                 = $dns::params::acls,
   String $optionsconf_template                                      = $dns::params::optionsconf_template,
+  Optional[Stdlib::Absolutepath] $sysconfig_file                    = $dns::params::sysconfig_file,
+  Optional[String] $sysconfig_template                              = $dns::params::sysconfig_template,
+  Optional[String] $sysconfig_startup_options                       = $dns::params::sysconfig_startup_options,
+  Optional[Boolean] $sysconfig_resolvconf_integration               = $dns::params::sysconfig_resolvconf_integration,
+  Optional[Boolean] $sysconfig_disable_zone_checking                = $dns::params::sysconfig_disable_zone_checking,
+  Optional[Hash[String[1], String]] $sysconfig_additional_settings  = $dns::params::sysconfig_additional_settings,
   Hash[String, Hash[String, Data]] $controls                        = $dns::params::controls,
   Variant[Enum['running', 'stopped'], Boolean] $service_ensure      = $dns::params::service_ensure,
   Boolean $service_enable                                           = $dns::params::service_enable,

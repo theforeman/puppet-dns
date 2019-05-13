@@ -16,6 +16,13 @@ class dns::params {
       $user               = 'bind'
       $group              = 'bind'
       $rndcconfgen        = '/usr/sbin/rndc-confgen'
+      $sysconfig_file     = '/etc/default/bind9'
+      $sysconfig_template = "dns/sysconfig.${facts['osfamily']}.erb"
+      $sysconfig_startup_options = '-u bind'
+      $sysconfig_resolvconf_integration = false
+
+      # This option is not relevant for Debian
+      $sysconfig_disable_zone_checking = undef
     }
     'RedHat': {
       $dnsdir             = '/etc'
@@ -31,6 +38,13 @@ class dns::params {
       $user               = 'named'
       $group              = 'named'
       $rndcconfgen        = '/usr/sbin/rndc-confgen'
+      $sysconfig_file     = '/etc/sysconfig/named'
+      $sysconfig_template = "dns/sysconfig.${facts['osfamily']}.erb"
+      $sysconfig_startup_options = undef
+      $sysconfig_disable_zone_checking = undef
+
+      # This option is not relevant for RedHat
+      $sysconfig_resolvconf_integration = undef
     }
     /^(FreeBSD|DragonFly)$/: {
       $dnsdir             = '/usr/local/etc/namedb'
@@ -46,6 +60,12 @@ class dns::params {
       $user               = 'bind'
       $group              = 'bind'
       $rndcconfgen        = '/usr/local/sbin/rndc-confgen'
+      # The sysconfig settings are not relevant for FreeBSD
+      $sysconfig_file     = undef
+      $sysconfig_template = undef
+      $sysconfig_startup_options = undef
+      $sysconfig_disable_zone_checking = undef
+      $sysconfig_resolvconf_integration = undef
     }
     'Archlinux': {
       $dnsdir             = '/etc'
@@ -61,6 +81,12 @@ class dns::params {
       $user               = 'named'
       $group              = 'named'
       $rndcconfgen        = '/usr/sbin/rndc-confgen'
+      # The sysconfig settings are not relevant for ArchLinux
+      $sysconfig_file     = undef
+      $sysconfig_template = undef
+      $sysconfig_startup_options = undef
+      $sysconfig_disable_zone_checking = undef
+      $sysconfig_resolvconf_integration = undef
     }
     default: {
       fail ("Unsupported operating system family ${facts['osfamily']}")
@@ -72,6 +98,8 @@ class dns::params {
 
   $namedconf_template    = 'dns/named.conf.erb'
   $optionsconf_template  = 'dns/options.conf.erb'
+
+  $sysconfig_additional_settings = {}
 
   $namedconf_path        = "${dnsdir}/named.conf"
 
