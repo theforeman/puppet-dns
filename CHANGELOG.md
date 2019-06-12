@@ -1,5 +1,18 @@
 # Changelog
 
+## [6.1.0](https://github.com/theforeman/puppet-dns/tree/6.1.0) (2019-06-12)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/6.0.0...6.1.0)
+
+**Implemented enhancements:**
+
+- Add support for managing sysconfig settings [\#145](https://github.com/theforeman/puppet-dns/pull/145) ([antaflos](https://github.com/antaflos))
+- Make managing BIND system group optional [\#139](https://github.com/theforeman/puppet-dns/pull/139) ([antaflos](https://github.com/antaflos))
+
+**Merged pull requests:**
+
+- Allow puppetlabs/concat and puppetlabs/stdlib 6.x [\#146](https://github.com/theforeman/puppet-dns/pull/146) ([alexjfisher](https://github.com/alexjfisher))
+
 ## [6.0.0](https://github.com/theforeman/puppet-dns/tree/6.0.0) (2019-04-15)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.4.0...6.0.0)
