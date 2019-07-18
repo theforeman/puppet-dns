@@ -1,5 +1,15 @@
 # Changelog
 
+## [6.2.0](https://github.com/theforeman/puppet-dns/tree/6.2.0) (2019-07-18)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/6.1.0...6.2.0)
+
+**Implemented enhancements:**
+
+- Validate named.conf and zones.conf using named-checkconf [\#144](https://github.com/theforeman/puppet-dns/pull/144) ([antaflos](https://github.com/antaflos))
+- Allow setting service restart command [\#143](https://github.com/theforeman/puppet-dns/pull/143) ([antaflos](https://github.com/antaflos))
+- Don't set forbidden zone options for zone type 'forward' [\#142](https://github.com/theforeman/puppet-dns/pull/142) ([antaflos](https://github.com/antaflos))
+
 ## [6.1.0](https://github.com/theforeman/puppet-dns/tree/6.1.0) (2019-06-12)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/6.0.0...6.1.0)
