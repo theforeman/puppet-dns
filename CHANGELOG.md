@@ -1,6 +1,6 @@
 # Changelog
 
-## [6.2.0](https://github.com/theforeman/puppet-dns/tree/6.2.0) (2019-07-18)
+## [6.2.0](https://github.com/theforeman/puppet-dns/tree/6.2.0) (2019-07-30)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/6.1.0...6.2.0)
 
