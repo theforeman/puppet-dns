@@ -18,6 +18,12 @@
 #   Should this module manage the Unix system group under which BIND runs (see
 #   dns::params)?  Defaults to true. Set to false if you want to manage the
 #   system group yourself.
+# @param manage_service
+#   Should this module manage the dns service?
+#   This only applies to the service management (running, stopped) and not to
+#   whether the service should be installed or not.
+#   Calls to "notify => Service['$dns::namedservicename']" will still be
+#   executed
 # @param namedservicename
 #   Name of the service
 # @param zonefilepath
@@ -125,6 +131,7 @@ class dns (
   Stdlib::Absolutepath $publicviewpath                              = $dns::params::publicviewpath,
   Stdlib::Absolutepath $vardir                                      = $dns::params::vardir,
   Boolean $group_manage                                             = $dns::params::group_manage,
+  Boolean $manage_service                                           = $dns::params::manage_service,
   String $namedservicename                                          = $dns::params::namedservicename,
   Stdlib::Absolutepath $zonefilepath                                = $dns::params::zonefilepath,
   Variant[Enum['unmanaged'], Stdlib::Absolutepath] $localzonepath   = $dns::params::localzonepath,
