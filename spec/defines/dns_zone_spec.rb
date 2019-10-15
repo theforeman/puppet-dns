@@ -38,7 +38,7 @@ describe 'dns::zone' do
       :group    => 'named',
       :mode     => '0644',
       :replace  => 'false',
-      :notify   => 'Service[named]',
+      :notify   => 'Class[Dns::Service]',
     })
   end
 

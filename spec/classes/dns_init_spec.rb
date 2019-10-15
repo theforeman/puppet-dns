@@ -228,6 +228,16 @@ describe 'dns' do
       it { should_not contain_group('named') }
     end
 
+    describe 'with manage_service true' do
+      let(:params) { {:manage_service => true} }
+      it { should contain_service('named') }
+    end
+
+    describe 'with manage_service false' do
+      let(:params) { {:manage_service => false} }
+      it { should_not contain_service('named') }
+    end
+
     describe 'with acls set' do
       let(:params) { {:acls => { 'trusted_nets' => [ '127.0.0.1/24', '127.0.1.0/24' ] } } }
       it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
@@ -453,6 +463,16 @@ export SOMETHING="other"
       let(:params) { {:group_manage => false} }
       it { should_not contain_group('bind') }
     end
+
+    describe 'with manage_service true' do
+      let(:params) { {:manage_service => true} }
+      it { should contain_service('named') }
+    end
+
+    describe 'with manage_service false' do
+      let(:params) { {:manage_service => false} }
+      it { should_not contain_service('named') }
+    end
   end
 
   describe 'on Debian' do
@@ -591,5 +611,16 @@ export SOMETHING="other"
         )
       }
     end
+
+    describe 'with manage_service true' do
+      let(:params) { {:manage_service => true} }
+      it { should contain_service('bind9') }
+    end
+
+    describe 'with manage_service false' do
+      let(:params) { {:manage_service => false} }
+      it { should_not contain_service('bind9') }
+    end
+
   end
 end

@@ -22,8 +22,8 @@
 #   Should this module manage the dns service?
 #   This only applies to the service management (running, stopped) and not to
 #   whether the service should be installed or not.
-#   Calls to "notify => Service['$dns::namedservicename']" will still be
-#   executed
+#   IMPORTANT: this will not reload the service after a config change, you'll
+#   have to do that manually or via a separate call to notify
 # @param namedservicename
 #   Name of the service
 # @param zonefilepath
