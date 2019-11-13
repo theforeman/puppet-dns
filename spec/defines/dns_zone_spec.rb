@@ -38,8 +38,7 @@ describe 'dns::zone' do
       :group    => 'named',
       :mode     => '0644',
       :replace  => 'false',
-      :notify   => 'Service[named]',
-    })
+    }).that_notifies('Class[Dns::Service]')
   end
 
   it "should have valid zone file contents" do

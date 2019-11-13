@@ -141,6 +141,7 @@ class dns::params {
     },
   }
 
+  $manage_service        = true
   $service_ensure        = 'running'
   $service_enable        = true
   $acls                  = {}

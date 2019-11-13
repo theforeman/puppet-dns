@@ -33,13 +33,13 @@ define dns::key(
       group   => $dns::group,
       mode    => '0640',
       content => template('dns/key.erb'),
-      notify  => Service[$dns::namedservicename],
+      notify  => Class['dns::service'],
     }
   } else {
     exec { "create-${filename}":
       command => "${dns::rndcconfgen} -r /dev/urandom -a -c ${keyfilename} -b ${keysize} -k ${name}",
       creates => $keyfilename,
-      notify  => Service[$dns::namedservicename],
+      notify  => Class['dns::service'],
     }-> file { $keyfilename:
       owner => 'root',
       group => $dns::params::group,

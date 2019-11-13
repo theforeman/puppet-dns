@@ -35,7 +35,7 @@ define dns::view (
     owner  => root,
     group  => $dns::params::group,
     mode   => '0640',
-    notify => Service[$dns::namedservicename],
+    notify => Class['dns::service'],
     before => Concat[$dns::publicviewpath],
   }
 

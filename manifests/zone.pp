@@ -87,7 +87,7 @@ define dns::zone (
       mode    => '0644',
       content => template('dns/zone.header.erb'),
       replace => false,
-      notify  => Service[$dns::namedservicename],
+      notify  => Class['dns::service'],
     }
   }
 }
