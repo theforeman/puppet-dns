@@ -12,7 +12,7 @@ matrix:
     - rvm: 2.5.1
       env:
         - BEAKER_PUPPET_COLLECTION=puppet5
-        - BEAKER_setfile=centos7-64{hostname=centos7-64.example.com}
+        - BEAKER_setfile=centos6-64{hostname=centos6-64.example.com}
       script: bundle exec rake beaker
       services: docker
       bundler_args: --without development
@@ -23,7 +23,7 @@ matrix:
     - rvm: 2.5.1
       env:
         - BEAKER_PUPPET_COLLECTION=puppet6
-        - BEAKER_setfile=centos7-64{hostname=centos7-64.example.com}
+        - BEAKER_setfile=centos6-64{hostname=centos6-64.example.com}
       script: bundle exec rake beaker
       services: docker
       bundler_args: --without development
