@@ -31,6 +31,7 @@ describe 'Scenario: install bind with views enabled' do
       dns::zone { 'example.com-v4':
         zone         => 'example.com',
         soa          => 'ns1-v4.example.com',
+        soaip        => '192.0.2.1',
         filename     => 'db.example.com-v4',
         target_views => ['v4'],
       }
@@ -38,6 +39,7 @@ describe 'Scenario: install bind with views enabled' do
       dns::zone { 'example.com-v6':
         zone         => 'example.com',
         soa          => 'ns1-v6.example.com',
+        soaipv6      => '2001:db8::1',
         filename     => 'db.example.com-v6',
         target_views => ['v6'],
       }

@@ -1,4 +1,14 @@
-# Define new zone for the dns
+# @summary Define new zone for the dns
+#
+# @param soaip
+#   The IP address for the SOA. If `reverse` is false, an A record will be
+#   created pointing to this IP address for `$soa`. This only makes sense if
+#   `$soa` is withing this zone and needs glue records.
+#
+# @param soaipv6
+#   The IPv6 address for the SOA. If `reverse` is false, an AAAA record will be
+#   created pointing to this IP address for `$soa`. This only makes sense if
+#   `$soa` is withing this zone and needs glue records.
 #
 # @param manage_file
 #   Whether the manage the file resource. When true $manage_file_name is implied.
@@ -19,7 +29,8 @@ define dns::zone (
   String $soa                                           = $fqdn,
   Boolean $reverse                                      = false,
   String $ttl                                           = '10800',
-  Stdlib::Compat::Ip_address $soaip                     = $ipaddress,
+  Optional[Stdlib::IP::Address::V4] $soaip              = undef,
+  Optional[Stdlib::IP::Address::V6] $soaipv6            = undef,
   Integer $refresh                                      = 86400,
   Integer $update_retry                                 = 3600,
   Integer $expire                                       = 604800,

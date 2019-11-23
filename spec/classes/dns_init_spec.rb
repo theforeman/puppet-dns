@@ -9,7 +9,6 @@ describe 'dns' do
          :clientcert     => 'puppetmaster.example.com',
          :fqdn           => 'puppetmaster.example.com',
          :osfamily       => 'RedHat',
-         :ipaddress      => '192.0.2.1',
       }
     end
 
@@ -480,7 +479,6 @@ export SOMETHING="other"
          :clientcert     => 'puppetmaster.example.com',
          :fqdn           => 'puppetmaster.example.com',
          :osfamily       => 'Debian',
-         :ipaddress      => '192.0.2.1',
       }
     end
 

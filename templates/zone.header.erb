@@ -8,6 +8,11 @@ $TTL <%= @ttl %>
 )
 
 @ IN NS <%= @soa %>.
-<% if ! @reverse %>
+<% unless @reverse -%>
+<% if @soaip -%>
 <%= @soa %>. IN A <%= @soaip %>
-<% end %>
+<% end -%>
+<% if @soaipv6 -%>
+<%= @soa %>. IN AAAA <%= @soaipv6 %>
+<% end -%>
+<% end -%>

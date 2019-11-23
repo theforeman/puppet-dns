@@ -17,7 +17,9 @@ describe 'Scenario: install bind' do
     include dns
 
     dns::zone { 'example.com':
-      soa => 'ns1.example.com',
+      soa     => 'ns1.example.com',
+      soaip   => '192.0.2.1',
+      soaipv6 => '2001:db8::1',
     }
     EOS
   end
