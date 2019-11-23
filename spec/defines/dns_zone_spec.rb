@@ -6,7 +6,6 @@ describe 'dns::zone' do
     {
       :clientcert     => 'puppetmaster.example.com',
       :fqdn           => 'puppetmaster.example.com',
-      :ipaddress      => '192.168.1.1',
       :osfamily       => 'RedHat',
     }
   end
@@ -51,7 +50,6 @@ describe 'dns::zone' do
       '	3600	;Negative caching TTL',
       ')',
       '@ IN NS puppetmaster.example.com.',
-      'puppetmaster.example.com. IN A 192.168.1.1',
     ])
   end
 
@@ -72,6 +70,26 @@ describe 'dns::zone' do
         '@ IN NS puppetmaster.example.com.',
       ])
     end
+  end
+
+  context 'with soaip and soaipv6' do
+    let(:params) { { soaip: '192.0.2.1', soaipv6: '2001:db8::1' } }
+
+  it "should have valid zone file contents" do
+    verify_exact_contents(catalogue, '/var/named/dynamic/db.example.com', [
+      '$TTL 10800',
+      '@ IN SOA puppetmaster.example.com. root.example.com. (',
+      '	1	;Serial',
+      '	86400	;Refresh',
+      '	3600	;Retry',
+      '	604800	;Expire',
+      '	3600	;Negative caching TTL',
+      ')',
+      '@ IN NS puppetmaster.example.com.',
+      'puppetmaster.example.com. IN A 192.0.2.1',
+      'puppetmaster.example.com. IN AAAA 2001:db8::1',
+    ])
+  end
   end
 
   context 'when allow_transfer defined' do

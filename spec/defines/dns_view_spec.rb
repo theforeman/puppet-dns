@@ -6,7 +6,6 @@ describe 'dns::view' do
     {
       :clientcert     => 'puppetmaster.example.com',
       :fqdn           => 'puppetmaster.example.com',
-      :ipaddress      => '192.168.1.1',
       :osfamily       => 'RedHat',
     }
   end
