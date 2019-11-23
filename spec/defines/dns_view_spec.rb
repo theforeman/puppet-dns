@@ -5,7 +5,6 @@ describe 'dns::view' do
   let(:facts) do
     {
       :clientcert     => 'puppetmaster.example.com',
-      :concat_basedir => '/doesnotexist',
       :fqdn           => 'puppetmaster.example.com',
       :ipaddress      => '192.168.1.1',
       :osfamily       => 'RedHat',
