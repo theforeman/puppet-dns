@@ -7,7 +7,6 @@ describe 'dns' do
     let(:facts) do
       {
          :clientcert     => 'puppetmaster.example.com',
-         :concat_basedir => '/doesnotexist',
          :fqdn           => 'puppetmaster.example.com',
          :osfamily       => 'RedHat',
          :ipaddress      => '192.0.2.1',
@@ -402,7 +401,6 @@ export SOMETHING="other"
     let(:facts) do
       {
          :clientcert => 'puppetmaster.example.com',
-         :concat_basedir => '/doesnotexist',
          :fqdn => 'puppetmaster.example.com',
          :osfamily => 'FreeBSD',
       }
@@ -480,7 +478,6 @@ export SOMETHING="other"
     let(:facts) do
       {
          :clientcert     => 'puppetmaster.example.com',
-         :concat_basedir => '/doesnotexist',
          :fqdn           => 'puppetmaster.example.com',
          :osfamily       => 'Debian',
          :ipaddress      => '192.0.2.1',
