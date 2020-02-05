@@ -35,7 +35,7 @@ describe 'dns::zone' do
       :owner    => 'named',
       :group    => 'named',
       :mode     => '0644',
-      :replace  => 'false',
+      :replace  => 'true',
     }).that_notifies('Class[Dns::Service]')
   end
 

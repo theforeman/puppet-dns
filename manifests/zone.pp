@@ -97,7 +97,7 @@ define dns::zone (
       group   => $dns::group,
       mode    => '0644',
       content => template('dns/zone.header.erb'),
-      replace => false,
+      replace => true,
       notify  => Class['dns::service'],
     }
   }
