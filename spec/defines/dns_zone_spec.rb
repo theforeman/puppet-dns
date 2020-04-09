@@ -330,9 +330,63 @@ describe 'dns::zone' do
 
       end
 
-      context 'update_policy_rules is set' do
+      context 'update_policy with multiple declarations' do
+        let(:params) { {
+          :update_policy => {
+            'foreman_key' => {
+              'matchtype' => 'zonesub',
+              'rr'        => 'ANY'
+            },
+            'goreman_key' => {
+              'action'    => 'deny',
+              'matchtype' => 'subdomain',
+              'rr'        => 'ANY'
+            },
+          }
+        } }
+
+        it "should have valid zone configuration" do
+          verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
+          'zone "example.com" {',
+          '    type master;',
+          "    file \"#{zonefilepath}/db.example.com\";",
+          '    update-policy {',
+          '            grant foreman_key zonesub ANY;',
+          '            deny goreman_key subdomain ANY;',
+          '    };',
+          '};',
+        ])
+        end
+      end
+
+      context 'deprecated update_policy_rules' do
         let(:params) { {
           :update_policy_rules => {
+            'foreman_key' => {
+              'action'    => 'grant',
+              'matchtype' => 'zonesub',
+              'rr'        => 'ANY'
+            },
+          }
+        } }
+
+        it "should have valid zone configuration" do
+          verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
+          'zone "example.com" {',
+          '    type master;',
+          "    file \"#{zonefilepath}/db.example.com\";",
+          '    update-policy {',
+          '            grant rndc-key zonesub ANY;',
+          '            grant foreman_key zonesub ANY;',
+          '    };',
+          '};',
+        ])
+        end
+      end
+
+      context 'update_policy uses non-default key' do
+        let(:params) { {
+          :update_policy => {
             'foreman_key' => {
               'matchtype' => 'zonesub',
               'tname' => '*',
@@ -341,8 +395,47 @@ describe 'dns::zone' do
           }
         } }
 
-        it "should have valid slave zone configuration" do
-          is_expected.to compile
+        it "should have valid zone configuration" do
+          verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
+          'zone "example.com" {',
+          '    type master;',
+          "    file \"#{zonefilepath}/db.example.com\";",
+          '    update-policy {',
+          '            grant foreman_key zonesub * ANY;',
+          '    };',
+          '};',
+        ])
+        end
+      end
+
+      context 'update_policy set to local' do
+        let(:params) { {
+          :update_policy => 'local',
+        } }
+
+        it "should have valid zone configuration" do
+          verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
+          'zone "example.com" {',
+          '    type master;',
+          "    file \"#{zonefilepath}/db.example.com\";",
+          '    update-policy local;',
+          '};',
+        ])
+        end
+      end
+
+      context 'update_policy set to none' do
+        let(:params) { {
+          :update_policy => 'none',
+        } }
+
+        it "should have valid zone configuration" do
+          verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
+          'zone "example.com" {',
+          '    type master;',
+          "    file \"#{zonefilepath}/db.example.com\";",
+          '};',
+        ])
         end
       end
     end

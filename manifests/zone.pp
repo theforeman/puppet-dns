@@ -49,10 +49,22 @@ define dns::zone (
   Enum['first', 'only'] $forward                        = 'first',
   Array $forwarders                                     = [],
   Optional[Enum['yes', 'no', 'explicit']] $dns_notify   = undef,
-  Hash[String, Hash[String, Data]] $update_policy_rules = {},
+  Hash[String, Hash[String, Data]] $update_policy_rules = {}, # deprecated
+  Optional[Dns::UpdatePolicy] $update_policy            = undef,
 ) {
 
   $_contact = pick($contact, "root.${zone}.")
+
+  if $update_policy == undef {
+    if $update_policy_rules.length > 0 {
+      warning('update_policy_rules are deprecated in favour of update_policy')
+    }
+    $real_update_policy = $update_policy_rules + {
+      'rndc-key' => {'matchtype' => 'zonesub', 'rr' => 'ANY'}
+    }
+  } else {
+    $real_update_policy = $update_policy
+  }
 
   $zonefilename = "${zonefilepath}/${filename}"
 
