@@ -1,6 +1,16 @@
 require 'spec_helper'
 
 describe 'dns::zone' do
+
+  rndc_policy_params = {
+    :update_policy => {
+      'rndc-key' => {
+        'matchtype' => 'zonesub',
+        'rr'        => 'ANY'
+      },
+    },
+  }
+
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
       let(:facts) { os_facts.merge(fqdn: 'puppetmaster.example.com') }
@@ -35,9 +45,6 @@ describe 'dns::zone' do
           'zone "example.com" {',
           '    type master;',
           "    file \"#{zonefilepath}/db.example.com\";",
-          '    update-policy {',
-          '            grant rndc-key zonesub ANY;',
-          '    };',
           '};',
         ])
       end
@@ -105,7 +112,7 @@ describe 'dns::zone' do
       end
 
       context 'when allow_transfer defined' do
-        let(:params) {{ :allow_transfer => ['192.168.1.2'] }}
+        let(:params) {rndc_policy_params.merge({ :allow_transfer => ['192.168.1.2'] })}
 
         it "should have valid zone configuration with allow-transfer" do
           verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
@@ -121,7 +128,7 @@ describe 'dns::zone' do
         end
 
         context 'when allow_transfer with multiple values' do
-          let(:params) {{ :allow_transfer => ['192.168.1.2', '192.168.1.3'] }}
+          let(:params) {rndc_policy_params.merge({ :allow_transfer => ['192.168.1.2', '192.168.1.3'] })}
 
           it "should have valid zone configuration with allow-transfer" do
             verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
@@ -139,7 +146,7 @@ describe 'dns::zone' do
       end
 
       context 'when also_notify defined' do
-        let(:params) {{ :also_notify => ['192.168.1.2'] }}
+        let(:params) {rndc_policy_params.merge({ :also_notify => ['192.168.1.2'] })}
 
         it "should have valid zone configuration with also-notify" do
           verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
@@ -155,7 +162,7 @@ describe 'dns::zone' do
         end
 
         context 'when also_notify with multiple values' do
-          let(:params) {{ :also_notify => ['192.168.1.2', '192.168.1.3'] }}
+          let(:params) {rndc_policy_params.merge({ :also_notify => ['192.168.1.2', '192.168.1.3'] })}
 
           it "should have valid zone configuration with also-notify" do
             verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
@@ -202,7 +209,7 @@ describe 'dns::zone' do
         end
 
         context 'when dns_notify => no' do
-          let(:params) {{ :dns_notify => 'no' }}
+          let(:params) {rndc_policy_params.merge({ :dns_notify => 'no' })}
 
           it "should have valid slave zone configuration" do
             verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
@@ -266,9 +273,6 @@ describe 'dns::zone' do
               'zone "example.com" {',
               '    type master;',
               "    file \"#{zonefilepath}/db.example.com\";",
-              '    update-policy {',
-              '            grant rndc-key zonesub ANY;',
-              '    };',
               '};',
             ])
           end
@@ -278,9 +282,6 @@ describe 'dns::zone' do
               'zone "example.com" {',
               '    type master;',
               "    file \"#{zonefilepath}/db.example.com\";",
-              '    update-policy {',
-              '            grant rndc-key zonesub ANY;',
-              '    };',
               '};',
             ])
           end
