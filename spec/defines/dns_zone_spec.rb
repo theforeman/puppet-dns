@@ -359,31 +359,6 @@ describe 'dns::zone' do
         end
       end
 
-      context 'deprecated update_policy_rules' do
-        let(:params) { {
-          :update_policy_rules => {
-            'foreman_key' => {
-              'action'    => 'grant',
-              'matchtype' => 'zonesub',
-              'rr'        => 'ANY'
-            },
-          }
-        } }
-
-        it "should have valid zone configuration" do
-          verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
-          'zone "example.com" {',
-          '    type master;',
-          "    file \"#{zonefilepath}/db.example.com\";",
-          '    update-policy {',
-          '            grant rndc-key zonesub ANY;',
-          '            grant foreman_key zonesub ANY;',
-          '    };',
-          '};',
-        ])
-        end
-      end
-
       context 'update_policy uses non-default key' do
         let(:params) { {
           :update_policy => {
