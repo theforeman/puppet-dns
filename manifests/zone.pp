@@ -24,47 +24,35 @@
 #   tname and rr are optional
 #
 define dns::zone (
-  Array[String] $target_views                           = [],
-  String $zonetype                                      = 'master',
-  String $soa                                           = $fqdn,
-  Boolean $reverse                                      = false,
-  String $ttl                                           = '10800',
-  Optional[Stdlib::IP::Address::V4] $soaip              = undef,
-  Optional[Stdlib::IP::Address::V6] $soaipv6            = undef,
-  Integer $refresh                                      = 86400,
-  Integer $update_retry                                 = 3600,
-  Integer $expire                                       = 604800,
-  Integer $negttl                                       = 3600,
-  Integer $serial                                       = 1,
-  Array $masters                                        = [],
-  Array $allow_transfer                                 = [],
-  Array $allow_query                                    = [],
-  Array $also_notify                                    = [],
-  String $zone                                          = $title,
-  Optional[String] $contact                             = undef,
-  Stdlib::Absolutepath $zonefilepath                    = $dns::zonefilepath,
-  String $filename                                      = "db.${title}",
-  Boolean $manage_file                                  = true,
-  Boolean $manage_file_name                             = false,
-  Enum['first', 'only'] $forward                        = 'first',
-  Array $forwarders                                     = [],
-  Optional[Enum['yes', 'no', 'explicit']] $dns_notify   = undef,
-  Hash[String, Hash[String, Data]] $update_policy_rules = {}, # deprecated
-  Optional[Dns::UpdatePolicy] $update_policy            = undef,
+  Array[String] $target_views                         = [],
+  String $zonetype                                    = 'master',
+  String $soa                                         = $fqdn,
+  Boolean $reverse                                    = false,
+  String $ttl                                         = '10800',
+  Optional[Stdlib::IP::Address::V4] $soaip            = undef,
+  Optional[Stdlib::IP::Address::V6] $soaipv6          = undef,
+  Integer $refresh                                    = 86400,
+  Integer $update_retry                               = 3600,
+  Integer $expire                                     = 604800,
+  Integer $negttl                                     = 3600,
+  Integer $serial                                     = 1,
+  Array $masters                                      = [],
+  Array $allow_transfer                               = [],
+  Array $allow_query                                  = [],
+  Array $also_notify                                  = [],
+  String $zone                                        = $title,
+  Optional[String] $contact                           = undef,
+  Stdlib::Absolutepath $zonefilepath                  = $dns::zonefilepath,
+  String $filename                                    = "db.${title}",
+  Boolean $manage_file                                = true,
+  Boolean $manage_file_name                           = false,
+  Enum['first', 'only'] $forward                      = 'first',
+  Array $forwarders                                   = [],
+  Optional[Enum['yes', 'no', 'explicit']] $dns_notify = undef,
+  Optional[Dns::UpdatePolicy] $update_policy          = undef,
 ) {
 
   $_contact = pick($contact, "root.${zone}.")
-
-  if $update_policy == undef {
-    if $update_policy_rules.length > 0 {
-      warning('update_policy_rules are deprecated in favour of update_policy')
-    }
-    $real_update_policy = $update_policy_rules + {
-      'rndc-key' => {'matchtype' => 'zonesub', 'rr' => 'ANY'}
-    }
-  } else {
-    $real_update_policy = $update_policy
-  }
 
   $zonefilename = "${zonefilepath}/${filename}"
 

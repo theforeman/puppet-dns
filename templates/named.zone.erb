@@ -10,13 +10,13 @@ zone "<%= @zone %>" {
     file "<%= @zonefilename %>";
 <% end -%>
 <% if @zonetype == 'master' -%>
-<%   if @real_update_policy.is_a? String -%>
-<%     if @real_update_policy != 'none' -%>
-    update-policy <%= @real_update_policy %>;
+<%   if @update_policy.is_a? String -%>
+<%     if @update_policy != 'none' -%>
+    update-policy <%= @update_policy %>;
 <%     end -%>
 <%   else -%>
     update-policy {
-            <%- @real_update_policy.sort_by {|k, v| k}.each do |key, key_hash| -%>
+            <%- @update_policy.sort_by {|k, v| k}.each do |key, key_hash| -%>
             <%= key_hash['action'] || 'grant' %> <%= key %> <%= key_hash['matchtype'] %> <% if key_hash['tname'] %><%= key_hash['tname'] %> <% end %><%= key_hash['rr'] %>;
             <%- end -%>
     };
