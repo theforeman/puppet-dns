@@ -1,7 +1,7 @@
 # Default parameters
 # @api private
 class dns::params {
-  case $facts['osfamily'] {
+  case $facts['os']['family'] {
     'Debian': {
       $dnsdir             = '/etc/bind'
       $vardir             = '/var/cache/bind'
@@ -18,7 +18,7 @@ class dns::params {
       $rndcconfgen        = '/usr/sbin/rndc-confgen'
       $named_checkconf    = '/usr/sbin/named-checkconf'
       $sysconfig_file     = '/etc/default/bind9'
-      $sysconfig_template = "dns/sysconfig.${facts['osfamily']}.erb"
+      $sysconfig_template = "dns/sysconfig.${facts['os']['family']}.erb"
       $sysconfig_startup_options = '-u bind'
       $sysconfig_resolvconf_integration = false
 
@@ -41,7 +41,7 @@ class dns::params {
       $rndcconfgen        = '/usr/sbin/rndc-confgen'
       $named_checkconf    = '/usr/sbin/named-checkconf'
       $sysconfig_file     = '/etc/sysconfig/named'
-      $sysconfig_template = "dns/sysconfig.${facts['osfamily']}.erb"
+      $sysconfig_template = "dns/sysconfig.${facts['os']['family']}.erb"
       $sysconfig_startup_options = undef
       $sysconfig_disable_zone_checking = undef
 
@@ -93,7 +93,7 @@ class dns::params {
       $sysconfig_resolvconf_integration = undef
     }
     default: {
-      fail ("Unsupported operating system family ${facts['osfamily']}")
+      fail ("Unsupported operating system family ${facts['os']['family']}")
     }
   }
 

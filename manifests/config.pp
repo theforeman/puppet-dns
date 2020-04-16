@@ -77,7 +77,7 @@ class dns::config {
   # such settings must be set in the global, common /etc/rc.conf file and under
   # ArchLinux we must use systemd override files to change the startup
   # commandline. These cases are outside of this module's scope.
-  if $facts['osfamily'] in ['Debian', 'RedHat'] {
+  if $facts['os']['family'] in ['Debian', 'RedHat'] {
     file { $dns::sysconfig_file:
       owner   => 'root',
       group   => 'root',
