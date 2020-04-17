@@ -73,7 +73,7 @@ class dns::params {
     'Archlinux': {
       $dnsdir             = '/etc'
       $vardir             = '/var/named'
-      $optionspath        = '/etc/named.options.conf'
+      $optionspath        = "${dnsdir}/named.options.conf"
       $zonefilepath       = "${vardir}/dynamic"
       $localzonepath      = 'unmanaged' # "${dnsdir}/named.local.conf"
       $defaultzonepath    = 'unmanaged'
