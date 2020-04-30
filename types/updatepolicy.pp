@@ -1,6 +1,6 @@
 # Validate update-policy parameter
 type Dns::UpdatePolicy = Variant[
-  Enum['none', 'local'],
+  Enum['local'],
   Hash[
     String,
     Struct[{

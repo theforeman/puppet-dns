@@ -398,21 +398,6 @@ describe 'dns::zone' do
         ])
         end
       end
-
-      context 'update_policy set to none' do
-        let(:params) { {
-          :update_policy => 'none',
-        } }
-
-        it "should have valid zone configuration" do
-          verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
-          'zone "example.com" {',
-          '    type master;',
-          "    file \"#{zonefilepath}/db.example.com\";",
-          '};',
-        ])
-        end
-      end
     end
   end
 end
