@@ -13,7 +13,7 @@ define dns::view (
   Optional[Enum['yes','no']]            $recursion            = undef,
   Optional[Enum['yes','no']]            $dnssec_enable        = undef,
   Optional[Enum['yes','no']]            $dnssec_validation    = undef,
-  Enum['yes','no']                      $dns_notify           = 'yes',
+  Optional[Enum['yes','no','explicit']] $dns_notify           = undef,
   Boolean                               $include_localzones   = true,
   Boolean                               $include_defaultzones = true,
   String                                $order                = '-',

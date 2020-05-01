@@ -26,7 +26,7 @@ view "<%= @title %>" {
 <% unless @also_notify.empty? -%>
     also-notify { <%= @also_notify.join('; ') %>; };
 <% end -%>
-<% if @also_notify -%>
+<% if @dns_notify -%>
     notify <%= @dns_notify %>;
 <% end -%>
 <% if @match_recursive_only -%>
