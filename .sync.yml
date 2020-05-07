@@ -5,6 +5,7 @@
 .travis.yml:
   beaker_sets:
     - centos6-64
+    - 'centos7-64{image=centos:7.6.1810}'
     - debian8-64
     - debian9-64
     - debian10-64
