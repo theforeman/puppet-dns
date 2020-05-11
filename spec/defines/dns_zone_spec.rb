@@ -399,6 +399,30 @@ describe 'dns::zone' do
         ])
         end
       end
+
+      context 'when several dnssec related parameters are set' do
+        let(:params) { {
+          :inline_signing            => 'yes',
+          :dnssec_secure_to_insecure => 'yes',
+          :key_directory             => '/etc/bind/keys',
+          :auto_dnssec               => 'maintain',
+          :update_policy             => 'local',
+        } }
+
+        it "should have valid zone configuration" do
+          verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
+          'zone "example.com" {',
+          '    type master;',
+          "    file \"#{zonefilepath}/db.example.com\";",
+          '    auto-dnssec maintain;',
+          '    dnssec-secure-to-insecure yes;',
+          '    inline-signing yes;',
+          '    key-directory "/etc/bind/keys";',
+          '    update-policy local;',
+          '};',
+        ])
+        end
+      end
     end
   end
 end

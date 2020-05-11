@@ -50,6 +50,10 @@ define dns::zone (
   Array $forwarders                                   = [],
   Optional[Enum['yes', 'no', 'explicit']] $dns_notify = undef,
   Optional[Dns::UpdatePolicy] $update_policy          = undef,
+  Optional[Stdlib::Absolutepath] $key_directory           = undef,
+  Optional[Enum['yes', 'no']] $inline_signing             = undef,
+  Optional[Enum['yes', 'no']] $dnssec_secure_to_insecure  = undef,
+  Optional[Enum['allow', 'maintain', 'off']] $auto_dnssec = undef,
 ) {
 
   $_contact = pick($contact, "root.${zone}.")
