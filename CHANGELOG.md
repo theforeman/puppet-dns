@@ -1,17 +1,29 @@
 # Changelog
 
-## [7.0.0](https://github.com/theforeman/puppet-dns/tree/7.0.0) (2020-02-11)
+## [7.0.0](https://github.com/theforeman/puppet-dns/tree/7.0.0) (2020-05-12)
 
-[Full Changelog](https://github.com/theforeman/puppet-dns/compare/6.2.0...7.0.0)
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/7.0.0...7.0.0)
 
 **Breaking changes:**
 
+- Use modern facts [\#169](https://github.com/theforeman/puppet-dns/issues/169)
+- Make bind view clauses optional [\#163](https://github.com/theforeman/puppet-dns/pull/163) ([dlucredativ](https://github.com/dlucredativ))
+- Make zone update\_policy\_rules more generic [\#157](https://github.com/theforeman/puppet-dns/pull/157) ([damluk](https://github.com/damluk))
 - Refactor soaip in dns::zone [\#151](https://github.com/theforeman/puppet-dns/pull/151) ([ekohl](https://github.com/ekohl))
 
 **Implemented enhancements:**
 
-- Add Debian 10 [\#153](https://github.com/theforeman/puppet-dns/pull/153) ([mmoll](https://github.com/mmoll))
+- Fixes [\#29210](https://projects.theforeman.org/issues/29210) - support el8 [\#160](https://github.com/theforeman/puppet-dns/pull/160) ([wbclark](https://github.com/wbclark))
+- Introduce several dnssec related zone options [\#158](https://github.com/theforeman/puppet-dns/pull/158) ([damluk](https://github.com/damluk))
 - Add manage\_service parameter [\#149](https://github.com/theforeman/puppet-dns/pull/149) ([flyingstar16](https://github.com/flyingstar16))
+
+## [7.0.0](https://github.com/theforeman/puppet-dns/tree/7.0.0) (2020-02-11)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/6.2.0...7.0.0)
+
+**Implemented enhancements:**
+
+- Add Debian 10 [\#153](https://github.com/theforeman/puppet-dns/pull/153) ([mmoll](https://github.com/mmoll))
 
 ## [6.2.0](https://github.com/theforeman/puppet-dns/tree/6.2.0) (2019-07-19)
 
@@ -68,16 +80,13 @@
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.2.0...5.3.0)
 
-**Implemented enhancements:**
-
-- Support Ubuntu/bionic, drop Fedora 25 [\#115](https://github.com/theforeman/puppet-dns/pull/115) ([mmoll](https://github.com/mmoll))
-
 ## [5.2.0](https://github.com/theforeman/puppet-dns/tree/5.2.0) (2018-05-22)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.1.0...5.2.0)
 
 **Implemented enhancements:**
 
+- Support Ubuntu/bionic, drop Fedora 25 [\#115](https://github.com/theforeman/puppet-dns/pull/115) ([mmoll](https://github.com/mmoll))
 - Adds control keys and specifying update policy [\#108](https://github.com/theforeman/puppet-dns/pull/108) ([zyronix](https://github.com/zyronix))
 
 **Closed issues:**
