@@ -1,5 +1,20 @@
 # Changelog
 
+## [8.0.0](https://github.com/theforeman/puppet-dns/tree/8.0.0) (2020-05-13)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/7.0.0...8.0.0)
+
+**Breaking changes:**
+
+- Use modern facts [\#169](https://github.com/theforeman/puppet-dns/issues/169)
+- Make bind view clauses optional [\#163](https://github.com/theforeman/puppet-dns/pull/163) ([dlucredativ](https://github.com/dlucredativ))
+- Make zone update\_policy\_rules more generic [\#157](https://github.com/theforeman/puppet-dns/pull/157) ([damluk](https://github.com/damluk))
+
+**Implemented enhancements:**
+
+- Fixes [\#29210](https://projects.theforeman.org/issues/29210) - support el8 [\#160](https://github.com/theforeman/puppet-dns/pull/160) ([wbclark](https://github.com/wbclark))
+- Introduce several dnssec related zone options [\#158](https://github.com/theforeman/puppet-dns/pull/158) ([damluk](https://github.com/damluk))
+
 ## [7.0.0](https://github.com/theforeman/puppet-dns/tree/7.0.0) (2020-02-11)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/6.2.0...7.0.0)
