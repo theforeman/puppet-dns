@@ -1,11 +1,17 @@
 # Configure dns
 # @api private
 class dns::config {
+  if $dns::config_check {
+    $validate_cmd = "${dns::named_checkconf} %"
+  } else {
+    $validate_cmd = undef
+  }
+
   concat { $dns::publicviewpath:
     owner        => root,
     group        => $dns::params::group,
     mode         => '0640',
-    validate_cmd => "${dns::named_checkconf} %",
+    validate_cmd => $validate_cmd,
   }
 
   if $dns::enable_views {
@@ -28,7 +34,7 @@ class dns::config {
     group        => $dns::params::group,
     mode         => '0640',
     require      => Concat[$dns::optionspath],
-    validate_cmd => "${dns::named_checkconf} %",
+    validate_cmd => $validate_cmd,
   }
 
   # This file cannot be checked by named-checkconf because its content is only
