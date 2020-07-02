@@ -24,7 +24,7 @@ class dns::config {
   }
 
   concat { $dns::namedconf_path:
-    owner        => root,
+    owner        => 'root',
     group        => $dns::params::group,
     mode         => '0640',
     require      => Concat[$dns::optionspath],
@@ -34,7 +34,7 @@ class dns::config {
   # This file cannot be checked by named-checkconf because its content is only
   # valid inside an "options { };" directive.
   concat { $dns::optionspath:
-    owner => root,
+    owner => 'root',
     group => $dns::params::group,
     mode  => '0640',
   }

@@ -14,6 +14,8 @@
 #   Path of the config file holding all the zones
 # @param vardir
 #   Directory holding the variable or working files
+# @param logdir
+#   Directory holding the log files for named
 # @param group_manage
 #   Should this module manage the Unix system group under which BIND runs (see
 #   dns::params)?  Defaults to true. Set to false if you want to manage the
@@ -119,9 +121,15 @@
 #   A hash of zones to be created. See dns::zone for options.
 # @param keys
 #   A hash of keys to be created. See dns::key for options.
+# @param logging_categories
+#   A hash of logging categories to be created. See dns::logging::category for options.
+# @param logging_channels
+#   A hash of logging channels to be created. See dns::logging::channel for options.
 #
 # @see dns::zone
 # @see dns::key
+# @see dns::logging::category
+# @see dns::logging::channel
 class dns (
   Stdlib::Absolutepath $namedconf_path                              = $dns::params::namedconf_path,
   Stdlib::Absolutepath $dnsdir                                      = $dns::params::dnsdir,
@@ -130,6 +138,7 @@ class dns (
   Stdlib::Absolutepath $optionspath                                 = $dns::params::optionspath,
   Stdlib::Absolutepath $publicviewpath                              = $dns::params::publicviewpath,
   Stdlib::Absolutepath $vardir                                      = $dns::params::vardir,
+  Stdlib::Absolutepath $logdir                                      = $dns::params::logdir,
   Boolean $group_manage                                             = $dns::params::group_manage,
   Boolean $manage_service                                           = $dns::params::manage_service,
   String $namedservicename                                          = $dns::params::namedservicename,
@@ -164,6 +173,8 @@ class dns (
   Boolean $enable_views                                             = $dns::params::enable_views,
   Hash[String, Hash] $zones                                         = $dns::params::zones,
   Hash[String, Hash] $keys                                          = $dns::params::keys,
+  Hash[String, Hash] $logging_categories                            = $dns::params::logging_categories,
+  Hash[String, Hash] $logging_channels                              = $dns::params::logging_channels,
 ) inherits dns::params {
 
   include dns::install
@@ -174,4 +185,6 @@ class dns (
 
   create_resources('dns::key', $keys)
   create_resources('dns::zone', $zones)
+  create_resources('dns::logging::category', $logging_categories)
+  create_resources('dns::logging::channel', $logging_channels)
 }

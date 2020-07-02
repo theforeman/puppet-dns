@@ -132,7 +132,7 @@ describe 'dns' do
             '};',
             "include \"#{localzonepath}\";",
             '// Public view read by Server Admin',
-            "include \"#{etc_named_directory}/zones.conf\";"
+            "include \"#{etc_named_directory}/zones.conf\";",
           ]
 
           unless localzonepath
@@ -151,6 +151,8 @@ describe 'dns' do
         it { should contain_file(rndc_key) }
 
         it { should contain_service(service_name).with_ensure('running').with_enable(true).with_restart(nil) }
+        it { is_expected.not_to contain_concat_fragment('named.conf+50-logging-header.dns') }
+        it { is_expected.not_to contain_concat_fragment('named.conf+60-logging-footer.dns') }
       end
 
       describe 'with unmanaged localzonepath' do
@@ -169,7 +171,7 @@ describe 'dns' do
           "        include \"#{options_path}\";",
           '};',
           '// Public view read by Server Admin',
-          "include \"#{etc_named_directory}/zones.conf\";"
+          "include \"#{etc_named_directory}/zones.conf\";",
         ])}
       end
 
@@ -222,7 +224,7 @@ describe 'dns' do
             '  ndots integer;',
             '};',
             '// Public view read by Server Admin',
-            "include \"#{etc_named_directory}/zones.conf\";"
+            "include \"#{etc_named_directory}/zones.conf\";",
           ].compact
 
           verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', expected)
