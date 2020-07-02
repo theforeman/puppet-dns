@@ -112,6 +112,8 @@ class dns::params {
 
   $namedconf_path        = "${dnsdir}/named.conf"
 
+  $logdir                = '/var/log/named'
+
   #pertaining to rndc
   $rndckeypath           = "${dnsdir}/rndc.key"
 
@@ -151,4 +153,6 @@ class dns::params {
 
   $zones                 = {}
   $keys                  = {}
+  $logging_categories    = {}
+  $logging_channels      = {}
 }

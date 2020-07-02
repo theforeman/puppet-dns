@@ -1,0 +1,23 @@
+  channel <%= @channel_name %> {
+    <%- if @log_type == 'file' -%>
+    file "<%= @file_path -%>" versions <%= @file_versions -%> size <%= @file_size -%>;
+    <%- elsif @log_type == 'null' -%>
+    null;
+    <%- elsif @log_type == 'stderr' -%>
+    stderr;
+    <%- elsif @log_type == 'syslog' -%>
+    syslog <%= @syslog_facility -%>;
+    <%- end -%>
+    <%- if @severity and ! @severity.empty? -%>
+    severity <%= @severity -%>;
+    <%- end -%>
+    <%- if @print_category and ! @print_category.empty? -%>
+    print-category <%= @print_category -%>;
+    <%- end -%>
+    <%- if @print_severity and ! @print_severity.empty? -%>
+    print-severity <%= @print_severity -%>;
+    <%- end -%>
+    <%- if @print_time and ! @print_time.empty? -%>
+    print-time <%= @print_time -%>;
+    <%- end -%>
+  };

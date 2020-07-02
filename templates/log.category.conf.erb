@@ -1,0 +1,5 @@
+  category <%= @category_name %> {
+    <%- @channels.sort.each do |channel_name| -%>
+    <%= channel_name %>;
+    <%- end -%>
+  };
