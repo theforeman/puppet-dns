@@ -109,6 +109,10 @@
 #   setting `service_restart_command` to `/usr/sbin/service bind9 reload` or
 #   `/usr/sbin/rndc reload` or even `/usr/bin/systemctl try-reload-or-restart bind9`.
 #   Default is 'undef' so the service resource default is used.
+# @param config_check
+#   Should this module run configuration checks before putting new configurations in
+#   place?  Defaults to true. Set to false if you don't want configuration checks when
+#   config files are changed.
 # @param additional_options
 #   Additional options
 # @param additional_directives
@@ -168,6 +172,7 @@ class dns (
   Variant[Enum['running', 'stopped'], Boolean] $service_ensure      = $dns::params::service_ensure,
   Boolean $service_enable                                           = $dns::params::service_enable,
   Optional[String[1]] $service_restart_command                      = $dns::params::service_restart_command,
+  Boolean $config_check                                             = $dns::params::config_check,
   Hash[String, Data] $additional_options                            = $dns::params::additional_options,
   Array[String] $additional_directives                              = $dns::params::additional_directives,
   Boolean $enable_views                                             = $dns::params::enable_views,

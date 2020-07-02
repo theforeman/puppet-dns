@@ -365,6 +365,17 @@ describe 'dns' do
         it { should contain_file("#{etc_directory}/dns-key.key") }
       end
 
+      describe 'with config_check set to false' do
+        let(:params) { { :config_check => false } }
+
+        it { is_expected.to compile.with_all_deps }
+
+        it {
+          is_expected.to contain_concat("#{etc_directory}/named.conf")
+            .without_validate_cmd()
+        }
+      end
+
       context 'sysconfig', if: ['Debian', 'RedHat'].include?(os_facts[:os]['family']) do
         let(:sysconfig_named_path) do
           case facts[:os]['family']
