@@ -16,7 +16,7 @@
 # @param manage_file_name
 #   Whether to set the file parameter in the zone file.
 #
-# @param update_policy_rules
+# @param update_policy
 #   This can be used to specifiy additional update policy rules in the
 #   following format
 #   { '<KEY_NAME' => {'matchtype' => '<VALUE>', 'tname' => '<VALUE>', 'rr' => 'VALUE' } }
