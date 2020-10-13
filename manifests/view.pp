@@ -1,4 +1,44 @@
-# Define new view for the dns
+# @summary Define new view for the dns
+# @see https://kb.isc.org/docs/aa-00851
+#
+# @param match_clients
+#   The value for match-clients in the view definition
+# @param match_destinations
+#   The value for match-destinations in the view definition
+# @param match_recursive_only
+#   The value for match-recursive-only in the view definition
+# @param allow_transfer
+#   The value for allow-transfer in the view definition
+# @param allow_recursion
+#   The value for allow-recursion in the view definition
+# @param allow_query
+#   The value for allow-query in the view definition
+# @param allow_query_cache
+#   The value for allow-query-cache in the view definition
+# @param also_notify
+#   The value for also-notify in the view definition
+# @param forwarders
+#   The value for forwarders in the view definition
+# @param forward
+#   The value for forward in the view definition. Only used if forwarders is
+#   not empty.
+# @param recursion
+#   The value for recursion in the view definition
+# @param dnssec_enable
+#   The value for dnssec-enable in the view definition
+# @param dnssec_validation
+#   The value for dnssec-validation in the view definition
+# @param dns_notify
+#   The value for notify in the view definition
+# @param include_localzones
+#    Whether to include the local zones or not. Requires dns::localzonepath not
+#    to be unmanaged to be effective.
+# @param include_defaultzones
+#    Whether to include the default zones or not. Requires dns::defaultzonepath
+#    not to be unmanaged to be effective.
+# @param order
+#   The order parameter to the concat fragment.
+#
 define dns::view (
   Array[String]                         $match_clients        = [],
   Array[String]                         $match_destinations   = [],
