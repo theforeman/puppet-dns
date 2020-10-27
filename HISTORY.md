@@ -1,3 +1,117 @@
+## [8.1.0](https://github.com/theforeman/puppet-dns/tree/8.1.0) (2020-10-27)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/8.0.0...8.1.0)
+
+**Implemented enhancements:**
+
+- Add the ability to define logging [\#172](https://github.com/theforeman/puppet-dns/pull/172) ([coreone](https://github.com/coreone))
+
+**Fixed bugs:**
+
+- Enforce parameter\_documentation lint plugin [\#176](https://github.com/theforeman/puppet-dns/pull/176) ([ekohl](https://github.com/ekohl))
+- Update zone documentation [\#174](https://github.com/theforeman/puppet-dns/pull/174) ([marcdeop](https://github.com/marcdeop))
+- Fix custom key ordering [\#173](https://github.com/theforeman/puppet-dns/pull/173) ([coreone](https://github.com/coreone))
+
+## [8.0.0](https://github.com/theforeman/puppet-dns/tree/8.0.0) (2020-05-13)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/7.0.0...8.0.0)
+
+**Breaking changes:**
+
+- Use modern facts [\#169](https://github.com/theforeman/puppet-dns/issues/169)
+- Make bind view clauses optional [\#163](https://github.com/theforeman/puppet-dns/pull/163) ([dlucredativ](https://github.com/dlucredativ))
+- Make zone update\_policy\_rules more generic [\#157](https://github.com/theforeman/puppet-dns/pull/157) ([damluk](https://github.com/damluk))
+
+**Implemented enhancements:**
+
+- Fixes [\#29210](https://projects.theforeman.org/issues/29210) - support el8 [\#160](https://github.com/theforeman/puppet-dns/pull/160) ([wbclark](https://github.com/wbclark))
+- Introduce several dnssec related zone options [\#158](https://github.com/theforeman/puppet-dns/pull/158) ([damluk](https://github.com/damluk))
+
+## [7.0.0](https://github.com/theforeman/puppet-dns/tree/7.0.0) (2020-02-11)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/6.2.0...7.0.0)
+
+**Breaking changes:**
+
+- Refactor soaip in dns::zone [\#151](https://github.com/theforeman/puppet-dns/pull/151) ([ekohl](https://github.com/ekohl))
+
+**Implemented enhancements:**
+
+- Add Debian 10 [\#153](https://github.com/theforeman/puppet-dns/pull/153) ([mmoll](https://github.com/mmoll))
+- Add manage\_service parameter [\#149](https://github.com/theforeman/puppet-dns/pull/149) ([flyingstar16](https://github.com/flyingstar16))
+
+## [6.2.0](https://github.com/theforeman/puppet-dns/tree/6.2.0) (2019-07-19)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/6.1.0...6.2.0)
+
+**Implemented enhancements:**
+
+- Validate named.conf and zones.conf using named-checkconf [\#144](https://github.com/theforeman/puppet-dns/pull/144) ([antaflos](https://github.com/antaflos))
+- Allow setting service restart command [\#143](https://github.com/theforeman/puppet-dns/pull/143) ([antaflos](https://github.com/antaflos))
+- Don't set forbidden zone options for zone type 'forward' [\#142](https://github.com/theforeman/puppet-dns/pull/142) ([antaflos](https://github.com/antaflos))
+
+## [6.1.0](https://github.com/theforeman/puppet-dns/tree/6.1.0) (2019-06-12)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/6.0.0...6.1.0)
+
+**Implemented enhancements:**
+
+- Add support for managing sysconfig settings [\#145](https://github.com/theforeman/puppet-dns/pull/145) ([antaflos](https://github.com/antaflos))
+- Make managing BIND system group optional [\#139](https://github.com/theforeman/puppet-dns/pull/139) ([antaflos](https://github.com/antaflos))
+
+**Merged pull requests:**
+
+- Allow puppetlabs/concat and puppetlabs/stdlib 6.x [\#146](https://github.com/theforeman/puppet-dns/pull/146) ([alexjfisher](https://github.com/alexjfisher))
+
+## [6.0.0](https://github.com/theforeman/puppet-dns/tree/6.0.0) (2019-04-15)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.4.0...6.0.0)
+
+**Breaking changes:**
+
+- drop Puppet 4 [\#137](https://github.com/theforeman/puppet-dns/pull/137) ([mmoll](https://github.com/mmoll))
+- drop EOL OSes [\#136](https://github.com/theforeman/puppet-dns/pull/136) ([mmoll](https://github.com/mmoll))
+
+## [5.4.0](https://github.com/theforeman/puppet-dns/tree/5.4.0) (2019-01-10)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.3.1...5.4.0)
+
+**Implemented enhancements:**
+
+- Convert documentation to puppet-strings [\#133](https://github.com/theforeman/puppet-dns/pull/133) ([ekohl](https://github.com/ekohl))
+- Add keys parameter and create\_resources accordingly [\#130](https://github.com/theforeman/puppet-dns/pull/130) ([marcdeop](https://github.com/marcdeop))
+- Add Puppet 6 support [\#129](https://github.com/theforeman/puppet-dns/pull/129) ([ekohl](https://github.com/ekohl))
+
+## [5.3.1](https://github.com/theforeman/puppet-dns/tree/5.3.1) (2018-10-04)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.3.0...5.3.1)
+
+**Merged pull requests:**
+
+- Allow puppetlabs/stdlib 5.x [\#126](https://github.com/theforeman/puppet-dns/pull/126) ([ekohl](https://github.com/ekohl))
+- allow puppetlabs-concat 5.x [\#122](https://github.com/theforeman/puppet-dns/pull/122) ([mmoll](https://github.com/mmoll))
+
+## [5.3.0](https://github.com/theforeman/puppet-dns/tree/5.3.0) (2018-07-16)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.2.0...5.3.0)
+
+**Implemented enhancements:**
+
+- Support Ubuntu/bionic, drop Fedora 25 [\#115](https://github.com/theforeman/puppet-dns/pull/115) ([mmoll](https://github.com/mmoll))
+
+## [5.2.0](https://github.com/theforeman/puppet-dns/tree/5.2.0) (2018-05-22)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/5.1.0...5.2.0)
+
+**Implemented enhancements:**
+
+- Adds control keys and specifying update policy [\#108](https://github.com/theforeman/puppet-dns/pull/108) ([zyronix](https://github.com/zyronix))
+
+**Closed issues:**
+
+- Fails with puppetlabs/concat 4.1.1 [\#107](https://github.com/theforeman/puppet-dns/issues/107)
+- Add support for adding keys for nsupdate [\#94](https://github.com/theforeman/puppet-dns/issues/94)
+
 ## 5.1.0
 
 * Stop shipping development code in releases
