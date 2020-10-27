@@ -1,5 +1,19 @@
 # Changelog
 
+## [8.1.0](https://github.com/theforeman/puppet-dns/tree/8.1.0) (2020-10-27)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/8.0.0...8.1.0)
+
+**Implemented enhancements:**
+
+- Add the ability to define logging [\#172](https://github.com/theforeman/puppet-dns/pull/172) ([coreone](https://github.com/coreone))
+
+**Fixed bugs:**
+
+- Enforce parameter\_documentation lint plugin [\#176](https://github.com/theforeman/puppet-dns/pull/176) ([ekohl](https://github.com/ekohl))
+- Update zone documentation [\#174](https://github.com/theforeman/puppet-dns/pull/174) ([marcdeop](https://github.com/marcdeop))
+- Fix custom key ordering [\#173](https://github.com/theforeman/puppet-dns/pull/173) ([coreone](https://github.com/coreone))
+
 ## [8.0.0](https://github.com/theforeman/puppet-dns/tree/8.0.0) (2020-05-13)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/7.0.0...8.0.0)
