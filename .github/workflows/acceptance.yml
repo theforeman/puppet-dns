@@ -47,10 +47,6 @@ jobs:
             puppet: "5"
     name: Puppet ${{ matrix.puppet }} - ${{ matrix.setfile }}
     steps:
-      - name: Enable IPv6 on docker
-        run: |
-          echo '{"ipv6":true,"fixed-cidr-v6":"2001:db8:1::/64"}' | sudo tee /etc/docker/daemon.json
-          sudo service docker restart
       - uses: actions/checkout@v2
       - name: Setup ruby
         uses: actions/setup-ruby@v1

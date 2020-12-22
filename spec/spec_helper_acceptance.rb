@@ -3,6 +3,7 @@ require 'voxpupuli/acceptance/spec_helper_acceptance'
 ENV['BEAKER_setfile'] ||= 'centos7-64{hostname=centos7-64.example.com}'
 
 configure_beaker(modules: :fixtures) do |host|
+  on(host, 'echo 0 > /proc/sys/net/ipv6/conf/all/disable_ipv6')
   if fact_on(host, 'os.family') == 'RedHat'
     unless fact_on(host, 'os.name') == 'Fedora'
       # don't delete downloaded rpm for use with BEAKER_provision=no +
