@@ -1,5 +1,15 @@
 # Changelog
 
+## [8.2.0](https://github.com/theforeman/puppet-dns/tree/8.2.0) (2021-04-26)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/8.1.0...8.2.0)
+
+**Implemented enhancements:**
+
+- Support Puppet 7 [\#184](https://github.com/theforeman/puppet-dns/pull/184) ([ekohl](https://github.com/ekohl))
+- Drop Fedora 26, add Fedora 32 [\#181](https://github.com/theforeman/puppet-dns/pull/181) ([ekohl](https://github.com/ekohl))
+- Allow configuration checks to be turned off [\#178](https://github.com/theforeman/puppet-dns/pull/178) ([coreone](https://github.com/coreone))
+
 ## [8.1.0](https://github.com/theforeman/puppet-dns/tree/8.1.0) (2020-10-27)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/8.0.0...8.1.0)
