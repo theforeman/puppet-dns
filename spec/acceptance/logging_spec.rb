@@ -2,35 +2,35 @@ require 'spec_helper_acceptance'
 
 describe 'Scenario: install bind with logging enabled' do
   context 'with logging enabled' do
-    let(:pp) do
-      <<-EOS
-      class { 'dns':
-        logging_categories => {
-          queries => {
-            channels => ['queries_file'],
+    it_behaves_like 'an idempotent resource' do
+      let(:manifest) do
+        <<-PUPPET
+        class { 'dns':
+          logging_categories => {
+            queries => {
+              channels => ['queries_file'],
+            },
           },
-        },
-        logging_channels   => {
-          queries_file => {
-            file_path     => '/var/log/named/queries.log',
-            file_versions => 6,
-            file_size     => '50m',
-            log_type      => 'file',
-            severity      => 'dynamic',
-            print_time    => 'yes',
+          logging_channels   => {
+            queries_file => {
+              file_path     => '/var/log/named/queries.log',
+              file_versions => 6,
+              file_size     => '50m',
+              log_type      => 'file',
+              severity      => 'dynamic',
+              print_time    => 'yes',
+            },
           },
-        },
-      }
+        }
 
-      dns::zone { 'example.com':
-        soa                => 'ns1.example.com',
-        soaip              => '192.0.2.1',
-        soaipv6            => '2001:db8::1',
-      }
-      EOS
+        dns::zone { 'example.com':
+          soa                => 'ns1.example.com',
+          soaip              => '192.0.2.1',
+          soaipv6            => '2001:db8::1',
+        }
+        PUPPET
+      end
     end
-
-    it_behaves_like 'a idempotent resource'
 
     service_name = fact('osfamily') == 'Debian' ? 'bind9' : 'named'
 
