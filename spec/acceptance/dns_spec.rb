@@ -1,19 +1,19 @@
 require 'spec_helper_acceptance'
 
 describe 'Scenario: install bind' do
-  let(:pp) do
-    <<-EOS
-    include dns
+  it_behaves_like 'an idempotent resource' do
+    let(:manifest) do
+      <<-EOS
+      include dns
 
-    dns::zone { 'example.com':
-      soa     => 'ns1.example.com',
-      soaip   => '192.0.2.1',
-      soaipv6 => '2001:db8::1',
-    }
-    EOS
+      dns::zone { 'example.com':
+        soa     => 'ns1.example.com',
+        soaip   => '192.0.2.1',
+        soaipv6 => '2001:db8::1',
+      }
+      EOS
+    end
   end
-
-  it_behaves_like 'a idempotent resource'
 
   service_name = fact('osfamily') == 'Debian' ? 'bind9' : 'named'
 

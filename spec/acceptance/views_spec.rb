@@ -2,39 +2,39 @@ require 'spec_helper_acceptance'
 
 describe 'Scenario: install bind with views enabled' do
   context 'with views enabled' do
-    let(:pp) do
-      <<-EOS
-      class {'::dns':
-        enable_views => true,
-      }
+    it_behaves_like 'an idempotent resource' do
+      let(:manifest) do
+        <<-PUPPET
+        class {'::dns':
+          enable_views => true,
+        }
 
-      dns::view { 'v4':
-        match_clients => ['0.0.0.0/0'],
-      }
+        dns::view { 'v4':
+          match_clients => ['0.0.0.0/0'],
+        }
 
-      dns::view { 'v6':
-        match_clients => ['::/0'],
-      }
+        dns::view { 'v6':
+          match_clients => ['::/0'],
+        }
 
-      dns::zone { 'example.com-v4':
-        zone         => 'example.com',
-        soa          => 'ns1-v4.example.com',
-        soaip        => '192.0.2.1',
-        filename     => 'db.example.com-v4',
-        target_views => ['v4'],
-      }
+        dns::zone { 'example.com-v4':
+          zone         => 'example.com',
+          soa          => 'ns1-v4.example.com',
+          soaip        => '192.0.2.1',
+          filename     => 'db.example.com-v4',
+          target_views => ['v4'],
+        }
 
-      dns::zone { 'example.com-v6':
-        zone         => 'example.com',
-        soa          => 'ns1-v6.example.com',
-        soaipv6      => '2001:db8::1',
-        filename     => 'db.example.com-v6',
-        target_views => ['v6'],
-      }
-      EOS
+        dns::zone { 'example.com-v6':
+          zone         => 'example.com',
+          soa          => 'ns1-v6.example.com',
+          soaipv6      => '2001:db8::1',
+          filename     => 'db.example.com-v6',
+          target_views => ['v6'],
+        }
+        PUPPET
+      end
     end
-
-    it_behaves_like 'a idempotent resource'
 
     service_name = fact('osfamily') == 'Debian' ? 'bind9' : 'named'
 
