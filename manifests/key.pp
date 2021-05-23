@@ -17,7 +17,7 @@
 #   The size of the key to generate. Only used when generating the key. It's
 #   ignored if when a key is specified.
 #
-define dns::key(
+define dns::key (
   String               $algorithm    = 'hmac-md5',
   String               $filename     = "${name}.key",
   Optional[String]     $secret       = undef,
@@ -27,7 +27,7 @@ define dns::key(
   $keyfilename = "${keydir}/${filename}"
 
   if $secret {
-    file {$keyfilename:
+    file { $keyfilename:
       ensure  => file,
       owner   => $dns::user,
       group   => $dns::group,

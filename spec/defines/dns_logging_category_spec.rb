@@ -17,7 +17,7 @@ describe 'dns::logging::category' do
 
         it { is_expected.to compile.with_all_deps }
 
-        it 'should have valid category contents' do
+        it 'has valid category contents' do
           verify_concat_fragment_exact_contents(
             catalogue,
             "named.conf-logging-category-#{title}.dns",
@@ -25,25 +25,25 @@ describe 'dns::logging::category' do
               '  category test {',
               '    test_channel;',
               '  };',
-            ]
+            ],
           )
         end
 
         it {
           is_expected.to contain_concat_fragment(
-            "named.conf-logging-category-#{title}.dns"
+            "named.conf-logging-category-#{title}.dns",
           ).with('order' => 55)
         }
 
         it { is_expected.to contain_file(logdir).with_ensure('directory') }
         it {
           is_expected.to contain_concat_fragment(
-            'named.conf+50-logging-header.dns'
+            'named.conf+50-logging-header.dns',
           ).with('order' => 50).with('content' => "logging {\n")
         }
         it {
           is_expected.to contain_concat_fragment(
-            'named.conf+60-logging-footer.dns'
+            'named.conf+60-logging-footer.dns',
           ).with('order' => 60).with('content' => "};\n")
         }
       end
@@ -58,7 +58,7 @@ describe 'dns::logging::category' do
 
         it {
           is_expected.to contain_concat_fragment(
-            "named.conf-logging-category-#{title}.dns"
+            "named.conf-logging-category-#{title}.dns",
           ).with('order' => 59)
         }
       end

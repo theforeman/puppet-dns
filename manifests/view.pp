@@ -58,7 +58,6 @@ define dns::view (
   Boolean                               $include_defaultzones = true,
   String                                $order                = '-',
 ) {
-
   unless $dns::enable_views {
     fail('Must set $dns::enable_views to true in order to use dns::view')
   }
@@ -89,5 +88,4 @@ define dns::view (
     content => "};\n",
     order   => "${title}-14",
   }
-
 }
