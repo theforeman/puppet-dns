@@ -81,7 +81,6 @@ define dns::zone (
   Optional[Enum['yes', 'no']] $dnssec_secure_to_insecure  = undef,
   Optional[Enum['allow', 'maintain', 'off']] $auto_dnssec = undef,
 ) {
-
   $_contact = pick($contact, "root.${zone}.")
 
   $zonefilename = "${zonefilepath}/${filename}"

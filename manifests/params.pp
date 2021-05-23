@@ -125,8 +125,8 @@ class dns::params {
   $listen_on_v6          = 'any'
 
   $recursion             = 'yes'
-  $allow_recursion       = [ 'localnets', 'localhost' ]
-  $allow_query           = [ 'any' ]
+  $allow_recursion       = ['localnets', 'localhost']
+  $allow_query           = ['any']
 
   $empty_zones_enable    = 'yes'
 
@@ -138,8 +138,8 @@ class dns::params {
   $controls              = {
     '127.0.0.1' => {
       'port' => 953,
-      'allowed_addresses' => [ '127.0.0.1' ],
-      'keys' => [ 'rndc-key' ],
+      'allowed_addresses' => ['127.0.0.1'],
+      'keys' => ['rndc-key'],
     },
   }
 

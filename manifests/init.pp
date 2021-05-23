@@ -181,7 +181,6 @@ class dns (
   Hash[String, Hash] $logging_categories                            = $dns::params::logging_categories,
   Hash[String, Hash] $logging_channels                              = $dns::params::logging_channels,
 ) inherits dns::params {
-
   include dns::install
   include dns::config
   contain dns::service
