@@ -26,17 +26,17 @@ describe 'dns::key' do
       context 'secret set' do
         let(:params) do
           {
-            :secret => 'top_secret',
+            secret: 'top_secret',
           }
         end
 
-        it 'should contain a file with the secret in it' do
+        it 'contains a file with the secret in it' do
           verify_exact_contents(catalogue, "#{etc_named_directory}/foreman_key.key", [
-            'key "foreman_key" {',
-            '    algorithm hmac-md5;',
-            '    secret "top_secret";',
-            '};',
-          ])
+                                  'key "foreman_key" {',
+                                  '    algorithm hmac-md5;',
+                                  '    secret "top_secret";',
+                                  '};',
+                                ],)
         end
 
         it do

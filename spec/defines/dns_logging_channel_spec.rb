@@ -17,7 +17,7 @@ describe 'dns::logging::channel' do
 
         it { is_expected.to compile.with_all_deps }
 
-        it 'should have valid channel contents' do
+        it 'has valid channel contents' do
           verify_concat_fragment_exact_contents(
             catalogue,
             "named.conf-logging-channel-#{title}.dns",
@@ -25,25 +25,25 @@ describe 'dns::logging::channel' do
               '  channel test {',
               '    null;',
               '  };',
-            ]
+            ],
           )
         end
 
         it {
           is_expected.to contain_concat_fragment(
-            "named.conf-logging-channel-#{title}.dns"
+            "named.conf-logging-channel-#{title}.dns",
           ).with('order' => 51)
         }
 
-        it { should contain_file(logdir).with_ensure('directory') }
+        it { is_expected.to contain_file(logdir).with_ensure('directory') }
         it {
           is_expected.to contain_concat_fragment(
-            'named.conf+50-logging-header.dns'
+            'named.conf+50-logging-header.dns',
           ).with('order' => 50).with('content' => "logging {\n")
         }
         it {
           is_expected.to contain_concat_fragment(
-            'named.conf+60-logging-footer.dns'
+            'named.conf+60-logging-footer.dns',
           ).with('order' => 60).with('content' => "};\n")
         }
       end
@@ -58,7 +58,7 @@ describe 'dns::logging::channel' do
 
         it {
           is_expected.to contain_concat_fragment(
-            "named.conf-logging-channel-#{title}.dns"
+            "named.conf-logging-channel-#{title}.dns",
           ).with('order' => 55)
         }
       end
@@ -66,7 +66,7 @@ describe 'dns::logging::channel' do
       describe 'with log_type = stderr set' do
         let(:params) { { 'log_type' => 'stderr' } }
 
-        it 'should have valid channel contents' do
+        it 'has valid channel contents' do
           verify_concat_fragment_exact_contents(
             catalogue,
             "named.conf-logging-channel-#{title}.dns",
@@ -74,13 +74,13 @@ describe 'dns::logging::channel' do
               '  channel test {',
               '    stderr;',
               '  };',
-            ]
+            ],
           )
         end
 
         it {
           is_expected.to contain_concat_fragment(
-            "named.conf-logging-channel-#{title}.dns"
+            "named.conf-logging-channel-#{title}.dns",
           ).with('order' => 51)
         }
       end
@@ -99,7 +99,7 @@ describe 'dns::logging::channel' do
           }
         end
 
-        it 'should have valid channel contents' do
+        it 'has valid channel contents' do
           verify_concat_fragment_exact_contents(
             catalogue,
             "named.conf-logging-channel-#{title}.dns",
@@ -107,7 +107,7 @@ describe 'dns::logging::channel' do
               '  channel test {',
               '    syslog auth;',
               '  };',
-            ]
+            ],
           )
         end
       end
@@ -176,7 +176,7 @@ describe 'dns::logging::channel' do
           }
         end
 
-        it 'should have valid channel contents' do
+        it 'has valid channel contents' do
           verify_concat_fragment_exact_contents(
             catalogue,
             "named.conf-logging-channel-#{title}.dns",
@@ -184,7 +184,7 @@ describe 'dns::logging::channel' do
               '  channel test {',
               '    file "/path/to/file.log" versions 4 size 5m;',
               '  };',
-            ]
+            ],
           )
         end
       end
@@ -197,7 +197,7 @@ describe 'dns::logging::channel' do
           }
         end
 
-        it 'should have valid channel contents' do
+        it 'has valid channel contents' do
           verify_concat_fragment_exact_contents(
             catalogue,
             "named.conf-logging-channel-#{title}.dns",
@@ -206,7 +206,7 @@ describe 'dns::logging::channel' do
               '    stderr;',
               '    severity dynamic;',
               '  };',
-            ]
+            ],
           )
         end
       end
@@ -219,7 +219,7 @@ describe 'dns::logging::channel' do
           }
         end
 
-        it 'should have valid channel contents' do
+        it 'has valid channel contents' do
           verify_concat_fragment_exact_contents(
             catalogue,
             "named.conf-logging-channel-#{title}.dns",
@@ -228,7 +228,7 @@ describe 'dns::logging::channel' do
               '    stderr;',
               '    print-category yes;',
               '  };',
-            ]
+            ],
           )
         end
       end
@@ -241,7 +241,7 @@ describe 'dns::logging::channel' do
           }
         end
 
-        it 'should have valid channel contents' do
+        it 'has valid channel contents' do
           verify_concat_fragment_exact_contents(
             catalogue,
             "named.conf-logging-channel-#{title}.dns",
@@ -250,7 +250,7 @@ describe 'dns::logging::channel' do
               '    stderr;',
               '    print-severity yes;',
               '  };',
-            ]
+            ],
           )
         end
       end
@@ -263,7 +263,7 @@ describe 'dns::logging::channel' do
           }
         end
 
-        it 'should have valid channel contents' do
+        it 'has valid channel contents' do
           verify_concat_fragment_exact_contents(
             catalogue,
             "named.conf-logging-channel-#{title}.dns",
@@ -272,7 +272,7 @@ describe 'dns::logging::channel' do
               '    stderr;',
               '    print-time yes;',
               '  };',
-            ]
+            ],
           )
         end
       end

@@ -90,15 +90,15 @@ describe 'dns' do
       let(:service_name) { facts[:os]['family'] == 'Debian' ? 'bind9' : 'named' }
 
       describe 'with no custom parameters' do
-        it { should contain_class('dns::params') }
-        it { should contain_class('dns::install') }
-        it { should contain_class('dns::config') }
-        it { should contain_class('dns::service') }
+        it { is_expected.to contain_class('dns::params') }
+        it { is_expected.to contain_class('dns::install') }
+        it { is_expected.to contain_class('dns::config') }
+        it { is_expected.to contain_class('dns::service') }
 
-        it { should contain_package(package_name).with_ensure('present') }
-        it { should contain_group(group_name) }
+        it { is_expected.to contain_package(package_name).with_ensure('present') }
+        it { is_expected.to contain_group(group_name) }
 
-        it { should contain_concat(options_path) }
+        it { is_expected.to contain_concat(options_path) }
         it do
           expected = [
             "directory \"#{var_path}\";",
@@ -118,8 +118,8 @@ describe 'dns' do
           verify_concat_fragment_exact_contents(catalogue, 'options.conf+10-main.dns', expected)
         end
 
-        it { should contain_concat("#{etc_named_directory}/zones.conf").with_validate_cmd("#{sbin}/named-checkconf %") }
-        it { should contain_concat("#{etc_directory}/named.conf").with_validate_cmd("#{sbin}/named-checkconf %") }
+        it { is_expected.to contain_concat("#{etc_named_directory}/zones.conf").with_validate_cmd("#{sbin}/named-checkconf %") }
+        it { is_expected.to contain_concat("#{etc_directory}/named.conf").with_validate_cmd("#{sbin}/named-checkconf %") }
         it do
           expected = [
             '// named.conf',
@@ -142,60 +142,65 @@ describe 'dns' do
           verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', expected)
         end
 
-        it { should contain_file(zonefilepath).with_ensure('directory') }
+        it { is_expected.to contain_file(zonefilepath).with_ensure('directory') }
         it do
-          should contain_exec('create-rndc.key')
+          is_expected.to contain_exec('create-rndc.key')
             .with_command("#{sbin}/rndc-confgen -r /dev/urandom -a -c #{rndc_key}")
             .with_creates(rndc_key)
         end
-        it { should contain_file(rndc_key) }
+        it { is_expected.to contain_file(rndc_key) }
 
-        it { should contain_service(service_name).with_ensure('running').with_enable(true).with_restart(nil) }
+        it { is_expected.to contain_service(service_name).with_ensure('running').with_enable(true).with_restart(nil) }
         it { is_expected.not_to contain_concat_fragment('named.conf+50-logging-header.dns') }
         it { is_expected.not_to contain_concat_fragment('named.conf+60-logging-footer.dns') }
       end
 
       describe 'with unmanaged localzonepath' do
+        let(:params) do
+          {
+            localzonepath: 'unmanaged',
+          }
+        end
 
-        let(:params) do {
-          :localzonepath => 'unmanaged',
-        } end
-
-        it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
-          '// named.conf',
-          "include \"#{rndc_key}\";",
-          'controls  {',
-          '        inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; };',
-          '};',
-          'options  {',
-          "        include \"#{options_path}\";",
-          '};',
-          '// Public view read by Server Admin',
-          "include \"#{etc_named_directory}/zones.conf\";",
-        ])}
+        it {
+          verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
+                                                  '// named.conf',
+                                                  "include \"#{rndc_key}\";",
+                                                  'controls  {',
+                                                  '        inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; };',
+                                                  '};',
+                                                  'options  {',
+                                                  "        include \"#{options_path}\";",
+                                                  '};',
+                                                  '// Public view read by Server Admin',
+                                                  "include \"#{etc_named_directory}/zones.conf\";",
+                                                ],)
+        }
       end
 
       describe 'with additional_directives' do
-        let(:params) { {:additional_directives => [
-          [
-            'logging {',
-            '  channel string {',
-            '    print-severity boolean;',
-            '    print-category boolean;',
-            '  };',
-            '};',
-          ].join("\n"),
-          [
-            'lwres {',
-            '  listen-on [ port integer ] {',
-            '    ( ipv4_address | ipv6_address ) [ port integer ];',
-            '  };',
-            '  view string optional_class;',
-            '  search { string; ... };',
-            '  ndots integer;',
-            '};',
-          ].join("\n"),
-        ]} }
+        let(:params) do
+          { additional_directives: [
+            [
+              'logging {',
+              '  channel string {',
+              '    print-severity boolean;',
+              '    print-category boolean;',
+              '  };',
+              '};',
+            ].join("\n"),
+            [
+              'lwres {',
+              '  listen-on [ port integer ] {',
+              '    ( ipv4_address | ipv6_address ) [ port integer ];',
+              '  };',
+              '  view string optional_class;',
+              '  search { string; ... };',
+              '  ndots integer;',
+              '};',
+            ].join("\n"),
+          ] }
+        end
 
         it do
           expected = [
@@ -232,72 +237,81 @@ describe 'dns' do
       end
 
       describe 'with ipv6 disabled' do
-        let(:params) { {:listen_on_v6 => 'none'} }
+        let(:params) { { listen_on_v6: 'none' } }
 
-        it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
-          'listen-on-v6 { none; };',
-        ])}
+        it {
+          verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+                                            'listen-on-v6 { none; };',
+                                          ],)
+        }
       end
 
       describe 'with empty zones disabled' do
-        let(:params) { {:empty_zones_enable => 'no'} }
+        let(:params) { { empty_zones_enable: 'no' } }
 
-        it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
-          'empty-zones-enable no;',
-        ])}
+        it {
+          verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+                                            'empty-zones-enable no;',
+                                          ],)
+        }
       end
 
       describe 'with dns_notify disabled' do
-        let(:params) { {:dns_notify => 'no' } }
+        let(:params) { { dns_notify: 'no' } }
 
-        it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
-          'notify no;',
-        ])}
+        it {
+          verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+                                            'notify no;',
+                                          ],)
+        }
       end
 
       describe 'with forward only' do
-        let(:params) { {:forward => 'only'} }
+        let(:params) { { forward: 'only' } }
 
-        it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
-          'forward only;',
-        ])}
+        it {
+          verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+                                            'forward only;',
+                                          ],)
+        }
       end
 
       describe 'with undef forward' do
-        let(:params) { {:forward => :undef} }
+        let(:params) { { forward: :undef } }
 
-        it { should contain_concat_fragment('options.conf+10-main.dns').without_content('/forward ;/') }
+        it { is_expected.to contain_concat_fragment('options.conf+10-main.dns').without_content('/forward ;/') }
       end
 
       describe 'with false listen_on_v6' do
-        let(:params) { {:listen_on_v6 => false} }
+        let(:params) { { listen_on_v6: false } }
 
-        it { should contain_concat_fragment('options.conf+10-main.dns').without_content('/listen_on_v6/') }
+        it { is_expected.to contain_concat_fragment('options.conf+10-main.dns').without_content('/listen_on_v6/') }
       end
 
       describe 'with group_manage false' do
-        let(:params) { {:group_manage => false} }
+        let(:params) { { group_manage: false } }
 
-        it { should_not contain_group(group_name) }
+        it { is_expected.not_to contain_group(group_name) }
       end
 
       context 'service' do
         describe 'with service_ensure stopped' do
-          let(:params) { {:service_ensure => 'stopped'} }
+          let(:params) { { service_ensure: 'stopped' } }
 
-          it { should contain_service(service_name).with_ensure('stopped').with_enable(true) }
+          it { is_expected.to contain_service(service_name).with_ensure('stopped').with_enable(true) }
         end
 
         describe 'with service_enable false' do
-          let(:params) { {:service_enable => false} }
+          let(:params) { { service_enable: false } }
 
-          it { should contain_service(service_name).with_ensure('running').with_enable(false) }
+          it { is_expected.to contain_service(service_name).with_ensure('running').with_enable(false) }
         end
 
         describe 'with service_restart_command set to "/usr/sbin/service bind9 reload' do
-          let(:params) { {:service_restart_command => '/usr/sbin/service bind9 reload'} }
+          let(:params) { { service_restart_command: '/usr/sbin/service bind9 reload' } }
+
           it {
-            should contain_service(service_name)
+            is_expected.to contain_service(service_name)
               .with_ensure('running')
               .with_enable(true)
               .with_restart('/usr/sbin/service bind9 reload')
@@ -305,78 +319,84 @@ describe 'dns' do
         end
 
         describe 'with manage_service true' do
-          let(:params) { {:manage_service => true} }
-          it { should contain_service(service_name) }
+          let(:params) { { manage_service: true } }
+
+          it { is_expected.to contain_service(service_name) }
         end
 
         describe 'with manage_service false' do
-          let(:params) { {:manage_service => false} }
-          it { should_not contain_service(service_name) }
+          let(:params) { { manage_service: false } }
+
+          it { is_expected.not_to contain_service(service_name) }
         end
       end
 
       describe 'with acls set' do
-        let(:params) { {:acls => { 'trusted_nets' => [ '127.0.0.1/24', '127.0.1.0/24' ] } } }
+        let(:params) { { acls: { 'trusted_nets' => ['127.0.0.1/24', '127.0.1.0/24'] } } }
 
-        it { verify_concat_fragment_contents(catalogue, 'named.conf+10-main.dns', [
-          'acl "trusted_nets"  {',
-          '        127.0.0.1/24;',
-          '        127.0.1.0/24;',
-          '};',
-        ])}
+        it {
+          verify_concat_fragment_contents(catalogue, 'named.conf+10-main.dns', [
+                                            'acl "trusted_nets"  {',
+                                            '        127.0.0.1/24;',
+                                            '        127.0.1.0/24;',
+                                            '};',
+                                          ],)
+        }
       end
 
       describe 'with additional options' do
-        let(:params) { { :additional_options => { 'max-cache-ttl' => 3600, 'max-ncache-ttl' => 3600 } } }
+        let(:params) { { additional_options: { 'max-cache-ttl' => 3600, 'max-ncache-ttl' => 3600 } } }
 
-        it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
-          'max-cache-ttl 3600;',
-          'max-ncache-ttl 3600;'
-        ])}
+        it {
+          verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+                                            'max-cache-ttl 3600;',
+                                            'max-ncache-ttl 3600;'
+                                          ],)
+        }
       end
 
       describe 'with zones' do
         let :params do
           {
-            :zones => {
+            zones: {
               'example.com' => {},
             },
           }
         end
 
-        it { should compile.with_all_deps }
-        it { should contain_dns__zone('example.com') }
-        it { should contain_file("#{zonefilepath}/db.example.com") }
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_dns__zone('example.com') }
+        it { is_expected.to contain_file("#{zonefilepath}/db.example.com") }
       end
 
       describe 'with keys' do
         let :params do
           {
-            :keys => {
+            keys: {
               'dns-key' => {},
             },
           }
         end
 
-        it { should compile.with_all_deps }
-        it { should contain_dns__key('dns-key') }
-        it { should contain_concat__fragment('named.conf+20-key-dns-key.dns') }
-        it { should contain_exec('create-dns-key.key') }
-        it { should contain_file("#{etc_directory}/dns-key.key") }
+        it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_dns__key('dns-key') }
+        it { is_expected.to contain_concat__fragment('named.conf+20-key-dns-key.dns') }
+        it { is_expected.to contain_exec('create-dns-key.key') }
+        it { is_expected.to contain_file("#{etc_directory}/dns-key.key") }
       end
 
       describe 'with config_check set to false' do
-        let(:params) { { :config_check => false } }
+        let(:params) { { config_check: false } }
 
         it { is_expected.to compile.with_all_deps }
 
         it {
           is_expected.to contain_concat("#{etc_directory}/named.conf")
-            .without_validate_cmd()
+            .without_validate_cmd
         }
       end
 
-      context 'sysconfig', if: ['Debian', 'RedHat'].include?(os_facts[:os]['family']) do
+      context 'sysconfig', if: %w[Debian RedHat].include?(os_facts[:os]['family']) do
         let(:sysconfig_named_path) do
           case facts[:os]['family']
           when 'RedHat'
@@ -424,11 +444,11 @@ describe 'dns' do
           end
 
           it do
-            should contain_file(sysconfig_named_path).with(
+            is_expected.to contain_file(sysconfig_named_path).with(
               owner: 'root',
               group: 'root',
               mode: '0644',
-              content: sysconfig_named_content
+              content: sysconfig_named_content,
             )
           end
         end
@@ -468,11 +488,11 @@ describe 'dns' do
           end
 
           it {
-            should contain_file(sysconfig_named_path).with(
+            is_expected.to contain_file(sysconfig_named_path).with(
               owner: 'root',
               group: 'root',
               mode: '0644',
-              content: sysconfig_named_content
+              content: sysconfig_named_content,
             )
           }
         end
@@ -498,11 +518,11 @@ describe 'dns' do
           end
 
           it {
-            should contain_file(sysconfig_named_path).with(
+            is_expected.to contain_file(sysconfig_named_path).with(
               owner: 'root',
               group: 'root',
               mode: '0644',
-              content: sysconfig_named_content
+              content: sysconfig_named_content,
             )
           }
         end
@@ -520,10 +540,10 @@ describe 'dns' do
 
           it {
             verify_contents(catalogue, sysconfig_named_path, [
-              'BAZ="quux"',
-              'FOO="bar"',
-              'export SOMETHING="other"',
-            ])
+                              'BAZ="quux"',
+                              'FOO="bar"',
+                              'export SOMETHING="other"',
+                            ],)
           }
         end
       end
