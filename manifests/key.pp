@@ -38,7 +38,7 @@ define dns::key(
     }
   } else {
     exec { "create-${filename}":
-      command => "${dns::rndcconfgen} -r /dev/urandom -a -c ${keyfilename} -b ${keysize} -k ${name}",
+      command => "${dns::rndcconfgen} -a -c ${keyfilename} -b ${keysize} -k ${name}",
       creates => $keyfilename,
       before  => Class['dns::config'],
       notify  => Class['dns::service'],

@@ -145,7 +145,7 @@ describe 'dns' do
         it { should contain_file(zonefilepath).with_ensure('directory') }
         it do
           should contain_exec('create-rndc.key')
-            .with_command("#{sbin}/rndc-confgen -r /dev/urandom -a -c #{rndc_key}")
+            .with_command("#{sbin}/rndc-confgen -a -c #{rndc_key}")
             .with_creates(rndc_key)
         end
         it { should contain_file(rndc_key) }
