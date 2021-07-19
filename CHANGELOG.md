@@ -1,6 +1,25 @@
 # Changelog
 
-## [8.2.0](https://github.com/theforeman/puppet-dns/tree/8.2.0) (2021-04-26)
+## [9.0.0](https://github.com/theforeman/puppet-dns/tree/9.0.0) (2021-07-22)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/8.2.0...9.0.0)
+
+**Breaking changes:**
+
+- Drop EL6 and Debian 8 and Ubuntu 16.04 support [\#193](https://github.com/theforeman/puppet-dns/pull/193) ([ehelms](https://github.com/ehelms))
+- Drop Puppet 5 support [\#191](https://github.com/theforeman/puppet-dns/pull/191) ([ehelms](https://github.com/ehelms))
+
+**Implemented enhancements:**
+
+- Drop usage of -r from rndc-confgen [\#190](https://github.com/theforeman/puppet-dns/pull/190) ([karelyatin](https://github.com/karelyatin))
+- Allow Puppet 7 compatible versions of mods [\#186](https://github.com/theforeman/puppet-dns/pull/186) ([ekohl](https://github.com/ekohl))
+- Replace get\_in\_addr\_arpa with reverse\_dns function [\#175](https://github.com/theforeman/puppet-dns/pull/175) ([ekohl](https://github.com/ekohl))
+
+**Closed issues:**
+
+- create-rndc.key fails with bind9 9.13.0+ [\#189](https://github.com/theforeman/puppet-dns/issues/189)
+
+## [8.2.0](https://github.com/theforeman/puppet-dns/tree/8.2.0) (2021-04-27)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/8.1.0...8.2.0)
 
