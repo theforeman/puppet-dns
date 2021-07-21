@@ -97,43 +97,10 @@ class dns::params {
     }
   }
 
-  # This module will manage the system group by default
-  $group_manage = true
-
-  # Don't set any restart command by default, let Puppet use the
-  # platform-dependent service resource default when handling the service
-  # restart.
-  $service_restart_command = undef
-
-  $namedconf_template    = 'dns/named.conf.erb'
-  $optionsconf_template  = 'dns/options.conf.erb'
-
-  $sysconfig_additional_settings = {}
-
   $namedconf_path        = "${dnsdir}/named.conf"
-
-  $logdir                = '/var/log/named'
 
   #pertaining to rndc
   $rndckeypath           = "${dnsdir}/rndc.key"
-
-  $enable_views          = false
-
-  $forward               = undef
-  $forwarders            = []
-
-  $listen_on_v6          = 'any'
-
-  $recursion             = 'yes'
-  $allow_recursion       = [ 'localnets', 'localhost' ]
-  $allow_query           = [ 'any' ]
-
-  $empty_zones_enable    = 'yes'
-
-  $dns_notify            = undef
-
-  $dnssec_enable         = 'yes'
-  $dnssec_validation     = 'yes'
 
   $controls              = {
     '127.0.0.1' => {
@@ -142,18 +109,4 @@ class dns::params {
       'keys' => [ 'rndc-key' ],
     },
   }
-
-  $manage_service        = true
-  $service_ensure        = 'running'
-  $service_enable        = true
-  $config_check          = true
-  $acls                  = {}
-
-  $additional_options    = {}
-  $additional_directives = []
-
-  $zones                 = {}
-  $keys                  = {}
-  $logging_categories    = {}
-  $logging_channels      = {}
 }
