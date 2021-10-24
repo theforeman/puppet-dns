@@ -1,5 +1,13 @@
 # Changelog
 
+## [9.1.0](https://github.com/theforeman/puppet-dns/tree/9.1.0) (2021-10-29)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.0.0...9.1.0)
+
+**Implemented enhancements:**
+
+- Move static parameters to init.pp [\#195](https://github.com/theforeman/puppet-dns/pull/195) ([ekohl](https://github.com/ekohl))
+
 ## [9.0.0](https://github.com/theforeman/puppet-dns/tree/9.0.0) (2021-07-22)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/8.2.0...9.0.0)
