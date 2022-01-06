@@ -95,7 +95,7 @@ describe 'dns' do
         it { should contain_class('dns::config') }
         it { should contain_class('dns::service') }
 
-        it { should contain_package(package_name).with_ensure('present') }
+        it { should contain_package(package_name).with_ensure('installed') }
         it { should contain_group(group_name) }
 
         it { should contain_concat(options_path) }
