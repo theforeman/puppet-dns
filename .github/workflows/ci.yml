@@ -31,7 +31,7 @@ jobs:
         run: bundle exec rake lint
       - name: Setup Test Matrix
         id: get_outputs
-        run: bundle exec metadata2gha --use-fqdn --pidfile-workaround CentOS
+        run: bundle exec metadata2gha --use-fqdn
 
   unit:
     needs: setup_matrix
