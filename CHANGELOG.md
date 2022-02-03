@@ -1,5 +1,14 @@
 # Changelog
 
+## [9.2.0](https://github.com/theforeman/puppet-dns/tree/9.2.0) (2022-02-03)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.1.0...9.2.0)
+
+**Implemented enhancements:**
+
+- Support CentOS 9, Debian 11 and Ubuntu 20.04 [\#201](https://github.com/theforeman/puppet-dns/pull/201) ([ekohl](https://github.com/ekohl))
+- puppetlabs/stdlib: Allow 8.x [\#199](https://github.com/theforeman/puppet-dns/pull/199) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [9.1.0](https://github.com/theforeman/puppet-dns/tree/9.1.0) (2021-10-29)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.0.0...9.1.0)
