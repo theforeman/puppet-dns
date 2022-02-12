@@ -10,7 +10,7 @@ describe 'dns' do
         when 'Debian'
           'bind9'
         when 'FreeBSD'
-          'bind910'
+          'bind916'
         else
           'bind'
         end

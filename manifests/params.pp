@@ -57,7 +57,7 @@ class dns::params {
       $defaultzonepath    = 'unmanaged'
       $publicviewpath     = "${dnsdir}/zones.conf"
       $viewconfigpath     = "${dnsdir}/named/views"
-      $dns_server_package = 'bind910'
+      $dns_server_package = 'bind916'
       $namedservicename   = 'named'
       $user               = 'bind'
       $group              = 'bind'
