@@ -29,6 +29,9 @@ zone "<%= @zone %>" {
 <% if @inline_signing -%>
     inline-signing <%= @inline_signing %>;
 <% end -%>
+<% if @dnssec_policy -%>
+    dnssec-policy <%= @dnssec_policy %>;
+<% end -%>
 <% if @key_directory -%>
     key-directory "<%= @key_directory %>";
 <% end -%>

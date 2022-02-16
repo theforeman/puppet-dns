@@ -48,6 +48,8 @@
 # @param inline_signing
 # @param dnssec_secure_to_insecure
 # @param auto_dnssec
+# @param dnssec_policy
+#   Causes the zone to be signed and turns on automatic maintenance for the zone.
 #
 define dns::zone (
   Array[String] $target_views                             = [],
@@ -80,6 +82,7 @@ define dns::zone (
   Optional[Enum['yes', 'no']] $inline_signing             = undef,
   Optional[Enum['yes', 'no']] $dnssec_secure_to_insecure  = undef,
   Optional[Enum['allow', 'maintain', 'off']] $auto_dnssec = undef,
+  Optional[String[1]] $dnssec_policy                      = undef,
 ) {
 
   $_contact = pick($contact, "root.${zone}.")
