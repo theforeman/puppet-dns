@@ -407,6 +407,7 @@ describe 'dns::zone' do
           :key_directory             => '/etc/bind/keys',
           :auto_dnssec               => 'maintain',
           :update_policy             => 'local',
+          :dnssec_policy             => 'foo',
         } }
 
         it "should have valid zone configuration" do
@@ -419,6 +420,7 @@ describe 'dns::zone' do
           '    inline-signing yes;',
           '    key-directory "/etc/bind/keys";',
           '    update-policy local;',
+          '    dnssec-policy foo;',
           '};',
         ])
         end
