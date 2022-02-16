@@ -1,0 +1,12 @@
+dnssec-policy <%= $name %> {
+  <%- unless $keys.empty { -%>
+    keys {
+      <%- $keys.each |$key| { -%>
+        <%= $key['type'] %> <% if $key['directory'] { %><%= $key['directory']%> <% } %>lifetime <%= $key['lifetime'] %> algorithm <%= $key['algorithm'] %><% if $key['size'] { %> <%= $key['size'] %><% } %>;
+      <%- } -%>
+    };
+  <%- } -%>
+  <%- $options.filter |$k, $v| { $v }.each |$k, $v| { -%>
+    <%= $k %> <%= $v%>;
+  <%- } -%>
+};
