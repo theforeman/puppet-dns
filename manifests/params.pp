@@ -24,6 +24,12 @@ class dns::params {
 
       # This option is not relevant for Debian
       $sysconfig_disable_zone_checking = undef
+
+      $dnssec_enable = $facts['os']['name'] ? {
+        'Debian' => if versioncmp($facts['os']['release']['major'], '11') >= 0 { undef } else { 'yes' },
+        'Ubuntu' => if versioncmp($facts['os']['release']['major'], '20.04') >= 0 { undef } else { 'yes' },
+        default  => undef,
+      }
     }
     'RedHat': {
       $dnsdir             = '/etc'
@@ -47,6 +53,8 @@ class dns::params {
 
       # This option is not relevant for RedHat
       $sysconfig_resolvconf_integration = undef
+
+      $dnssec_enable = 'yes'
     }
     /^(FreeBSD|DragonFly)$/: {
       $dnsdir             = '/usr/local/etc/namedb'
@@ -69,6 +77,7 @@ class dns::params {
       $sysconfig_startup_options = undef
       $sysconfig_disable_zone_checking = undef
       $sysconfig_resolvconf_integration = undef
+      $dnssec_enable = undef
     }
     'Archlinux': {
       $dnsdir             = '/etc'
@@ -91,6 +100,8 @@ class dns::params {
       $sysconfig_startup_options = undef
       $sysconfig_disable_zone_checking = undef
       $sysconfig_resolvconf_integration = undef
+
+      $dnssec_enable = undef
     }
     default: {
       fail ("Unsupported operating system family ${facts['os']['family']}")

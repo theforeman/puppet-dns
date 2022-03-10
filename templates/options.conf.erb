@@ -8,7 +8,9 @@ forward <%= scope.lookupvar('::dns::forward') %>;
 
 recursion <%= scope.lookupvar('::dns::recursion') %>;
 allow-query { <%= scope.lookupvar('::dns::allow_query').join("; ") %>; };
+<% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::dnssec_enable')) -%>
 dnssec-enable <%= scope.lookupvar('::dns::dnssec_enable') %>;
+<% end -%>
 dnssec-validation <%= scope.lookupvar('::dns::dnssec_validation') %>;
 
 empty-zones-enable <%= scope.lookupvar('::dns::empty_zones_enable') %>;

@@ -100,16 +100,25 @@ describe 'dns' do
 
         it { should contain_concat(options_path) }
         it do
+          has_dnssec_enable = case facts[:os]['family']
+                              when 'Debian'
+                                ['9', '10', '18.04'].include?(facts[:os]['release']['major'])
+                              when 'RedHat'
+                                true
+                              else
+                                false
+                              end
           expected = [
             "directory \"#{var_path}\";",
             'recursion yes;',
             'allow-query { any; };',
-            'dnssec-enable yes;',
             'dnssec-validation yes;',
             'empty-zones-enable yes;',
             'listen-on-v6 { any; };',
             'allow-recursion { localnets; localhost; };'
           ]
+
+          expected << 'dnssec-enable yes;' if has_dnssec_enable
 
           if facts[:os]['family'] == 'FreeBSD'
             expected << 'pid-file "/var/run/named/pid";'

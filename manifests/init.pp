@@ -56,7 +56,8 @@
 # @param dns_notify
 #   The notify option in named.conf
 # @param dnssec_enable
-#   The dnssec-enable option
+#   The dnssec-enable option. This option is deprecated and has no effect since
+#   BIND 9.15. It's been removed in BIND 9.18.
 # @param dnssec_validation
 #   The dnssec-validation option
 # @param namedconf_template
@@ -157,7 +158,7 @@ class dns (
   Array[String] $allow_query                                        = ['any'],
   Enum['yes', 'no'] $empty_zones_enable                             = 'yes',
   Optional[Enum['yes', 'no', 'explicit']] $dns_notify               = undef,
-  Enum['yes', 'no'] $dnssec_enable                                  = 'yes',
+  Optional[Enum['yes', 'no']] $dnssec_enable                        = $dns::params::dnssec_enable,
   Enum['yes', 'no', 'auto'] $dnssec_validation                      = 'yes',
   String $namedconf_template                                        = 'dns/named.conf.erb',
   Hash[String, Array[String]] $acls                                 = {},
