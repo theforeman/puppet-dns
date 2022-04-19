@@ -1,5 +1,20 @@
 # Changelog
 
+## [9.3.0](https://github.com/theforeman/puppet-dns/tree/9.3.0) (2022-04-19)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.2.0...9.3.0)
+
+**Implemented enhancements:**
+
+- Handle dnssec-enable config option removal [\#210](https://github.com/theforeman/puppet-dns/pull/210) ([ekohl](https://github.com/ekohl))
+- Add support for defining custom dnssec-policies [\#206](https://github.com/theforeman/puppet-dns/pull/206) ([smortex](https://github.com/smortex))
+- Add support for `dnssec-policy` [\#205](https://github.com/theforeman/puppet-dns/pull/205) ([smortex](https://github.com/smortex))
+- Update the specified bind version on FreeBSD to 9.16. [\#204](https://github.com/theforeman/puppet-dns/pull/204) ([rtprio](https://github.com/rtprio))
+
+**Closed issues:**
+
+- dnssec-enable no longer a valid configuration item. [\#207](https://github.com/theforeman/puppet-dns/issues/207)
+
 ## [9.2.0](https://github.com/theforeman/puppet-dns/tree/9.2.0) (2022-02-03)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.1.0...9.2.0)
