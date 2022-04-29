@@ -16,3 +16,6 @@ $TTL <%= @ttl %>
 <%= @soa %>. IN AAAA <%= @soaipv6 %>
 <% end -%>
 <% end -%>
+<%- @records.each do |record| -%>
+<%= record %>
+<%- end -%>
