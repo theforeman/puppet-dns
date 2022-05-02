@@ -16,6 +16,9 @@
 # @param manage_file_name
 #   Whether to set the file parameter in the zone file.
 #
+# @param replace_file
+#   Whether to update the zone file when a change is detected.
+#
 # @param update_policy
 #   This can be used to specifiy additional update policy rules in the
 #   following format
@@ -33,6 +36,7 @@
 # @param expire
 # @param negttl
 # @param serial
+# @param records
 # @param masters
 # @param allow_transfer
 # @param allow_query
@@ -75,6 +79,7 @@ define dns::zone (
   String $filename                                        = "db.${title}",
   Boolean $manage_file                                    = true,
   Boolean $manage_file_name                               = false,
+  Boolean $replace_file                                   = false,
   Enum['first', 'only'] $forward                          = 'first',
   Array $forwarders                                       = [],
   Optional[Enum['yes', 'no', 'explicit']] $dns_notify     = undef,
@@ -131,7 +136,7 @@ define dns::zone (
       group   => $dns::group,
       mode    => '0644',
       content => template('dns/zone.header.erb'),
-      replace => false,
+      replace => $replace_file,
       notify  => Class['dns::service'],
     }
   }
