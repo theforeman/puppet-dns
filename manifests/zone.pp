@@ -37,6 +37,10 @@
 # @param negttl
 # @param serial
 # @param records
+#   A list of records which will be added to the zone file in
+#   the RFC 1035 format (see https://datatracker.ietf.org/doc/html/rfc1035)
+#   Example ['host1 IN A 192.168.0.10', 'alt-host1 IN CNAME host1']
+#
 # @param masters
 # @param allow_transfer
 # @param allow_query
