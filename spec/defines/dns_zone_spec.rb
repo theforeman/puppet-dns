@@ -72,6 +72,19 @@ describe 'dns::zone' do
         ])
       end
 
+      context 'when replace_file => true' do
+        let(:params) { { replace_file: true } }
+
+        it "should create zone file with replace => true" do
+          should contain_file("#{zonefilepath}/db.example.com").with({
+            :owner    => user_name,
+            :group    => user_name,
+            :mode     => '0644',
+            :replace  => 'true',
+          }).that_notifies('Class[Dns::Service]')
+        end
+      end
+
       context 'when reverse => true' do
         let(:title) { '1.168.192.in-addr.arpa' }
         let(:params) {{ :reverse => true }}
@@ -107,6 +120,27 @@ describe 'dns::zone' do
             '@ IN NS puppetmaster.example.com.',
             'puppetmaster.example.com. IN A 192.0.2.1',
             'puppetmaster.example.com. IN AAAA 2001:db8::1',
+          ])
+        end
+      end
+
+      context 'with records' do
+        let(:params) { { records: ['host1 IN A 192.0.2.10', 'vm-host1 IN CNAME host1', 'host2 IN A 192.0.2.11']} }
+
+        it "should have valid zone file contents" do
+          verify_exact_contents(catalogue, "#{zonefilepath}/db.example.com", [
+            '$TTL 10800',
+            '@ IN SOA puppetmaster.example.com. root.example.com. (',
+            '	1	;Serial',
+            '	86400	;Refresh',
+            '	3600	;Retry',
+            '	604800	;Expire',
+            '	3600	;Negative caching TTL',
+            ')',
+            '@ IN NS puppetmaster.example.com.',
+            'host1 IN A 192.0.2.10',
+            'vm-host1 IN CNAME host1',
+            'host2 IN A 192.0.2.11',
           ])
         end
       end

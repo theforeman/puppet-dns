@@ -16,6 +16,9 @@
 # @param manage_file_name
 #   Whether to set the file parameter in the zone file.
 #
+# @param replace_file
+#   Whether to update the zone file when a change is detected.
+#
 # @param update_policy
 #   This can be used to specifiy additional update policy rules in the
 #   following format
@@ -33,6 +36,11 @@
 # @param expire
 # @param negttl
 # @param serial
+# @param records
+#   A list of records which will be added to the zone file in
+#   the RFC 1035 format (see https://datatracker.ietf.org/doc/html/rfc1035)
+#   Example ['host1 IN A 192.168.0.10', 'alt-host1 IN CNAME host1']
+#
 # @param masters
 # @param allow_transfer
 # @param allow_query
@@ -64,6 +72,7 @@ define dns::zone (
   Integer $expire                                         = 604800,
   Integer $negttl                                         = 3600,
   Integer $serial                                         = 1,
+  Array[String[1]] $records                               = [],
   Array $masters                                          = [],
   Array $allow_transfer                                   = [],
   Array $allow_query                                      = [],
@@ -74,6 +83,7 @@ define dns::zone (
   String $filename                                        = "db.${title}",
   Boolean $manage_file                                    = true,
   Boolean $manage_file_name                               = false,
+  Boolean $replace_file                                   = false,
   Enum['first', 'only'] $forward                          = 'first',
   Array $forwarders                                       = [],
   Optional[Enum['yes', 'no', 'explicit']] $dns_notify     = undef,
@@ -130,7 +140,7 @@ define dns::zone (
       group   => $dns::group,
       mode    => '0644',
       content => template('dns/zone.header.erb'),
-      replace => false,
+      replace => $replace_file,
       notify  => Class['dns::service'],
     }
   }
