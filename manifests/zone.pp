@@ -68,7 +68,7 @@ define dns::zone (
   Integer $expire                                         = 604800,
   Integer $negttl                                         = 3600,
   Integer $serial                                         = 1,
-  Array $records                                          = [],
+  Array[String[1]] $records                               = [],
   Array $masters                                          = [],
   Array $allow_transfer                                   = [],
   Array $allow_query                                      = [],
