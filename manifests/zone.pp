@@ -44,6 +44,7 @@
 # @param masters
 # @param allow_transfer
 # @param allow_query
+# @param allow_update
 # @param also_notify
 # @param zone
 # @param contact
@@ -76,6 +77,7 @@ define dns::zone (
   Array $masters                                          = [],
   Array $allow_transfer                                   = [],
   Array $allow_query                                      = [],
+  Array $allow_update                                     = [],
   Array $also_notify                                      = [],
   String $zone                                            = $title,
   Optional[String] $contact                               = undef,
@@ -108,6 +110,9 @@ define dns::zone (
     }
   } else {
     $_target_views = ['_GLOBAL_']
+  }
+  if !$allow_update.empty and $update_policy {
+    fail('It is a configuration error to specify both allow_update and update_policy at the same time.')
   }
 
   if $zonetype == 'slave' {
