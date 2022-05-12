@@ -19,6 +19,9 @@ zone "<%= @zone %>" {
             <%- end -%>
     };
 <%   end -%>
+<%   unless @allow_update.empty? -%>
+    allow-update { <%= @allow_update.join('; ') %>; };
+<%   end -%>
 <% end -%>
 <% if @auto_dnssec -%>
     auto-dnssec <%= @auto_dnssec %>;
