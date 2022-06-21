@@ -116,8 +116,8 @@ class dns::params {
   $controls              = {
     '127.0.0.1' => {
       'port' => 953,
-      'allowed_addresses' => [ '127.0.0.1' ],
-      'keys' => [ 'rndc-key' ],
+      'allowed_addresses' => ['127.0.0.1'],
+      'keys' => ['rndc-key'],
     },
   }
 }
