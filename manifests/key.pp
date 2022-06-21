@@ -42,7 +42,7 @@ define dns::key (
       creates => $keyfilename,
       before  => Class['dns::config'],
       notify  => Class['dns::service'],
-    }-> file { $keyfilename:
+    } -> file { $keyfilename:
       owner => 'root',
       group => $dns::params::group,
       mode  => '0640',
