@@ -1,6 +1,16 @@
 # Changelog
 
-## [9.3.0](https://github.com/theforeman/puppet-dns/tree/9.3.0) (2022-04-19)
+## [9.4.0](https://github.com/theforeman/puppet-dns/tree/9.4.0) (2022-08-01)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.3.0...9.4.0)
+
+**Implemented enhancements:**
+
+- Update to voxpupuli-test 5 [\#214](https://github.com/theforeman/puppet-dns/pull/214) ([ekohl](https://github.com/ekohl))
+- Add support for `allow-update` in zones [\#213](https://github.com/theforeman/puppet-dns/pull/213) ([SimonPe](https://github.com/SimonPe))
+- Manage zone records [\#212](https://github.com/theforeman/puppet-dns/pull/212) ([BDelacour](https://github.com/BDelacour))
+
+## [9.3.0](https://github.com/theforeman/puppet-dns/tree/9.3.0) (2022-04-20)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.2.0...9.3.0)
 
