@@ -191,10 +191,14 @@ describe 'dns' do
         it { is_expected.not_to contain_concat_fragment('named.conf+60-logging-footer.dns') }
       end
 
-      describe 'with unmanaged localzonepath' do
+      describe 'with unmanaged localzonepath and unmanaged defaultzonepath' do
 
         let(:params) do {
           :localzonepath => 'unmanaged',
+        } end
+
+        let(:params) do {
+          :defaultzonepath => 'unmanaged',
         } end
 
         it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
@@ -244,6 +248,7 @@ describe 'dns' do
             "        include \"#{options_path}\";",
             '};',
             localzonepath ? "include \"#{localzonepath}\";" : nil,
+            defaultzonepath ? "include \"#{defaultzonepath}\";" : nil,
             '// additional directives',
             'logging {',
             '  channel string {',
