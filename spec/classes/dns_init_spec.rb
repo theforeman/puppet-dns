@@ -65,6 +65,15 @@ describe 'dns' do
         end
       end
 
+      let(:defaultzonepath) do
+        case facts[:os]['family']
+        when 'Debian'
+          "#{etc_directory}/named.conf.default-zones"
+        when 'RedHat'
+          'unmanaged'
+        end
+      end
+
       let(:var_path) do
         case facts[:os]['family']
         when 'Debian'
