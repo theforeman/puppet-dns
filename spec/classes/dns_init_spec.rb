@@ -195,9 +195,6 @@ describe 'dns' do
 
         let(:params) do {
           :localzonepath => 'unmanaged',
-        } end
-
-        let(:params) do {
           :defaultzonepath => 'unmanaged',
         } end
 
