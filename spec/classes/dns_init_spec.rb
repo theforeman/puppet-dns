@@ -237,7 +237,7 @@ describe 'dns' do
         it do
 
           if defaultzonepath == 'unmanaged'
-            defaultzonepath = undef
+            defaultzonepath = nil
           end
           #   expected = [
           #     '// named.conf',
