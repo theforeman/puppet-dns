@@ -243,7 +243,7 @@ describe 'dns' do
             "        include \"#{options_path}\";",
             '};',
             localzonepath ? "include \"#{localzonepath}\";" : nil,
-            (defaultzonepath && defaultzonepath != 'unmanaged') ? "include \"#{defaultzonepath}\";" : nil,
+            defaultzonepath ? "include \"#{defaultzonepath}\";" : nil,
             '// additional directives',
             'logging {',
             '  channel string {',
