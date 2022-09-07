@@ -140,6 +140,7 @@ describe 'dns' do
             "        include \"#{options_path}\";",
             '};',
             "include \"#{localzonepath}\";",
+            "include \"#{defaultzonepath}\";",
             '// Public view read by Server Admin',
             "include \"#{etc_named_directory}/zones.conf\";",
           ]
