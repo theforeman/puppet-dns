@@ -151,7 +151,7 @@ describe 'dns' do
               defaultzonepath ? "include \"#{defaultzonepath}\";" : nil,
               '// Public view read by Server Admin',
               "include \"#{etc_named_directory}/zones.conf\";",
-            ]
+            ].compact
           # else
           #   expected = [
           #     '// named.conf',
