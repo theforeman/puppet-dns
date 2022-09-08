@@ -137,7 +137,7 @@ describe 'dns' do
         it { should contain_concat("#{etc_named_directory}/zones.conf").with_validate_cmd("#{sbin}/named-checkconf %") }
         it { should contain_concat("#{etc_directory}/named.conf").with_validate_cmd("#{sbin}/named-checkconf %") }
         it do
-          if facts[:os]['family'] == 'Debian'
+          # if facts[:os]['family'] == 'Debian'
             expected = [
               '// named.conf',
               "include \"#{rndc_key}\";",
@@ -148,25 +148,25 @@ describe 'dns' do
               "        include \"#{options_path}\";",
               '};',
               "include \"#{localzonepath}\";",
-              "include \"#{defaultzonepath}\";",
+              defaultzonepath ? "include \"#{defaultzonepath}\";" : nil,
               '// Public view read by Server Admin',
               "include \"#{etc_named_directory}/zones.conf\";",
             ]
-          else
-            expected = [
-              '// named.conf',
-              "include \"#{rndc_key}\";",
-              'controls  {',
-              '        inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; };',
-              '};',
-              'options  {',
-              "        include \"#{options_path}\";",
-              '};',
-              "include \"#{localzonepath}\";",
-              '// Public view read by Server Admin',
-              "include \"#{etc_named_directory}/zones.conf\";",
-            ]
-          end
+          # else
+          #   expected = [
+          #     '// named.conf',
+          #     "include \"#{rndc_key}\";",
+          #     'controls  {',
+          #     '        inet 127.0.0.1 port 953 allow { 127.0.0.1; } keys { "rndc-key"; };',
+          #     '};',
+          #     'options  {',
+          #     "        include \"#{options_path}\";",
+          #     '};',
+          #     "include \"#{localzonepath}\";",
+          #     '// Public view read by Server Admin',
+          #     "include \"#{etc_named_directory}/zones.conf\";",
+          #   ]
+          # end
 
 
           unless localzonepath
