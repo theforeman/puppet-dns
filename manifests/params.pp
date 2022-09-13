@@ -54,7 +54,10 @@ class dns::params {
       # This option is not relevant for RedHat
       $sysconfig_resolvconf_integration = undef
 
-      $dnssec_enable = 'yes'
+      $dnssec_enable = $facts['os']['Family'] ? {
+        'RedHat' => if versioncmp($facts['os']['release']['major'], '8') >= 0 { undef } else { 'yes' },
+        default  => undef,
+      }
     }
     /^(FreeBSD|DragonFly)$/: {
       $dnsdir             = '/usr/local/etc/namedb'
