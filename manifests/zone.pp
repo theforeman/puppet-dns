@@ -137,7 +137,7 @@ define dns::zone (
     }
   }
 
-  if $manage_file {
+  if ($manage_file and $zonetype !='forward') {
     file { $zonefilename:
       ensure  => file,
       owner   => $dns::user,
