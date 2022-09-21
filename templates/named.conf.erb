@@ -16,6 +16,9 @@ options  {
 <% if scope.lookupvar("::dns::localzonepath") != 'unmanaged' -%>
 include "<%= scope.lookupvar('::dns::localzonepath') %>";
 <% end -%>
+<% if scope.lookupvar("::dns::defaultzonepath") != 'unmanaged' -%>
+include "<%= scope.lookupvar('::dns::defaultzonepath') %>";
+<% end -%>
 <% end -%>
 
 <%- scope.lookupvar('::dns::acls').sort_by {|k, v| k}.each do |acl_name, acl_array| -%>

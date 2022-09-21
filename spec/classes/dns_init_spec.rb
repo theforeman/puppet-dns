@@ -65,6 +65,13 @@ describe 'dns' do
         end
       end
 
+      let(:defaultzonepath) do
+        case facts[:os]['family']
+        when 'Debian'
+          "#{etc_directory}/named.conf.default-zones"
+        end
+      end
+
       let(:var_path) do
         case facts[:os]['family']
         when 'Debian'
@@ -140,9 +147,11 @@ describe 'dns' do
             "        include \"#{options_path}\";",
             '};',
             "include \"#{localzonepath}\";",
+            defaultzonepath ? "include \"#{defaultzonepath}\";" : nil,
             '// Public view read by Server Admin',
             "include \"#{etc_named_directory}/zones.conf\";",
-          ]
+          ].compact
+
 
           unless localzonepath
             expected = expected.reject { |line| line == 'include "";' }
@@ -164,10 +173,11 @@ describe 'dns' do
         it { is_expected.not_to contain_concat_fragment('named.conf+60-logging-footer.dns') }
       end
 
-      describe 'with unmanaged localzonepath' do
+      describe 'with unmanaged localzonepath and unmanaged defaultzonepath' do
 
         let(:params) do {
           :localzonepath => 'unmanaged',
+          :defaultzonepath => 'unmanaged',
         } end
 
         it { verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', [
@@ -217,6 +227,7 @@ describe 'dns' do
             "        include \"#{options_path}\";",
             '};',
             localzonepath ? "include \"#{localzonepath}\";" : nil,
+            defaultzonepath ? "include \"#{defaultzonepath}\";" : nil,
             '// additional directives',
             'logging {',
             '  channel string {',
@@ -235,6 +246,7 @@ describe 'dns' do
             '// Public view read by Server Admin',
             "include \"#{etc_named_directory}/zones.conf\";",
           ].compact
+
 
           verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', expected)
         end
