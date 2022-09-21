@@ -146,16 +146,11 @@ describe 'dns' do
             'options  {',
             "        include \"#{options_path}\";",
             '};',
-            "include \"#{localzonepath}\";",
+            localzonepath ? "include \"#{localzonepath}\";" : nil,
             defaultzonepath ? "include \"#{defaultzonepath}\";" : nil,
             '// Public view read by Server Admin',
             "include \"#{etc_named_directory}/zones.conf\";",
           ].compact
-
-
-          unless localzonepath
-            expected = expected.reject { |line| line == 'include "";' }
-          end
 
           verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', expected)
         end
