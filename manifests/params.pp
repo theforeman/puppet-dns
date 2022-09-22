@@ -55,7 +55,6 @@ class dns::params {
       $sysconfig_resolvconf_integration = undef
 
       $dnssec_enable = if versioncmp($facts['os']['release']['major'], '9') >= 0 { undef } else { 'yes' }
-      }
     }
     /^(FreeBSD|DragonFly)$/: {
       $dnsdir             = '/usr/local/etc/namedb'
