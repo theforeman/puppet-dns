@@ -111,7 +111,7 @@ describe 'dns' do
                               when 'Debian'
                                 ['9', '10', '18.04'].include?(facts[:os]['release']['major'])
                               when 'RedHat'
-                                true
+                                ['7', '8'].include?(facts[:os]['release']['major'])
                               else
                                 false
                               end
