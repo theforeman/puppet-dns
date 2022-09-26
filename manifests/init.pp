@@ -130,6 +130,8 @@
 #   A hash of logging categories to be created. See dns::logging::category for options.
 # @param logging_channels
 #   A hash of logging channels to be created. See dns::logging::channel for options.
+# @param redhat_scl
+#   Set to true if you are using isc-bind version of bind which comes as a SCL version
 #
 # @see dns::zone
 # @see dns::key
@@ -181,6 +183,7 @@ class dns (
   Hash[String, Hash] $keys                                          = {},
   Hash[String, Hash] $logging_categories                            = {},
   Hash[String, Hash] $logging_channels                              = {},
+  Boolean $redhat_scl                                               = false
 ) inherits dns::params {
   include dns::install
   include dns::config
