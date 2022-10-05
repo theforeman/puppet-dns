@@ -88,7 +88,7 @@ See the CONTRIBUTING.md file for much more information.
 
 # More info
 
-See [https://theforeman.org](https://theforeman.org) or at #theforeman irc channel on freenode
+See [https://theforeman.org](https://theforeman.org) or at #theforeman irc channel on Libera Chat (https://libera.chat)
 
 Copyright (c) 2010-2016 Foreman developers and Zach Leslie
 
