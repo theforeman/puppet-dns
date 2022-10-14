@@ -543,6 +543,32 @@ describe 'dns' do
           }
         end
       end
+      context 'scl', if: ['RedHat'].include?(os_facts[:os]['family']) do
+        describe 'with RedHat SCL', if: os_facts[:os]['family'] == 'RedHat' do
+          let(:manifest) do
+            <<-EOS
+          class { 'dns::globals':
+            scl => 'isc-bind'
+          }
+          include dns
+            EOS
+          end
+          it {
+            should contain_file('/usr/bin/dig').with(
+              owner: 'root',
+              group: 'root',
+              mode: '0755',
+              content: /.*isc-bind.*/
+            )
+            should contain_file('/usr/bin/nsupdate').with(
+              owner: 'root',
+              group: 'root',
+              mode: '0755',
+              content: /.*isc-bind.*/
+            )
+          }
+        end
+      end
     end
   end
 end

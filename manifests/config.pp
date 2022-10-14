@@ -86,21 +86,24 @@ class dns::config {
       mode    => '0644',
       content => template($dns::sysconfig_template),
     }
+  }
 
-    if $dns::redhat_scl {
-      ['dig', 'nsupdate'].each | $util | {
-        file { "/usr/bin/${util}":
-          ensure  => file,
-          owner   => root,
-          group   => root,
-          mode    => '0755',
-          content => [
-            '#!/bin/bash',
-            "scl enable isc-bind -- ${util} $@"
-          ]
-        }
+  # the RedHat SCL packages do not consist of the default rfc1912 zones file
+  # therefore the file is created out of this module
+  if $facts['os']['family'] == 'RedHat' and $dns::globals::scl {
+    file { $dns::localzonepath:
+      owner   => root,
+      group   => root,
+      mode    => '0755',
+      content => file('dns/named.rfc1912.zones'),
+    }
+    ['named.loopback', 'named.empty', 'named.localhost'].each |$localzone_file| {
+      file { "${dns::vardir}/$localzone_file":
+        owner   => $dns::user,
+        group   => $dns::group,
+        mode    => '0755',
+        content => file('dns/named.rfc1912.zonefile'),
       }
     }
-
   }
 }

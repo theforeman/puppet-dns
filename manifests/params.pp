@@ -1,6 +1,6 @@
 # Default parameters
 # @api private
-class dns::params {
+class dns::params inherits dns::globals {
   case $facts['os']['family'] {
     'Debian': {
       $dnsdir             = '/etc/bind'
@@ -32,32 +32,39 @@ class dns::params {
       }
     }
     'RedHat': {
-      if $dns::redhat_scl {
-        $sclroot = '/opt/isc/isc-bind/root'
-        $sclconfroot = '/etc/opt/isc/scls/isc-bind'
+      $user = 'named'
+      $group = 'named'
+
+      $sysconfig_template = "dns/sysconfig.${facts['os']['family']}.erb"
+      $sysconfig_startup_options = undef
+      $sysconfig_disable_zone_checking = undef
+
+      # This option is not relevant for RedHat
+      $sysconfig_resolvconf_integration = undef
+
+      if $dns::globals::scl {
+        $sclprovider = $dns::globals::scl.split('-')[0]
+        $sclenvname = $dns::globals::scl
+        $sclroot = "/opt/${sclprovider}/${sclenvname}/root"
+        $sclvar = "/var/opt/${sclprovider}/scls/${sclenvname}"
+        $sclconfroot = "/etc/opt/${sclprovider}/scls/${sclenvname}"
 
         $dnsdir = $sclconfroot
-        $vardir = '/var/named'
+        $vardir = "${sclvar}/named/data"
         $optionspath = "${dnsdir}/options.conf"
         $zonefilepath = "${vardir}/dynamic"
         $localzonepath = "${dnsdir}/named.rfc1912.zones"
         $defaultzonepath = 'unmanaged'
-        $publicviewpath = "${dnsdir}/named/zones.conf"
-        $viewconfigpath = "${dnsdir}/named/views"
-        $dns_server_package = 'isc-bind'
-        $namedservicename = 'isc-bind-named.service'
-        $user = 'named'
-        $group = 'named'
+        $publicviewpath = "${dnsdir}/zones.conf"
+        $viewconfigpath = "${dnsdir}/views"
+        # Install the SCL meta package to pull in utils
+        $dns_server_package = $sclenvname
+        $namedservicename = "${sclenvname}-named.service"
 
         $rndcconfgen = "${sclroot}/usr/sbin/rndc-confgen"
         $named_checkconf = "${sclroot}/usr/bin/named-checkconf"
         $sysconfig_file = "${sclconfroot}/sysconfig/named"
-        $sysconfig_template = "dns/sysconfig.${facts['os']['family']}.erb"
-        $sysconfig_startup_options = undef
-        $sysconfig_disable_zone_checking = undef
 
-        # This option is not relevant for RedHat
-        $sysconfig_resolvconf_integration = undef
         # option not available on bind > 9-18
         $dnssec_enable = undef
       }
@@ -72,18 +79,10 @@ class dns::params {
         $viewconfigpath = "${dnsdir}/named/views"
         $dns_server_package = 'bind'
         $namedservicename = 'named'
-        $user = 'named'
-        $group = 'named'
+
         $rndcconfgen = '/usr/sbin/rndc-confgen'
         $named_checkconf = '/usr/sbin/named-checkconf'
         $sysconfig_file = '/etc/sysconfig/named'
-        $sysconfig_template = "dns/sysconfig.${facts['os']['family']}.erb"
-        $sysconfig_startup_options = undef
-        $sysconfig_disable_zone_checking = undef
-
-        # This option is not relevant for RedHat
-        $sysconfig_resolvconf_integration = undef
-
         $dnssec_enable = if versioncmp($facts['os']['release']['major'], '9') >= 0 { undef } else { 'yes' }
       }
     }
