@@ -1,5 +1,19 @@
 # Changelog
 
+## [9.5.0](https://github.com/theforeman/puppet-dns/tree/9.5.0) (2022-10-28)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.4.0...9.5.0)
+
+**Implemented enhancements:**
+
+- stopped zone file from being created if zone type is forward [\#219](https://github.com/theforeman/puppet-dns/pull/219) ([ikonia](https://github.com/ikonia))
+- Remove dnssec-enable option for EL \>= 9 [\#218](https://github.com/theforeman/puppet-dns/pull/218) ([ikonia](https://github.com/ikonia))
+- Added defaultzonepath to template name.conf.erb [\#217](https://github.com/theforeman/puppet-dns/pull/217) ([benjamin-robertson](https://github.com/benjamin-robertson))
+
+**Merged pull requests:**
+
+- Change IRC support details for foreman website support URL [\#222](https://github.com/theforeman/puppet-dns/pull/222) ([ikonia](https://github.com/ikonia))
+
 ## [9.4.0](https://github.com/theforeman/puppet-dns/tree/9.4.0) (2022-08-01)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.3.0...9.4.0)
