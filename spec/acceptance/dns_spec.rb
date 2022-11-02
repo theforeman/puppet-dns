@@ -29,4 +29,17 @@ describe 'Scenario: install bind' do
   describe command('dig +short SOA example.com @localhost') do
     its(:stdout) { is_expected.to match("ns1.example.com. root.example.com. 1 86400 3600 604800 3600\n") }
   end
+
+  before(:context) do
+    describe command('dnf remove -y bind bind-utils') do
+      its(:stdout) { should match /Removed:/ }
+    end
+  end
+
+  after(:context) do
+    describe command('dnf remove -y isc-bind isc-bind-bind-utils') do
+      its(:stdout) { should match /Removed:/ }
+    end
+  end
+
 end

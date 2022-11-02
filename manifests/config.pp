@@ -101,7 +101,7 @@ class dns::config {
       file { "${dns::vardir}/$localzone_file":
         owner   => $dns::user,
         group   => $dns::group,
-        mode    => '0755',
+        mode    => '0644',
         content => file('dns/named.rfc1912.zonefile'),
       }
     }

@@ -1,15 +1,15 @@
 require 'spec_helper_acceptance'
 
-if fact('osfamily') == 'RedHat'
+if fact('osfamily') == 'RedHat' and %w[7 8].include?(facts[:os]['release']['major'])
   describe 'Scenario: install scl-bind' do
 
     it_behaves_like 'an idempotent resource' do
       let(:manifest) do
         <<-EOS
         yumrepo{'bind_scl':
-          descr    => 'copr repo for bind owned by isc'
-          baseurl  =>  "https://download.copr.fedorainfracloud.org/results/isc/bind/epel-$facts['os']['release']['major']-x86_64/"
-          gpgcheck =>  0
+          descr    => 'copr repo for bind owned by isc',
+          baseurl  =>  "https://download.copr.fedorainfracloud.org/results/isc/bind/epel-$facts['os']['release']['major']-x86_64/",
+          gpgcheck =>  0,
 
         }
         class { 'dns::globals':
