@@ -95,6 +95,7 @@ define dns::zone (
   Optional[Enum['yes', 'no']] $dnssec_secure_to_insecure  = undef,
   Optional[Enum['allow', 'maintain', 'off']] $auto_dnssec = undef,
   Optional[String[1]] $dnssec_policy                      = undef,
+  Optional[Enum['map', 'text']] $masterfile_format        = $dns::masterfile_format,
 ) {
   $_contact = pick($contact, "root.${zone}.")
 

@@ -89,6 +89,11 @@ class { 'dns::globals':
 }
 ```
 
+## Configuration for bind > 9.16
+### masterfile format for secondaries
+If bind > 9.16 is used, the `masterfile_format` parameter of a zone should be set to 'text' as this puppet module does
+not issue named-compilezone on a zonefile.
+
 # Credits
 
 Based on zleslie-dns, with a lot of the guts ripped out. Thanks

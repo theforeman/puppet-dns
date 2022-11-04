@@ -38,6 +38,13 @@ zone "<%= @zone %>" {
 <% if @key_directory -%>
     key-directory "<%= @key_directory %>";
 <% end -%>
+
+<% if @zonetype == 'slave' -%>
+<%   if @masterfile_format -%>
+  masterfile-format <%= @masterfile_format %>;
+<%   end -%>
+<% end -%>
+
 <% unless @zonetype == 'forward' -%>
 <% unless @allow_transfer.empty? -%>
     allow-transfer { <%= @allow_transfer.join('; ') %>; };

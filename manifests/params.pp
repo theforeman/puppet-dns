@@ -30,6 +30,11 @@ class dns::params inherits dns::globals {
         'Ubuntu' => if versioncmp($facts['os']['release']['major'], '20.04') >= 0 { undef } else { 'yes' },
         default  => undef,
       }
+      $masterfile_format = $facts['os']['name'] ? {
+        'Debian' => if versioncmp($facts['os']['release']['major'], '11') >= 0 { 'text' } else { undef },
+        'Ubuntu' => if versioncmp($facts['os']['release']['major'], '20.04') >= 0 { 'text' } else { undef },
+        default  => undef,
+      }
     }
     'RedHat': {
       $user = 'named'
@@ -65,8 +70,9 @@ class dns::params inherits dns::globals {
         $named_checkconf = "${sclroot}/usr/bin/named-checkconf"
         $sysconfig_file = "${sclconfroot}/sysconfig/named"
 
-        # option not available on bind > 9-18
+        # option not available on bind > 9.18
         $dnssec_enable = undef
+        $masterfile_format = 'text'
       }
       else {
         $dnsdir = '/etc'
@@ -84,6 +90,7 @@ class dns::params inherits dns::globals {
         $named_checkconf = '/usr/sbin/named-checkconf'
         $sysconfig_file = '/etc/sysconfig/named'
         $dnssec_enable = if versioncmp($facts['os']['release']['major'], '9') >= 0 { undef } else { 'yes' }
+        $masterfile_format = if versioncmp($facts['os']['release']['major'], '9') >= 0 { 'text' } else { undef }
       }
     }
     /^(FreeBSD|DragonFly)$/: {
@@ -108,6 +115,7 @@ class dns::params inherits dns::globals {
       $sysconfig_disable_zone_checking = undef
       $sysconfig_resolvconf_integration = undef
       $dnssec_enable = undef
+      $masterfile_format = undef
     }
     'Archlinux': {
       $dnsdir             = '/etc'
@@ -132,6 +140,7 @@ class dns::params inherits dns::globals {
       $sysconfig_resolvconf_integration = undef
 
       $dnssec_enable = undef
+      $masterfile_format = undef
     }
     default: {
       fail ("Unsupported operating system family ${facts['os']['family']}")

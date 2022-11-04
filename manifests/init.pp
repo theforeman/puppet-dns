@@ -181,6 +181,7 @@ class dns (
   Hash[String, Hash] $keys                                          = {},
   Hash[String, Hash] $logging_categories                            = {},
   Hash[String, Hash] $logging_channels                              = {},
+  Optional[Enum['map', 'text']] $masterfile_format                  = $dns::params::masterfile_format,
 ) inherits dns::params {
   include dns::install
   include dns::config
