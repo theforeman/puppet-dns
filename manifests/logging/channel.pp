@@ -47,7 +47,7 @@ define dns::logging::channel (
 
   if $log_type == 'syslog' {
     if empty($syslog_facility) {
-      fail('dns::logging::channel: "syslog_faility" needs to be set with log type syslog')
+      fail('dns::logging::channel: "syslog_facility" needs to be set with log type syslog')
     }
   }
 
