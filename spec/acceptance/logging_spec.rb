@@ -32,7 +32,7 @@ describe 'Scenario: install bind with logging enabled' do
       end
     end
 
-    service_name = fact('osfamily') == 'Debian' ? 'bind9' : 'named'
+    service_name = fact('os.family') == 'Debian' ? 'bind9' : 'named'
 
     describe service(service_name) do
       it { is_expected.to be_enabled }

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'dns::logging::channel' do
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { os_facts.merge(fqdn: 'puppetmaster.example.com') }
+      let(:facts) { override_facts(os_facts, networking: { fqdn: 'puppetmaster.example.com' }) }
       let(:pre_condition) { 'include dns' }
       let(:title) { 'test' }
       let(:logdir) { '/var/log/named' }
