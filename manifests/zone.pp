@@ -63,7 +63,7 @@
 define dns::zone (
   Array[String] $target_views                             = [],
   String $zonetype                                        = 'master',
-  String $soa                                             = $fqdn,
+  String $soa                                             = $facts['networking']['fqdn'],
   Boolean $reverse                                        = false,
   String $ttl                                             = '10800',
   Optional[Stdlib::IP::Address::V4] $soaip                = undef,

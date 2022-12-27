@@ -13,7 +13,7 @@ describe 'dns::zone' do
 
   on_supported_os.each do |os, os_facts|
     context "on #{os}" do
-      let(:facts) { os_facts.merge(fqdn: 'puppetmaster.example.com') }
+      let(:facts) { override_facts(os_facts, networking: { fqdn: 'puppetmaster.example.com' }) }
       let(:title) { "example.com" }
       let(:pre_condition) { 'include dns' }
       let(:zonefilepath) do
