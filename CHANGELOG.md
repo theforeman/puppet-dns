@@ -1,5 +1,14 @@
 # Changelog
 
+## [9.5.1](https://github.com/theforeman/puppet-dns/tree/9.5.1) (2023-01-31)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.5.0...9.5.1)
+
+**Fixed bugs:**
+
+- Remove legacy fact usage [\#225](https://github.com/theforeman/puppet-dns/pull/225) ([smortex](https://github.com/smortex))
+- logging channel error message typo faility to facility [\#224](https://github.com/theforeman/puppet-dns/pull/224) ([ikonia](https://github.com/ikonia))
+
 ## [9.5.0](https://github.com/theforeman/puppet-dns/tree/9.5.0) (2022-10-28)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.4.0...9.5.0)
