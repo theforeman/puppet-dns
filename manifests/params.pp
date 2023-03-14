@@ -16,7 +16,10 @@ class dns::params {
       $user               = 'bind'
       $group              = 'bind'
       $rndcconfgen        = '/usr/sbin/rndc-confgen'
-      $named_checkconf    = '/usr/sbin/named-checkconf'
+      $named_checkconf    = $facts['os']['name'] ? {
+        'Ubuntu' => if versioncmp($facts['os']['release']['major'], '22.04') >= 0 { '/usr/bin/named-checkconf' } else { '/usr/sbin/named-checkconf' },
+        default  => '/usr/sbin/named-checkconf',
+      }
       $sysconfig_file     = '/etc/default/bind9'
       $sysconfig_template = "dns/sysconfig.${facts['os']['family']}.erb"
       $sysconfig_startup_options = '-u bind'

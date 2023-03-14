@@ -29,6 +29,17 @@ describe 'dns' do
 
       let(:sbin) { facts[:os]['family'] == 'FreeBSD' ? '/usr/local/sbin' : '/usr/sbin' }
 
+      let(:checkconf) {
+        case facts[:os]['family']
+        when 'Debian'
+          ['22.04'].include?(facts[:os]['release']['major']) ? "/usr/bin/named-checkconf" : "/usr/sbin/named-checkconf"
+        when 'FreeBSD'
+          '/usr/local/sbin/named-checkconf'
+        else
+          '/usr/sbin/named-checkconf'
+        end
+      }
+
       let(:etc_named_directory) do
         case facts[:os]['family']
         when 'Debian'
@@ -134,8 +145,8 @@ describe 'dns' do
           verify_concat_fragment_exact_contents(catalogue, 'options.conf+10-main.dns', expected)
         end
 
-        it { should contain_concat("#{etc_named_directory}/zones.conf").with_validate_cmd("#{sbin}/named-checkconf %") }
-        it { should contain_concat("#{etc_directory}/named.conf").with_validate_cmd("#{sbin}/named-checkconf %") }
+        it { should contain_concat("#{etc_named_directory}/zones.conf").with_validate_cmd("#{checkconf} %") }
+        it { should contain_concat("#{etc_directory}/named.conf").with_validate_cmd("#{checkconf} %") }
         it do
           expected = [
             '// named.conf',
