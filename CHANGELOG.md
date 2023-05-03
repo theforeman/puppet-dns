@@ -1,6 +1,15 @@
 # Changelog
 
-## [9.5.1](https://github.com/theforeman/puppet-dns/tree/9.5.1) (2023-01-31)
+## [9.6.0](https://github.com/theforeman/puppet-dns/tree/9.6.0) (2023-05-03)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.5.1...9.6.0)
+
+**Implemented enhancements:**
+
+- Mark compatible with puppetlabs/concat 8.x [\#230](https://github.com/theforeman/puppet-dns/pull/230) ([ekohl](https://github.com/ekohl))
+- Add support for Ubuntu Jammy \(22.04\) [\#228](https://github.com/theforeman/puppet-dns/pull/228) ([kajinamit](https://github.com/kajinamit))
+
+## [9.5.1](https://github.com/theforeman/puppet-dns/tree/9.5.1) (2023-02-02)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.5.0...9.5.1)
 
