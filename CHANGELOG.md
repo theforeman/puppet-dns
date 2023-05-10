@@ -1,5 +1,14 @@
 # Changelog
 
+## [10.0.0](https://github.com/theforeman/puppet-dns/tree/10.0.0) (2023-05-10)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.6.0...10.0.0)
+
+**Breaking changes:**
+
+- Refs [\#36345](https://projects.theforeman.org/issues/36345) - Drop Puppet 6 support [\#232](https://github.com/theforeman/puppet-dns/pull/232) ([ekohl](https://github.com/ekohl))
+- Drop Debian 9 & Fedora 32 and add Fedora 37/38 [\#231](https://github.com/theforeman/puppet-dns/pull/231) ([ekohl](https://github.com/ekohl))
+
 ## [9.6.0](https://github.com/theforeman/puppet-dns/tree/9.6.0) (2023-05-03)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.5.1...9.6.0)
