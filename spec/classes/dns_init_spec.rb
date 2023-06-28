@@ -403,13 +403,15 @@ describe 'dns' do
         }
       end
 
-      context 'sysconfig', if: ['Debian', 'RedHat'].include?(os_facts[:os]['family']) do
+      context 'sysconfig', if: ['Debian', 'RedHat', 'Ubuntu'].include?(os_facts[:os]['family']) do
         let(:sysconfig_named_path) do
           case facts[:os]['family']
           when 'RedHat'
             '/etc/sysconfig/named'
           when 'Debian'
             '/etc/default/bind9'
+          when 'Ubuntu'
+            facts[:os]['release']['major'] == '18.04' ? '/etc/default/bind9' : '/etc/default/named'
           end
         end
 

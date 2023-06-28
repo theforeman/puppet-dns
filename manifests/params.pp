@@ -20,7 +20,11 @@ class dns::params {
         'Ubuntu' => if versioncmp($facts['os']['release']['major'], '22.04') >= 0 { '/usr/bin/named-checkconf' } else { '/usr/sbin/named-checkconf' },
         default  => '/usr/sbin/named-checkconf',
       }
-      $sysconfig_file     = '/etc/default/bind9'
+      $sysconfig_file     = $facts['os']['name'] ? {
+        'Debian' => '/etc/default/bind9',
+        'Ubuntu' => if versioncmp($facts['os']['release']['major'], '20.04') >= 0 { '/etc/default/named' } else { '/etc/default/bind9' },
+        default  => '/etc/default/named',
+      }
       $sysconfig_template = "dns/sysconfig.${facts['os']['family']}.erb"
       $sysconfig_startup_options = '-u bind'
       $sysconfig_resolvconf_integration = false
