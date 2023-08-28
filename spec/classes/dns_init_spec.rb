@@ -409,7 +409,12 @@ describe 'dns' do
           when 'RedHat'
             '/etc/sysconfig/named'
           when 'Debian'
-            '/etc/default/bind9'
+            case facts[:os]['name']
+            when 'Debian'
+              facts[:os]['release']['major'] == '10' ? '/etc/default/bind9' : '/etc/default/named'
+            when 'Ubuntu'
+              facts[:os]['release']['major'] == '18.04' ? '/etc/default/bind9' : '/etc/default/named'
+            end
           end
         end
 
