@@ -1,6 +1,18 @@
 # Changelog
 
-## [10.0.0](https://github.com/theforeman/puppet-dns/tree/10.0.0) (2023-05-10)
+## [10.1.0](https://github.com/theforeman/puppet-dns/tree/10.1.0) (2023-09-18)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/10.0.0...10.1.0)
+
+**Implemented enhancements:**
+
+- Relax dependencies [\#236](https://github.com/theforeman/puppet-dns/pull/236) ([smortex](https://github.com/smortex))
+
+**Fixed bugs:**
+
+- Change sysconfig\_file for Debian/Ubuntu to '/etc/default/named' [\#238](https://github.com/theforeman/puppet-dns/pull/238) ([ekohl](https://github.com/ekohl))
+
+## [10.0.0](https://github.com/theforeman/puppet-dns/tree/10.0.0) (2023-05-15)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/9.6.0...10.0.0)
 
