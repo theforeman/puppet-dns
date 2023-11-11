@@ -1,5 +1,14 @@
 # Changelog
 
+## [10.2.0](https://github.com/theforeman/puppet-dns/tree/10.2.0) (2023-11-14)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/10.1.0...10.2.0)
+
+**Implemented enhancements:**
+
+- Add Debian 12 support [\#242](https://github.com/theforeman/puppet-dns/pull/242) ([bastelfreak](https://github.com/bastelfreak))
+- Add Puppet 8 support [\#237](https://github.com/theforeman/puppet-dns/pull/237) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [10.1.0](https://github.com/theforeman/puppet-dns/tree/10.1.0) (2023-09-18)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/10.0.0...10.1.0)
