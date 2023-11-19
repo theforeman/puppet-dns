@@ -58,7 +58,7 @@ define dns::logging::channel (
     if empty($file_size) {
       fail('dns::logging::channel: "file_size" needs to be set with log type file')
     }
-    if empty($file_versions) {
+    if !$file_versions {
       fail('dns::logging::channel: "file_versions" needs to be set with log type file')
     }
   }
