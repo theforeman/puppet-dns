@@ -51,6 +51,9 @@
 # @param zonefilepath
 # @param filename
 # @param forward
+# @param master_empty_forwarders_enable
+#   Enable empty forwarders option in master zone.
+#   Applicable when forwarders are empty and zonetype is set to master.
 # @param forwarders
 # @param dns_notify
 # @param zone_statistics
@@ -88,6 +91,7 @@ define dns::zone (
   Boolean $manage_file_name                               = false,
   Boolean $replace_file                                   = false,
   Enum['first', 'only'] $forward                          = 'first',
+  Boolean $master_empty_forwarders_enable                 = false,
   Array $forwarders                                       = [],
   Optional[Enum['yes', 'no', 'explicit']] $dns_notify     = undef,
   Optional[Enum['yes', 'no']] $zone_statistics            = undef,

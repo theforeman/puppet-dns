@@ -10,6 +10,12 @@ zone "<%= @zone %>" {
     file "<%= @zonefilename %>";
 <% end -%>
 <% if @zonetype == 'master' -%>
+<% if @forwarders.empty? && @master_empty_forwarders_enable -%>
+    forwarders {};
+<% end -%>
+<% unless @forwarders.empty? -%>
+    forwarders { <%= @forwarders.join('; ') %>; };
+<% end -%>
 <%   if @update_policy.is_a? String -%>
     update-policy <%= @update_policy %>;
 <%   elsif @update_policy -%>
