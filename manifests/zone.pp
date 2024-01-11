@@ -53,6 +53,7 @@
 # @param forward
 # @param forwarders
 # @param dns_notify
+# @param zone_statistics
 # @param key_directory
 # @param inline_signing
 # @param dnssec_secure_to_insecure
@@ -89,6 +90,7 @@ define dns::zone (
   Enum['first', 'only'] $forward                          = 'first',
   Array $forwarders                                       = [],
   Optional[Enum['yes', 'no', 'explicit']] $dns_notify     = undef,
+  Optional[Enum['yes', 'no']] $zone_statistics            = undef,
   Optional[Dns::UpdatePolicy] $update_policy              = undef,
   Optional[Stdlib::Absolutepath] $key_directory           = undef,
   Optional[Enum['yes', 'no']] $inline_signing             = undef,

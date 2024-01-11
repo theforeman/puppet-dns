@@ -7,6 +7,14 @@ controls  {
         inet <%= control_ip %> port <%= control_hash['port'] %> allow { <% control_hash['allowed_addresses'].sort.each do |address| %><%= address %>; <% end %>} keys { <% control_hash['keys'].sort.each do |key| %>"<%= key %>"; <% end %>};
 <%- end -%>
 };
+<%- if scope.lookupvar('::dns::statistics_channels').any? -%>
+
+statistics-channels  {
+<%- scope.lookupvar('::dns::statistics_channels').sort_by {|k, v| k}.each do |stats_ip, stats_hash| -%>
+        inet <%= stats_ip %> port <%= stats_hash['port'] %> allow { <% stats_hash['allowed_addresses'].sort.each do |address| %><%= address %>; <% end %>};
+<%- end -%>
+};
+<%- end -%>
 
 options  {
         include "<%= scope.lookupvar('::dns::optionspath') %>";

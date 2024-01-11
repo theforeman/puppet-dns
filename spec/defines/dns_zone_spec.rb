@@ -459,6 +459,22 @@ describe 'dns::zone' do
         ])
         end
       end
+
+      context 'zone_statistics enabled' do
+        let(:params) { {
+          :zone_statistics => 'yes',
+        } }
+
+        it "should have valid zone configuration" do
+          verify_concat_fragment_exact_contents(catalogue, 'dns_zones+10__GLOBAL__example.com.dns', [
+          'zone "example.com" {',
+          '    type master;',
+          "    file \"#{zonefilepath}/db.example.com\";",
+          '    zone-statistics yes;',
+          '};',
+        ])
+        end
+      end
     end
   end
 end

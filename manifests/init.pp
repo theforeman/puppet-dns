@@ -98,6 +98,10 @@
 #   Specify a hash of controls. Each key is the name of a network, and its
 #   value is a hash containing 'port' => integer, 'keys' => array and
 #   'allowed_addresses' => array
+# @param statistics_channels
+#   Specify a hash of statistics-channels. Each key is the name of a network,
+#   and its value is a hash containing 'port' => integer and
+#   'allowed_addresses' => array
 # @param service_ensure
 #   The ensure attribute on the service
 # @param service_enable
@@ -170,6 +174,7 @@ class dns (
   Optional[Boolean] $sysconfig_disable_zone_checking                = $dns::params::sysconfig_disable_zone_checking,
   Hash[String[1], String] $sysconfig_additional_settings            = {},
   Hash[String, Hash[String, Data]] $controls                        = $dns::params::controls,
+  Hash[String, Hash[String, Data]] $statistics_channels             = {},
   Variant[Enum['running', 'stopped'], Boolean] $service_ensure      = 'running',
   Boolean $service_enable                                           = true,
   Optional[String[1]] $service_restart_command                      = undef,
