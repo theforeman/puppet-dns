@@ -353,6 +353,16 @@ describe 'dns' do
         ])}
       end
 
+      describe 'with statistics channels' do
+        let(:params) { { :statistics_channels => { '*' => { 'port' => 8053, 'allowed_addresses' => [ '127.0.0.0/8' ] } } } }
+
+        it { verify_concat_fragment_contents(catalogue, 'named.conf+10-main.dns', [
+          'statistics-channels  {',
+          '        inet * port 8053 allow { 127.0.0.0/8; };',
+          '};',
+        ])}
+      end
+
       describe 'with additional options' do
         let(:params) { { :additional_options => { 'max-cache-ttl' => 3600, 'max-ncache-ttl' => 3600 } } }
 

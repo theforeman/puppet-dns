@@ -23,6 +23,9 @@ zone "<%= @zone %>" {
     allow-update { <%= @allow_update.join('; ') %>; };
 <%   end -%>
 <% end -%>
+<% if @zone_statistics -%>
+    zone-statistics <%= @zone_statistics %>;
+<% end -%>
 <% if @auto_dnssec -%>
     auto-dnssec <%= @auto_dnssec %>;
 <% end -%>
