@@ -1,5 +1,18 @@
 # Changelog
 
+## [10.3.0](https://github.com/theforeman/puppet-dns/tree/10.3.0) (2024-02-19)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/10.2.0...10.3.0)
+
+**Implemented enhancements:**
+
+- add support for the statistics-channels directive [\#245](https://github.com/theforeman/puppet-dns/pull/245) ([UiP9AV6Y](https://github.com/UiP9AV6Y))
+- Add support for empty forwarders in master zone [\#244](https://github.com/theforeman/puppet-dns/pull/244) ([mbarecki](https://github.com/mbarecki))
+
+**Fixed bugs:**
+
+- Fix calling function empty\(\) with Numeric value [\#243](https://github.com/theforeman/puppet-dns/pull/243) ([smortex](https://github.com/smortex))
+
 ## [10.2.0](https://github.com/theforeman/puppet-dns/tree/10.2.0) (2023-11-14)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/10.1.0...10.2.0)
@@ -69,7 +82,7 @@
 **Implemented enhancements:**
 
 - Update to voxpupuli-test 5 [\#214](https://github.com/theforeman/puppet-dns/pull/214) ([ekohl](https://github.com/ekohl))
-- Add support for `allow-update` in zones [\#213](https://github.com/theforeman/puppet-dns/pull/213) ([SimonPe](https://github.com/SimonPe))
+- Add support for `allow-update` in zones [\#213](https://github.com/theforeman/puppet-dns/pull/213) ([LadyNamedLaura](https://github.com/LadyNamedLaura))
 - Manage zone records [\#212](https://github.com/theforeman/puppet-dns/pull/212) ([BDelacour](https://github.com/BDelacour))
 
 ## [9.3.0](https://github.com/theforeman/puppet-dns/tree/9.3.0) (2022-04-20)
