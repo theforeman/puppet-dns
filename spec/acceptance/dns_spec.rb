@@ -1,6 +1,19 @@
 require 'spec_helper_acceptance'
 
 describe 'Scenario: install bind' do
+
+  before(:context) do
+    describe command('dnf remove -y bind bind-utils') do
+      its(:stdout) { should match /Removed:/ }
+    end
+  end
+
+  after(:context) do
+    describe command('dnf remove -y isc-bind isc-bind-bind-utils') do
+      its(:stdout) { should match /Removed:/ }
+    end
+  end
+
   it_behaves_like 'an idempotent resource' do
     let(:manifest) do
       <<-EOS

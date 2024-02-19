@@ -1,0 +1,6 @@
+<%- | String $util,
+      String $sclenvname
+| -%>
+#!/bin/bash
+. scl_source enable <%= $sclenvname %>
+exec <%= $util %> "$@"

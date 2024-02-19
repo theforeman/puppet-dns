@@ -1,6 +1,6 @@
 # Default parameters
 # @api private
-class dns::params {
+class dns::params inherits dns::globals {
   case $facts['os']['family'] {
     'Debian': {
       $dnsdir             = '/etc/bind'
@@ -37,23 +37,16 @@ class dns::params {
         'Ubuntu' => if versioncmp($facts['os']['release']['major'], '20.04') >= 0 { undef } else { 'yes' },
         default  => undef,
       }
+      $masterfile_format = $facts['os']['name'] ? {
+        'Debian' => if versioncmp($facts['os']['release']['major'], '11') >= 0 { 'text' } else { undef },
+        'Ubuntu' => if versioncmp($facts['os']['release']['major'], '20.04') >= 0 { 'text' } else { undef },
+        default  => undef,
+      }
     }
     'RedHat': {
-      $dnsdir             = '/etc'
-      $vardir             = '/var/named'
-      $optionspath        = '/etc/named/options.conf'
-      $zonefilepath       = "${vardir}/dynamic"
-      $localzonepath      = "${dnsdir}/named.rfc1912.zones"
-      $defaultzonepath    = 'unmanaged'
-      $publicviewpath     = "${dnsdir}/named/zones.conf"
-      $viewconfigpath     = "${dnsdir}/named/views"
-      $dns_server_package = 'bind'
-      $namedservicename   = 'named'
-      $user               = 'named'
-      $group              = 'named'
-      $rndcconfgen        = '/usr/sbin/rndc-confgen'
-      $named_checkconf    = '/usr/sbin/named-checkconf'
-      $sysconfig_file     = '/etc/sysconfig/named'
+      $user = 'named'
+      $group = 'named'
+
       $sysconfig_template = "dns/sysconfig.${facts['os']['family']}.erb"
       $sysconfig_startup_options = undef
       $sysconfig_disable_zone_checking = undef
@@ -61,7 +54,51 @@ class dns::params {
       # This option is not relevant for RedHat
       $sysconfig_resolvconf_integration = undef
 
-      $dnssec_enable = if versioncmp($facts['os']['release']['major'], '9') >= 0 { undef } else { 'yes' }
+      if $dns::globals::scl {
+        $sclprovider = $dns::globals::scl.split('-')[0]
+        $sclenvname = $dns::globals::scl
+        $sclroot = "/opt/${sclprovider}/${sclenvname}/root"
+        $sclvar = "/var/opt/${sclprovider}/scls/${sclenvname}"
+        $sclconfroot = "/etc/opt/${sclprovider}/scls/${sclenvname}"
+
+        $dnsdir = $sclconfroot
+        $vardir = "${sclvar}/named/data"
+        $optionspath = "${dnsdir}/options.conf"
+        $zonefilepath = "${vardir}/dynamic"
+        $localzonepath = "${dnsdir}/named.rfc1912.zones"
+        $defaultzonepath = 'unmanaged'
+        $publicviewpath = "${dnsdir}/zones.conf"
+        $viewconfigpath = "${dnsdir}/views"
+        # Install the SCL meta package to pull in utils
+        $dns_server_package = $sclenvname
+        $namedservicename = "${sclenvname}-named.service"
+
+        $rndcconfgen = "${sclroot}/usr/sbin/rndc-confgen"
+        $named_checkconf = "${sclroot}/usr/bin/named-checkconf"
+        $sysconfig_file = "${sclconfroot}/sysconfig/named"
+
+        # option not available on bind > 9.18
+        $dnssec_enable = undef
+        $masterfile_format = 'text'
+      }
+      else {
+        $dnsdir = '/etc'
+        $vardir = '/var/named'
+        $optionspath = '/etc/named/options.conf'
+        $zonefilepath = "${vardir}/dynamic"
+        $localzonepath = "${dnsdir}/named.rfc1912.zones"
+        $defaultzonepath = 'unmanaged'
+        $publicviewpath = "${dnsdir}/named/zones.conf"
+        $viewconfigpath = "${dnsdir}/named/views"
+        $dns_server_package = 'bind'
+        $namedservicename = 'named'
+
+        $rndcconfgen = '/usr/sbin/rndc-confgen'
+        $named_checkconf = '/usr/sbin/named-checkconf'
+        $sysconfig_file = '/etc/sysconfig/named'
+        $dnssec_enable = if versioncmp($facts['os']['release']['major'], '9') >= 0 { undef } else { 'yes' }
+        $masterfile_format = if versioncmp($facts['os']['release']['major'], '9') >= 0 { 'text' } else { undef }
+      }
     }
     /^(FreeBSD|DragonFly)$/: {
       $dnsdir             = '/usr/local/etc/namedb'
@@ -85,6 +122,7 @@ class dns::params {
       $sysconfig_disable_zone_checking = undef
       $sysconfig_resolvconf_integration = undef
       $dnssec_enable = undef
+      $masterfile_format = undef
     }
     'Archlinux': {
       $dnsdir             = '/etc'
@@ -109,6 +147,7 @@ class dns::params {
       $sysconfig_resolvconf_integration = undef
 
       $dnssec_enable = undef
+      $masterfile_format = undef
     }
     default: {
       fail ("Unsupported operating system family ${facts['os']['family']}")
