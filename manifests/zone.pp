@@ -63,6 +63,8 @@
 # @param auto_dnssec
 # @param dnssec_policy
 #   Causes the zone to be signed and turns on automatic maintenance for the zone.
+# @param masterfile_format
+#   The format used to load the master file
 #
 define dns::zone (
   Array[String] $target_views                             = [],
@@ -101,6 +103,7 @@ define dns::zone (
   Optional[Enum['yes', 'no']] $dnssec_secure_to_insecure  = undef,
   Optional[Enum['allow', 'maintain', 'off']] $auto_dnssec = undef,
   Optional[String[1]] $dnssec_policy                      = undef,
+  Optional[Enum['text', 'raw', 'map']] $masterfile_format = undef,
 ) {
   $_contact = pick($contact, "root.${zone}.")
 
