@@ -63,5 +63,8 @@ zone "<%= @zone %>" {
 <% if @_dns_notify -%>
     notify <%= @_dns_notify %>;
 <% end -%>
+<% if @masterfile_format -%>
+    masterfile-format <%= @masterfile_format %>;
+<% end -%>
 <% end -%>
 };
