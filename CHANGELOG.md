@@ -1,5 +1,13 @@
 # Changelog
 
+## [10.4.0](https://github.com/theforeman/puppet-dns/tree/10.4.0) (2024-05-15)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/10.3.0...10.4.0)
+
+**Implemented enhancements:**
+
+- Add support for zone masterfile format [\#248](https://github.com/theforeman/puppet-dns/pull/248) ([jfroche](https://github.com/jfroche))
+
 ## [10.3.0](https://github.com/theforeman/puppet-dns/tree/10.3.0) (2024-02-19)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/10.2.0...10.3.0)
