@@ -1,6 +1,6 @@
 # Changelog
 
-## [10.4.0](https://github.com/theforeman/puppet-dns/tree/10.4.0) (2024-03-26)
+## [10.4.0](https://github.com/theforeman/puppet-dns/tree/10.4.0) (2024-05-15)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/10.3.0...10.4.0)
 
