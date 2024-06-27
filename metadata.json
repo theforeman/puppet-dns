@@ -90,6 +90,13 @@
       "operatingsystemrelease": [
         "4"
       ]
+    },
+    {
+      "operatingsystem": "AlmaLinux",
+      "operatingsystemrelease": [
+        "8",
+        "9"
+      ]
     }
   ]
 }
