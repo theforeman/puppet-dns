@@ -155,7 +155,7 @@ class dns (
   Variant[Enum['unmanaged'], Stdlib::Absolutepath] $localzonepath   = $dns::params::localzonepath,
   Variant[Enum['unmanaged'], Stdlib::Absolutepath] $defaultzonepath = $dns::params::defaultzonepath,
   Optional[Enum['only', 'first']] $forward                          = undef,
-  Array[String] $forwarders                                         = [],
+  Array[Dns::Forwarder] $forwarders                                 = [],
   Variant[String, Boolean] $listen_on_v6                            = 'any',
   Enum['yes', 'no'] $recursion                                      = 'yes',
   Array[String] $allow_recursion                                    = ['localnets', 'localhost'],
