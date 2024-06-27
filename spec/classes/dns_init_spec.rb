@@ -363,6 +363,15 @@ describe 'dns' do
         ])}
       end
 
+      describe 'with disable empty zones' do
+        let(:params) { { :disable_empty_zones => ["16.172.IN-ADDR.ARPA", "17.172.IN-ADDR.ARPA"] } }
+
+        it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+          'disable-empty-zone "16.172.IN-ADDR.ARPA";',
+          'disable-empty-zone "17.172.IN-ADDR.ARPA";'
+        ])}
+      end
+
       describe 'with additional options' do
         let(:params) { { :additional_options => { 'max-cache-ttl' => 3600, 'max-ncache-ttl' => 3600 } } }
 
