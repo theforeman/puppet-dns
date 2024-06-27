@@ -134,6 +134,9 @@
 #   A hash of logging categories to be created. See dns::logging::category for options.
 # @param logging_channels
 #   A hash of logging channels to be created. See dns::logging::channel for options.
+# @param disable_empty_zones
+#   A hash containing a list of empty zones that shouldn't be created by bind
+#   See: https://kb.isc.org/docs/aa-00800
 #
 # @see dns::zone
 # @see dns::key
@@ -186,6 +189,7 @@ class dns (
   Hash[String, Hash] $keys                                          = {},
   Hash[String, Hash] $logging_categories                            = {},
   Hash[String, Hash] $logging_channels                              = {},
+  Array[Stdlib::Fqdn] $disable_empty_zones                          = [],
 ) inherits dns::params {
   include dns::install
   include dns::config
