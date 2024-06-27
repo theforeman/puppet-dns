@@ -48,7 +48,7 @@ define dns::view (
   Array[String]                         $allow_query          = [],
   Array[String]                         $allow_query_cache    = [],
   Array[String]                         $also_notify          = [],
-  Array[String]                         $forwarders           = [],
+  Array[Dns::Forwarder]                 $forwarders           = [],
   Optional[Enum['only','first']]        $forward              = undef,
   Optional[Enum['yes','no']]            $recursion            = undef,
   Optional[Enum['yes','no']]            $dnssec_enable        = undef,

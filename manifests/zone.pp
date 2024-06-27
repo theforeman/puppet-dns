@@ -94,7 +94,7 @@ define dns::zone (
   Boolean $replace_file                                   = false,
   Enum['first', 'only'] $forward                          = 'first',
   Boolean $master_empty_forwarders_enable                 = false,
-  Array $forwarders                                       = [],
+  Array[Dns::Forwarder] $forwarders                       = [],
   Optional[Enum['yes', 'no', 'explicit']] $dns_notify     = undef,
   Optional[Enum['yes', 'no']] $zone_statistics            = undef,
   Optional[Dns::UpdatePolicy] $update_policy              = undef,
