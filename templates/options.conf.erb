@@ -30,6 +30,10 @@ allow-recursion { <%= scope.lookupvar('::dns::allow_recursion').join("; ") %>; }
 pid-file "/var/run/named/pid";
 <% end -%>
 
+<%- scope.lookupvar('::dns::disable_empty_zones').sort.each do |disable_empty_zone| -%>
+disable-empty-zone "<%= disable_empty_zone %>";
+<%- end -%>
+
 <%- scope.lookupvar('::dns::additional_options').sort_by {|k, v| k}.each do |option, value| -%>
 <%= option %> <%= value %>;
 <%- end -%>
