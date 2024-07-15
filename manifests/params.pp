@@ -28,7 +28,7 @@ class dns::params {
       # This option is not relevant for Debian
       $sysconfig_disable_zone_checking = undef
 
-      $dnssec_enable = undef,
+      $dnssec_enable = undef
     }
     'RedHat': {
       $dnsdir             = '/etc'
