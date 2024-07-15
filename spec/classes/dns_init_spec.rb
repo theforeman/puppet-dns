@@ -118,14 +118,6 @@ describe 'dns' do
 
         it { should contain_concat(options_path) }
         it do
-          has_dnssec_enable = case facts[:os]['family']
-                              when 'Debian'
-                                ['9', '10', '18.04'].include?(facts[:os]['release']['major'])
-                              when 'RedHat'
-                                ['7', '8'].include?(facts[:os]['release']['major'])
-                              else
-                                false
-                              end
           expected = [
             "directory \"#{var_path}\";",
             'recursion yes;',
@@ -136,7 +128,7 @@ describe 'dns' do
             'allow-recursion { localnets; localhost; };'
           ]
 
-          expected << 'dnssec-enable yes;' if has_dnssec_enable
+          expected << 'dnssec-enable yes;' if facts[:os]['family'] == 'RedHat' && facts[:os]['release']['major'] == '8'
 
           if facts[:os]['family'] == 'FreeBSD'
             expected << 'pid-file "/var/run/named/pid";'
@@ -428,12 +420,7 @@ describe 'dns' do
           when 'RedHat'
             '/etc/sysconfig/named'
           when 'Debian'
-            case facts[:os]['name']
-            when 'Debian'
-              facts[:os]['release']['major'] == '10' ? '/etc/default/bind9' : '/etc/default/named'
-            when 'Ubuntu'
-              facts[:os]['release']['major'] == '18.04' ? '/etc/default/bind9' : '/etc/default/named'
-            end
+            '/etc/default/named'
           end
         end
 
