@@ -1,6 +1,26 @@
 # Changelog
 
-## [10.4.0](https://github.com/theforeman/puppet-dns/tree/10.4.0) (2024-05-15)
+## [11.0.0](https://github.com/theforeman/puppet-dns/tree/11.0.0) (2024-07-18)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/10.4.0...11.0.0)
+
+**Breaking changes:**
+
+- Remove unused date function [\#263](https://github.com/theforeman/puppet-dns/pull/263) ([ekohl](https://github.com/ekohl))
+- Drop RHEL 7, CentOS 7 & 8, Scientific 7 & Debian 10; Add RHEL 9 & Fedora 39 & 40 [\#262](https://github.com/theforeman/puppet-dns/pull/262) ([ekohl](https://github.com/ekohl))
+- Drop files/named.ca [\#258](https://github.com/theforeman/puppet-dns/pull/258) ([bigon](https://github.com/bigon))
+- Update ensure\_packages-\>stdlib::ensure\_packages; require stdlib 9 [\#249](https://github.com/theforeman/puppet-dns/pull/249) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Update puppet\_metadata to ~\> 4.0 and voxpupuli-acceptance to ~\> 3.0 [\#261](https://github.com/theforeman/puppet-dns/pull/261) ([archanaserver](https://github.com/archanaserver))
+- Fixes [\#37604](https://projects.theforeman.org/issues/37604) - Validate DNS forwarders [\#260](https://github.com/theforeman/puppet-dns/pull/260) ([ekohl](https://github.com/ekohl))
+- Add parameter to set disable-empty-zone option [\#259](https://github.com/theforeman/puppet-dns/pull/259) ([bigon](https://github.com/bigon))
+- Add AlmaLinux 8 & 9 support [\#254](https://github.com/theforeman/puppet-dns/pull/254) ([archanaserver](https://github.com/archanaserver))
+- Refs [\#37121](https://projects.theforeman.org/issues/37121) - Add dns::tsig\_keygen function [\#253](https://github.com/theforeman/puppet-dns/pull/253) ([ekohl](https://github.com/ekohl))
+- Add dns::dnssec\_keygen function [\#246](https://github.com/theforeman/puppet-dns/pull/246) ([ekohl](https://github.com/ekohl))
+
+## [10.4.0](https://github.com/theforeman/puppet-dns/tree/10.4.0) (2024-05-16)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/10.3.0...10.4.0)
 
