@@ -135,7 +135,7 @@
 # @param logging_channels
 #   A hash of logging channels to be created. See dns::logging::channel for options.
 # @param disable_empty_zones
-#   A hash containing a list of empty zones that shouldn't be created by bind
+#   A list of empty zones that shouldn't be created by bind
 #   See: https://kb.isc.org/docs/aa-00800
 #
 # @see dns::zone
