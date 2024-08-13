@@ -32,7 +32,7 @@ describe 'dns' do
       let(:checkconf) {
         case facts[:os]['family']
         when 'Debian'
-          ['22.04', '12'].include?(facts[:os]['release']['major']) ? "/usr/bin/named-checkconf" : "/usr/sbin/named-checkconf"
+          facts[:os]['release']['major'] != '11' ? "/usr/bin/named-checkconf" : "/usr/sbin/named-checkconf"
         when 'FreeBSD'
           '/usr/local/sbin/named-checkconf'
         else
