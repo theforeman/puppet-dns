@@ -17,7 +17,7 @@ class dns::params {
       $group              = 'bind'
       $rndcconfgen        = '/usr/sbin/rndc-confgen'
       $named_checkconf    = $facts['os']['name'] ? {
-        'Ubuntu' => if versioncmp($facts['os']['release']['major'], '22.04') >= 0 { '/usr/bin/named-checkconf' } else { '/usr/sbin/named-checkconf' },
+        'Ubuntu' => '/usr/bin/named-checkconf',
         default  => if versioncmp($facts['os']['release']['major'], '12') >= 0 { '/usr/bin/named-checkconf' } else { '/usr/sbin/named-checkconf' },
       }
       $sysconfig_file     = '/etc/default/named'
