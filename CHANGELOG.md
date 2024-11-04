@@ -1,5 +1,14 @@
 # Changelog
 
+## [11.0.1](https://github.com/theforeman/puppet-dns/tree/11.0.1) (2024-11-04)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/11.0.0...11.0.1)
+
+**Fixed bugs:**
+
+- BIND 9.18 compatiblity on Ubuntu 20.04 [\#267](https://github.com/theforeman/puppet-dns/pull/267) ([ekohl](https://github.com/ekohl))
+- Fix the documentation of the disable\_empty\_zones parameter [\#265](https://github.com/theforeman/puppet-dns/pull/265) ([bigon](https://github.com/bigon))
+
 ## [11.0.0](https://github.com/theforeman/puppet-dns/tree/11.0.0) (2024-07-18)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/10.4.0...11.0.0)
