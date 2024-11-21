@@ -30,16 +30,16 @@
 # @param syslog_facility
 #   The syslog facility to use when logging to a syslog log_type
 define dns::logging::channel (
-  Optional[Stdlib::Absolutepath] $file_path          = undef,
-  Optional[String] $file_size                        = undef,
-  Optional[Integer] $file_versions                   = undef,
-  Enum['file', 'null', 'stderr', 'syslog'] $log_type = undef,
-  Integer[51, 59] $order                             = 51,
-  Optional[Enum['no', 'yes']] $print_category        = undef,
-  Optional[Enum['no', 'yes']] $print_severity        = undef,
-  Optional[Enum['no', 'yes']] $print_time            = undef,
-  Optional[String] $severity                         = undef,
-  Optional[String] $syslog_facility                  = undef,
+  Optional[Stdlib::Absolutepath] $file_path                   = undef,
+  Optional[String] $file_size                                 = undef,
+  Optional[Variant[Enum['unlimited'],Integer]] $file_versions = undef,
+  Enum['file', 'null', 'stderr', 'syslog'] $log_type          = undef,
+  Integer[51, 59] $order                                      = 51,
+  Optional[Enum['no', 'yes']] $print_category                 = undef,
+  Optional[Enum['no', 'yes']] $print_severity                 = undef,
+  Optional[Enum['no', 'yes']] $print_time                     = undef,
+  Optional[String] $severity                                  = undef,
+  Optional[String] $syslog_facility                           = undef,
 ) {
   include dns::logging
 
@@ -55,11 +55,8 @@ define dns::logging::channel (
     if empty($file_path) {
       fail('dns::logging::channel: "file_path" needs to be set with log type file')
     }
-    if empty($file_size) {
-      fail('dns::logging::channel: "file_size" needs to be set with log type file')
-    }
-    if !$file_versions {
-      fail('dns::logging::channel: "file_versions" needs to be set with log type file')
+    if $file_versions and empty($file_size) {
+      fail('dns::logging::channel: "file_size" needs to be set if "file_version" is set')
     }
   }
 
