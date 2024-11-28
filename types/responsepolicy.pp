@@ -6,7 +6,7 @@ type Dns::ResponsePolicy = Array[
       'nxdomain', 'nodata', 'tcp-only', 'cname'
     ]],
     cname_domain   => Optional[String[1]],
-    max_policy_ttl => Optional[Integer],
+    max_policy_ttl => Optional[Integer[0]],
     log            => Optional[Boolean]
   }], 1, 32
 ]
