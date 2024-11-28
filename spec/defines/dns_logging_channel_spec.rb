@@ -163,6 +163,7 @@ describe 'dns::logging::channel' do
         end
 
         it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_concat__fragment("named.conf-logging-channel-#{title}.dns").with_content(%r{file "/path/to/file.log";});
       end
 
       describe 'with log_type = file and file_versions not set' do
@@ -175,6 +176,7 @@ describe 'dns::logging::channel' do
         end
 
         it { is_expected.to compile.with_all_deps }
+        it { is_expected.to contain_concat__fragment("named.conf-logging-channel-#{title}.dns").with_content(%r{file "/path/to/file.log" size 5m;});
       end
 
       describe 'with log_type = syslog and all options set' do

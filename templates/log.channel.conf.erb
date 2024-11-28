@@ -1,10 +1,10 @@
   channel <%= @channel_name %> {
     <%- if @log_type == 'file' -%>
-    <%-   if @file_versions and @file_size -%>
+    <%-   if @file_versions && @file_size -%>
     file "<%= @file_path -%>" versions <%= @file_versions -%> size <%= @file_size -%>;
-    <%-     elsif @file_size -%>
+    <%-   elsif @file_size -%>
     file "<%= @file_path -%>" size <%= @file_size -%>;
-    <%-     else -%>
+    <%-   else -%>
     file "<%= @file_path -%>";
     <%-   end -%>
     <%- elsif @log_type == 'null' -%>
