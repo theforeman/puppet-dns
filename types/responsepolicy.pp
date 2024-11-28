@@ -1,6 +1,6 @@
 type Dns::ResponsePolicy = Array[
   Struct[{
-    zone           => String[1],
+    zone           => Stdlib::Fqdn,
     policy         => Optional[Enum[
       'given', 'disabled', 'passthru', 'drop',
       'nxdomain', 'nodata', 'tcp-only', 'cname'
