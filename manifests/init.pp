@@ -43,6 +43,8 @@
 #   The forward option
 # @param forwarders
 #   The forwarders option
+# @param listen_on
+#   The listen-on option
 # @param listen_on_v6
 #   The listen-on-v6 option
 # @param recursion
@@ -159,6 +161,7 @@ class dns (
   Variant[Enum['unmanaged'], Stdlib::Absolutepath] $defaultzonepath = $dns::params::defaultzonepath,
   Optional[Enum['only', 'first']] $forward                          = undef,
   Array[Dns::Forwarder] $forwarders                                 = [],
+  Optional[String] $listen_on                                       = undef,
   Variant[String, Boolean] $listen_on_v6                            = 'any',
   Enum['yes', 'no'] $recursion                                      = 'yes',
   Array[String] $allow_recursion                                    = ['localnets', 'localhost'],

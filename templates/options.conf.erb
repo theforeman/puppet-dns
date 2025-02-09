@@ -18,6 +18,9 @@ empty-zones-enable <%= scope.lookupvar('::dns::empty_zones_enable') %>;
 <% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::dns_notify')) -%>
 notify <%= scope.lookupvar('::dns::dns_notify') %>;
 <% end -%>
+<% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::listen_on')) -%>
+listen-on { <%= scope.lookupvar('::dns::listen_on') %>; };
+<% end -%>
 <% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::listen_on_v6')) -%>
 listen-on-v6 { <%= scope.lookupvar('::dns::listen_on_v6') %>; };
 <% end -%>
