@@ -250,6 +250,14 @@ describe 'dns' do
         end
       end
 
+      describe 'with ipv4 disabled' do
+        let(:params) { {:listen_on => 'none'} }
+
+        it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+          'listen-on { none; };',
+        ])}
+      end
+
       describe 'with ipv6 disabled' do
         let(:params) { {:listen_on_v6 => 'none'} }
 
