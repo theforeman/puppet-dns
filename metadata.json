@@ -69,7 +69,8 @@
     {
       "operatingsystem": "FreeBSD",
       "operatingsystemrelease": [
-        "11"
+        "13",
+        "14"
       ]
     },
     {
