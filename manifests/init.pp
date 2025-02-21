@@ -130,6 +130,8 @@
 #   like localzonepath inclusion.
 # @param zones
 #   A hash of zones to be created. See dns::zone for options.
+# @param additional_zones
+#   A hash of named.conf file and above zone hash
 # @param keys
 #   A hash of keys to be created. See dns::key for options.
 # @param logging_categories
@@ -189,6 +191,7 @@ class dns (
   Array[String] $additional_directives                              = [],
   Boolean $enable_views                                             = false,
   Hash[String, Hash] $zones                                         = {},
+  Hash[String, Hash] $additional_zones                              = {},
   Hash[String, Hash] $keys                                          = {},
   Hash[String, Hash] $logging_categories                            = {},
   Hash[String, Hash] $logging_channels                              = {},
@@ -202,6 +205,7 @@ class dns (
 
   create_resources('dns::key', $keys)
   create_resources('dns::zone', $zones)
+  create_resources('dns::zone', $additional_zones)
   create_resources('dns::logging::category', $logging_categories)
   create_resources('dns::logging::channel', $logging_channels)
 }
