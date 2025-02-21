@@ -14,6 +14,13 @@ class dns::config {
     validate_cmd => $validate_cmd,
   }
 
+  concat { '/etc/bind/named.conf.cust':
+    owner        => root,
+    group        => $dns::params::group,
+    mode         => '0640',
+    validate_cmd => $validate_cmd,
+  }
+
   if $dns::enable_views {
     file { $dns::viewconfigpath:
       ensure => directory,
