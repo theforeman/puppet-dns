@@ -215,6 +215,6 @@ class dns (
       $tmp = { $zone_name => $named_conf_path + $zone_data }
       $tmp
     }
-    create_resources('dns::zone', $zone_resource)
+    create_resources('dns::zone', $zone_resource[0])
   }
 }
