@@ -209,9 +209,11 @@ class dns (
   create_resources('dns::logging::category', $logging_categories)
   create_resources('dns::logging::channel', $logging_channels)
 
-  additional_zones.each |$namedconf, $additional_zone| {
+  $additional_zones.each |$namedconf, $additional_zone| {
     $zone_resource = $additional_zone.each |$zone_name, $zone_data| {
-      { $zone_name => {{ 'nameconfpath' => "${dns::zonefilepath}/${namedconf}" } + $zone_data } }
+      $named_conf_path = { 'nameconfpath' => $namedconf }
+      $tmp = { $zone_name => $named_conf_path + $zone_data }
+      $tmp
     }
     create_resources('dns::zone', $zone_resource)
   }
