@@ -205,7 +205,7 @@ class dns (
 
   create_resources('dns::key', $keys)
   create_resources('dns::zone', $zones)
-  create_resources('dns::zone', $additional_zones)
+  # create_resources('dns::zone', $additional_zones)
   create_resources('dns::logging::category', $logging_categories)
   create_resources('dns::logging::channel', $logging_channels)
 
