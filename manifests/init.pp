@@ -211,7 +211,7 @@ class dns (
 
   additional_zones.each |$namedconf, $additional_zone| {
     $zone_resource = $additional_zone.each |$zone_name, $zone_data| {
-      { $zone_name => { 'nameconfpath' => "${dns::zonefilepath}/${namedconf}"} + $zone_data }
+      { $zone_name => {{ 'nameconfpath' => "${dns::zonefilepath}/${namedconf}" } + $zone_data } }
     }
     create_resources('dns::zone', $zone_resource)
   }
