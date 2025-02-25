@@ -205,16 +205,13 @@ class dns (
 
   create_resources('dns::key', $keys)
   create_resources('dns::zone', $zones)
-  # create_resources('dns::zone', $additional_zones)
   create_resources('dns::logging::category', $logging_categories)
   create_resources('dns::logging::channel', $logging_channels)
 
   $additional_zones.each |$namedconf, $additional_zone| {
-    $zone_resource = $additional_zone.map |$zone_name, $zone_data| {
-      $named_conf_path = { 'nameconfpath' => "${dns::dnsdir}/${namedconf}" }
-      $tmp = { $zone_name => $named_conf_path + $zone_data }
-      $tmp
+    $zone_resource = $additional_zone.reduce({}) |$zone_memo, $zone_x| {
+      $zone_memo + { $zone_x[0] => { 'nameconfpath' => "${dns::dnsdir}/${namedconf}" } + $additional_zone[$zone_x[0]] }
     }
-    create_resources('dns::zone', $zone_resource[0])
+    create_resources('dns::zone', $zone_resource)
   }
 }
