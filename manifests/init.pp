@@ -211,7 +211,7 @@ class dns (
 
   $additional_zones.each |$namedconf, $additional_zone| {
     $zone_resource = $additional_zone.map |$zone_name, $zone_data| {
-      $named_conf_path = { 'nameconfpath' => $namedconf }
+      $named_conf_path = { 'nameconfpath' => "${dns::zonefilepath}/${namedconf}" }
       $tmp = { $zone_name => $named_conf_path + $zone_data }
       $tmp
     }
