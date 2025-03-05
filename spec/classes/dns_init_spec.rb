@@ -34,7 +34,7 @@ describe 'dns' do
         when 'Debian'
           facts[:os]['release']['major'] != '11' ? "/usr/bin/named-checkconf" : "/usr/sbin/named-checkconf"
         when 'FreeBSD'
-          '/usr/local/sbin/named-checkconf'
+          '/usr/local/bin/named-checkconf'
         else
           '/usr/sbin/named-checkconf'
         end
