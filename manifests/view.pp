@@ -38,6 +38,14 @@
 #    not to be unmanaged to be effective.
 # @param order
 #   The order parameter to the concat fragment.
+# @param response_policy
+#   Optional. An array of response policy configurations for the view in the
+#   following format:
+#   [{'zone' => '<ZONE_NAME>', 'policy' => '<POLICY_ACTION>', 'log' => true|false,
+#     'max_policy_ttl' => <TTL_VALUE>, 'cname_domain' => '<CNAME_DOMAIN>'}]
+#   Example: [{'zone' => 'example.com', 'policy' => 'passthru', 'log' => true,
+#              'max_policy_ttl' => 3600}, {'zone' => 'example.net',
+#              'policy' => 'cname', 'cname_domain' => 'example.com'}]
 #
 define dns::view (
   Array[String]                         $match_clients        = [],
@@ -57,6 +65,7 @@ define dns::view (
   Boolean                               $include_localzones   = true,
   Boolean                               $include_defaultzones = true,
   String                                $order                = '-',
+  Optional[Dns::ResponsePolicy]         $response_policy      = undef,
 ) {
   unless $dns::enable_views {
     fail('Must set $dns::enable_views to true in order to use dns::view')
