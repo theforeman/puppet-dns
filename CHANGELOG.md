@@ -1,5 +1,13 @@
 # Changelog
 
+## [11.1.0](https://github.com/theforeman/puppet-dns/tree/11.1.0) (2025-05-09)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/11.0.1...11.1.0)
+
+**Implemented enhancements:**
+
+- Add parameter to control listen-on [\#273](https://github.com/theforeman/puppet-dns/pull/273) ([kajinamit](https://github.com/kajinamit))
+
 ## [11.0.1](https://github.com/theforeman/puppet-dns/tree/11.0.1) (2024-11-04)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/11.0.0...11.0.1)
