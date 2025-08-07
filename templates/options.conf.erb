@@ -6,6 +6,14 @@ forwarders { <%= scope.lookupvar('::dns::forwarders').join("; ") %>; };
 forward <%= scope.lookupvar('::dns::forward') %>;
 <% end -%>
 
+<% if $dns::rpzzones { -%>
+response-policy {
+<%   $dns::rpczones.each |$zone| { -%>
+zone "<%= $zone %>";
+<%   } -%>
+};
+<% } -%>
+
 recursion <%= scope.lookupvar('::dns::recursion') %>;
 allow-query { <%= scope.lookupvar('::dns::allow_query').join("; ") %>; };
 <% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::dnssec_enable')) -%>
