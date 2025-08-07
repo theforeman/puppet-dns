@@ -1,4 +1,4 @@
-directory "<%= scope.lookupvar('::dns::vardir') %>";
+directory "<%= dns::vardir %>";
 <% unless scope.lookupvar('::dns::forwarders').empty? -%>
 forwarders { <%= scope.lookupvar('::dns::forwarders').join("; ") %>; };
 <% end -%>
