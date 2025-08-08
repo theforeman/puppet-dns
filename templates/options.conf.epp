@@ -26,7 +26,7 @@ empty-zones-enable <%= $dns::empty_zones_enable %>;
 <% if $dns::dns_notify != undef and $dns::dns_notify != '' { -%>
 notify <%= $dns::dns_notify %>;
 <% } -%>
-<% if $listen_on != undef and $dns::listen_on != '' { -%>
+<% if $dns::listen_on != undef and $dns::listen_on != '' { -%>
 listen-on { <%= $dns::listen_on %>; };
 <% } -%>
 <% if $dns::listen_on_v6 != undef and $dns::listen_on_v6 != '' and $dns::listen_on_v6 != false { -%>
