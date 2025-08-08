@@ -43,6 +43,8 @@
 #   The forward option
 # @param forwarders
 #   The forwarders option
+# @param rpz_zones
+#   Array of zones that will be included in response-policy definition
 # @param listen_on
 #   The listen-on option
 # @param listen_on_v6
