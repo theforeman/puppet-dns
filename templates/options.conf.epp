@@ -1,10 +1,10 @@
-directory "<%= dns::vardir %>";
-<% unless scope.lookupvar('::dns::forwarders').empty? -%>
-forwarders { <%= scope.lookupvar('::dns::forwarders').join("; ") %>; };
-<% end -%>
-<% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::forward')) -%>
-forward <%= scope.lookupvar('::dns::forward') %>;
-<% end -%>
+directory "<%= $dns::vardir %>";
+<% if $dns::forwarders and $dns::forwarders != [] { -%>
+forwarders { <%= join($dns::forwarders, '; ') %>; };
+<% } -%>
+<% if $dns::forward != undef and $dns::forward != '' { -%>
+forward <%= $dns::forward %>;
+<% } -%>
 
 <% if $dns::rpz_zones { -%>
 response-policy {
@@ -14,38 +14,38 @@ zone "<%= $zone %>";
 };
 <% } -%>
 
+recursion <%= $dns::recursion %>;
+allow-query { <%= join($dns::allow_query, '; ') %>; };
+<% if $dns::dnssec_enable != undef and $dns::dnssec_enable != '' and $dns::dnssec_enable != false { -%>
+dnssec-enable <%= $dns::dnssec_enable %>;
+<% } -%>
+dnssec-validation <%= $dns::dnssec_validation %>;
 
-recursion <%= scope.lookupvar('::dns::recursion') %>;
-allow-query { <%= scope.lookupvar('::dns::allow_query').join("; ") %>; };
-<% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::dnssec_enable')) -%>
-dnssec-enable <%= scope.lookupvar('::dns::dnssec_enable') %>;
-<% end -%>
-dnssec-validation <%= scope.lookupvar('::dns::dnssec_validation') %>;
+empty-zones-enable <%= $dns::empty_zones_enable %>;
 
-empty-zones-enable <%= scope.lookupvar('::dns::empty_zones_enable') %>;
+<% if $dns::dns_notify != undef and $dns::dns_notify != '' { -%>
+notify <%= $dns::dns_notify %>;
+<% } -%>
+<% if $listen_on != undef and $dns::listen_on != '' { -%>
+listen-on { <%= $dns::listen_on %>; };
+<% } -%>
+<% if $dns::listen_on_v6 != undef and $dns::listen_on_v6 != '' and $dns::listen_on_v6 != false { -%>
+listen-on-v6 { <%= $dns::listen_on_v6 %>; };
+<% } -%>
 
-<% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::dns_notify')) -%>
-notify <%= scope.lookupvar('::dns::dns_notify') %>;
-<% end -%>
-<% unless [nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::listen_on')) -%>
-listen-on { <%= scope.lookupvar('::dns::listen_on') %>; };
-<% end -%>
-<% unless [false, nil, :undefined, :undef, ''].include?(scope.lookupvar('::dns::listen_on_v6')) -%>
-listen-on-v6 { <%= scope.lookupvar('::dns::listen_on_v6') %>; };
-<% end -%>
+<% if $dns::allow_recursion and $dns::allow_recursion != [] { -%>
+allow-recursion { <%= join($dns::allow_recursion, '; ') %>; };
+<% } -%>
 
-<% unless scope.lookupvar('::dns::allow_recursion').empty? -%>
-allow-recursion { <%= scope.lookupvar('::dns::allow_recursion').join("; ") %>; };
-<% end -%>
-
-<% if (@facts['os']['family'] =~ /^(FreeBSD|DragonFly)$/) -%>
+<% if $facts['os']['family'] =~ /^(FreeBSD|DragonFly)$/ { -%>
 pid-file "/var/run/named/pid";
-<% end -%>
+<% } -%>
 
-<%- scope.lookupvar('::dns::disable_empty_zones').sort.each do |disable_empty_zone| -%>
-disable-empty-zone "<%= disable_empty_zone %>";
-<%- end -%>
+<% $dns::disable_empty_zones.sort.each |$disable_empty_zone| { -%>
+disable-empty-zone "<%= $disable_empty_zone %>";
+<% } -%>
 
-<%- scope.lookupvar('::dns::additional_options').sort_by {|k, v| k}.each do |option, value| -%>
-<%= option %> <%= value %>;
-<%- end -%>
+<% $dns::additional_options.keys.sort.each |$option| { -%>
+<%  $value = $dns::additional_options[$option] -%>
+<%= $option %> <%= $value %>;
+<% } -%>
