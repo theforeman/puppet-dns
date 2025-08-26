@@ -7,8 +7,14 @@ class dns::params {
       $vardir             = '/var/cache/bind'
       $optionspath        = "${dnsdir}/named.conf.options"
       $zonefilepath       = "${vardir}/zones"
-      $localzonepath      = "${dnsdir}/zones.rfc1918"
-      $defaultzonepath    = "${dnsdir}/named.conf.default-zones"
+      $localzonepath      = $facts['os']['name'] ? {
+        'Debian' => if versioncmp($facts['os']['release']['major'], '13') >= 0 { 'unmanaged' } else { "${dnsdir}/zones.rfc1918" },
+        default  => "${dnsdir}/zones.rfc1918",
+      }
+      $defaultzonepath    = $facts['os']['name'] ? {
+        'Debian' => if versioncmp($facts['os']['release']['major'], '13') >= 0 { 'unmanaged' } else { "${dnsdir}/named.conf.default-zones" },
+        default  => "${dnsdir}/named.conf.default-zones",
+      }
       $publicviewpath     = "${dnsdir}/zones.conf"
       $viewconfigpath     = "${dnsdir}/views"
       $dns_server_package = 'bind9'
