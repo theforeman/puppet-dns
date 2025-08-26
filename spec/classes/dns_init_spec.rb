@@ -70,7 +70,9 @@ describe 'dns' do
       let(:localzonepath) do
         case facts[:os]['family']
         when 'Debian'
-          "#{etc_directory}/zones.rfc1918"
+          if facts[:os]['release']['major'] != '13'
+            "#{etc_directory}/zones.rfc1918"
+          end
         when 'RedHat'
           "#{etc_directory}/named.rfc1912.zones"
         end
@@ -79,7 +81,9 @@ describe 'dns' do
       let(:defaultzonepath) do
         case facts[:os]['family']
         when 'Debian'
-          "#{etc_directory}/named.conf.default-zones"
+          if facts[:os]['release']['major'] != '13'
+            "#{etc_directory}/named.conf.default-zones"
+          end
         end
       end
 
