@@ -122,7 +122,7 @@ describe 'dns' do
             "directory \"#{var_path}\";",
             'recursion yes;',
             'allow-query { any; };',
-            'dnssec-validation auto;',
+            'dnssec-validation yes;',
             'empty-zones-enable yes;',
             'listen-on-v6 { any; };',
             'allow-recursion { localnets; localhost; };'
