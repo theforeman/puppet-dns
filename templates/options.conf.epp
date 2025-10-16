@@ -6,7 +6,7 @@ forwarders { <%= join($dns::forwarders, '; ') %>; };
 forward <%= $dns::forward %>;
 <% } -%>
 
-<% if $dns::rpz_zones { -%>
+<% unless empty($dns::rpz_zones) { -%>
 response-policy {
 <%   $dns::rpz_zones.each |$zone| { -%>
 zone "<%= $zone %>";
@@ -23,17 +23,17 @@ dnssec-validation <%= $dns::dnssec_validation %>;
 
 empty-zones-enable <%= $dns::empty_zones_enable %>;
 
-<% if $dns::dns_notify != undef and $dns::dns_notify != '' { -%>
+<% if $dns::dns_notify { -%>
 notify <%= $dns::dns_notify %>;
 <% } -%>
-<% if $dns::listen_on != undef and $dns::listen_on != '' { -%>
+<% if $dns::listen_on { -%>
 listen-on { <%= $dns::listen_on %>; };
 <% } -%>
-<% if $dns::listen_on_v6 != undef and $dns::listen_on_v6 != '' and $dns::listen_on_v6 != false { -%>
+<% if $dns::listen_on_v6 { -%>
 listen-on-v6 { <%= $dns::listen_on_v6 %>; };
 <% } -%>
 
-<% if $dns::allow_recursion and $dns::allow_recursion != [] { -%>
+<% if $dns::allow_recursion { -%>
 allow-recursion { <%= join($dns::allow_recursion, '; ') %>; };
 <% } -%>
 
