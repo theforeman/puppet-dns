@@ -163,7 +163,7 @@ class dns (
   Variant[Enum['unmanaged'], Stdlib::Absolutepath] $defaultzonepath = $dns::params::defaultzonepath,
   Optional[Enum['only', 'first']] $forward                          = undef,
   Array[Dns::Forwarder] $forwarders                                 = [],
-  Optional[Array] $rpz_zones                                        = undef,
+  Array $rpz_zones                                                  = undef,
   Optional[String] $listen_on                                       = undef,
   Variant[String, Boolean] $listen_on_v6                            = 'any',
   Enum['yes', 'no'] $recursion                                      = 'yes',
