@@ -1,0 +1,51 @@
+directory "<%= $dns::vardir %>";
+<% if $dns::forwarders and $dns::forwarders != [] { -%>
+forwarders { <%= join($dns::forwarders, '; ') %>; };
+<% } -%>
+<% if $dns::forward != undef and $dns::forward != '' { -%>
+forward <%= $dns::forward %>;
+<% } -%>
+
+<% if $dns::rpz_zones { -%>
+response-policy {
+<%   $dns::rpz_zones.each |$zone| { -%>
+zone "<%= $zone %>";
+<%   } -%>
+};
+<% } -%>
+
+recursion <%= $dns::recursion %>;
+allow-query { <%= join($dns::allow_query, '; ') %>; };
+<% if $dns::dnssec_enable != undef and $dns::dnssec_enable != '' and $dns::dnssec_enable != false { -%>
+dnssec-enable <%= $dns::dnssec_enable %>;
+<% } -%>
+dnssec-validation <%= $dns::dnssec_validation %>;
+
+empty-zones-enable <%= $dns::empty_zones_enable %>;
+
+<% if $dns::dns_notify != undef and $dns::dns_notify != '' { -%>
+notify <%= $dns::dns_notify %>;
+<% } -%>
+<% if $dns::listen_on != undef and $dns::listen_on != '' { -%>
+listen-on { <%= $dns::listen_on %>; };
+<% } -%>
+<% if $dns::listen_on_v6 != undef and $dns::listen_on_v6 != '' and $dns::listen_on_v6 != false { -%>
+listen-on-v6 { <%= $dns::listen_on_v6 %>; };
+<% } -%>
+
+<% if $dns::allow_recursion and $dns::allow_recursion != [] { -%>
+allow-recursion { <%= join($dns::allow_recursion, '; ') %>; };
+<% } -%>
+
+<% if $facts['os']['family'] =~ /^(FreeBSD|DragonFly)$/ { -%>
+pid-file "/var/run/named/pid";
+<% } -%>
+
+<% $dns::disable_empty_zones.sort.each |$disable_empty_zone| { -%>
+disable-empty-zone "<%= $disable_empty_zone %>";
+<% } -%>
+
+<% $dns::additional_options.keys.sort.each |$option| { -%>
+<%  $value = $dns::additional_options[$option] -%>
+<%= $option %> <%= $value %>;
+<% } -%>
