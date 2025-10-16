@@ -169,7 +169,7 @@ class dns (
   Enum['yes', 'no'] $empty_zones_enable                             = 'yes',
   Optional[Enum['yes', 'no', 'explicit']] $dns_notify               = undef,
   Optional[Enum['yes', 'no']] $dnssec_enable                        = $dns::params::dnssec_enable,
-  Enum['yes', 'no', 'auto'] $dnssec_validation                      = 'yes',
+  Enum['yes', 'no', 'auto'] $dnssec_validation                      = 'auto',
   String $namedconf_template                                        = 'dns/named.conf.erb',
   Hash[String, Array[String]] $acls                                 = {},
   String $optionsconf_template                                      = 'dns/options.conf.erb',

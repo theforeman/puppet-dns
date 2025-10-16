@@ -52,7 +52,7 @@ define dns::view (
   Optional[Enum['only','first']]        $forward              = undef,
   Optional[Enum['yes','no']]            $recursion            = undef,
   Optional[Enum['yes','no']]            $dnssec_enable        = undef,
-  Optional[Enum['yes','no']]            $dnssec_validation    = undef,
+  Optional[Enum['yes','no','auto']]     $dnssec_validation    = undef,
   Optional[Enum['yes','no','explicit']] $dns_notify           = undef,
   Boolean                               $include_localzones   = true,
   Boolean                               $include_defaultzones = true,
