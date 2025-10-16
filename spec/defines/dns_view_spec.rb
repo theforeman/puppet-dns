@@ -67,7 +67,7 @@ describe 'dns::view' do
           forward:              'first',
           recursion:            'yes',
           dnssec_enable:        'yes',
-          dnssec_validation:    'yes',
+          dnssec_validation:    'auto',
           dns_notify:           'explicit',
           include_localzones:   true,
           include_defaultzones: true,
