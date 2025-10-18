@@ -53,7 +53,7 @@ class dns::config {
 
   concat::fragment { 'options.conf+10-main.dns':
     target  => $dns::optionspath,
-    content => template($dns::optionsconf_template),
+    content => epp($dns::optionsconf_template),
     order   => '10',
   }
 
