@@ -75,7 +75,7 @@ class dns::params {
       $user               = 'bind'
       $group              = 'bind'
       $rndcconfgen        = '/usr/local/sbin/rndc-confgen'
-      $named_checkconf    = '/usr/local/sbin/named-checkconf'
+      $named_checkconf    = '/usr/local/bin/named-checkconf'
       # The sysconfig settings are not relevant for FreeBSD
       $sysconfig_file     = undef
       $sysconfig_template = undef
