@@ -16,7 +16,7 @@ zone "<%= $zone %>";
 
 recursion <%= $dns::recursion %>;
 allow-query { <%= join($dns::allow_query, '; ') %>; };
-<% if $dns::dnssec_enable != undef and $dns::dnssec_enable != '' and $dns::dnssec_enable != false { -%>
+<% if $dns::dnssec_enable { -%>
 dnssec-enable <%= $dns::dnssec_enable %>;
 <% } -%>
 dnssec-validation <%= $dns::dnssec_validation %>;
