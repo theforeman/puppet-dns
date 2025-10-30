@@ -267,7 +267,7 @@ describe 'dns' do
       end
  
       describe 'with rpz zone' do
-        let(:params) { {:rpz_zones => 'rpz.block.local'} }
+        let(:params) { {:rpz_zones => [ 'rpz.block.local' ]} }
         
         it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
           'zone "rpz.block.local";'
