@@ -1,5 +1,5 @@
 directory "<%= $dns::vardir %>";
-<% if unless empty($dns::forwarders) { -%>
+<% unless empty($dns::forwarders) { -%>
 forwarders { <%= join($dns::forwarders, '; ') %>; };
 <% } -%>
 <% if $dns::forward { -%>
