@@ -265,6 +265,14 @@ describe 'dns' do
           'listen-on-v6 { none; };',
         ])}
       end
+ 
+      describe 'with rpz zone' do
+        let(:params) { {:rpz_zones => 'rpz.block.local'} }
+        
+        it { verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+          'zone "rpz.block.local";'
+        ])}
+      end
 
       describe 'with empty zones disabled' do
         let(:params) { {:empty_zones_enable => 'no'} }
