@@ -1,5 +1,20 @@
 # Changelog
 
+## [12.0.0](https://github.com/theforeman/puppet-dns/tree/12.0.0) (2025-11-05)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/11.1.0...12.0.0)
+
+**Breaking changes:**
+
+- change dnssec-validation default to auto [\#283](https://github.com/theforeman/puppet-dns/pull/283) ([ikonia](https://github.com/ikonia))
+- Drop puppet 7 support [\#280](https://github.com/theforeman/puppet-dns/pull/280) ([kajinamit](https://github.com/kajinamit))
+
+**Implemented enhancements:**
+
+- add support for Openvox [\#282](https://github.com/theforeman/puppet-dns/pull/282) ([evgeni](https://github.com/evgeni))
+- Add Ubuntu 24.04 [\#281](https://github.com/theforeman/puppet-dns/pull/281) ([kajinamit](https://github.com/kajinamit))
+- Add support for Debian 13 [\#278](https://github.com/theforeman/puppet-dns/pull/278) ([smortex](https://github.com/smortex))
+
 ## [11.1.0](https://github.com/theforeman/puppet-dns/tree/11.1.0) (2025-05-09)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/11.0.1...11.1.0)
