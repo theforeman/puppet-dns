@@ -7,6 +7,7 @@ class dns::params {
       $vardir             = '/var/cache/bind'
       $optionspath        = "${dnsdir}/named.conf.options"
       $zonefilepath       = "${vardir}/zones"
+      $zonefilepath_mode  = '0750'
       $localzonepath      = $facts['os']['name'] ? {
         'Debian' => if versioncmp($facts['os']['release']['major'], '13') >= 0 { 'unmanaged' } else { "${dnsdir}/zones.rfc1918" },
         default  => "${dnsdir}/zones.rfc1918",
@@ -41,6 +42,7 @@ class dns::params {
       $vardir             = '/var/named'
       $optionspath        = '/etc/named/options.conf'
       $zonefilepath       = "${vardir}/dynamic"
+      $zonefilepath_mode  = '0770'
       $localzonepath      = "${dnsdir}/named.rfc1912.zones"
       $defaultzonepath    = 'unmanaged'
       $publicviewpath     = "${dnsdir}/named/zones.conf"
@@ -66,6 +68,7 @@ class dns::params {
       $vardir             = '/usr/local/etc/namedb/working'
       $optionspath        = '/usr/local/etc/namedb/options.conf'
       $zonefilepath       = "${dnsdir}/dynamic"
+      $zonefilepath_mode  = '0750'
       $localzonepath      = 'unmanaged' # "${dnsdir}/master/empty.db"
       $defaultzonepath    = 'unmanaged'
       $publicviewpath     = "${dnsdir}/zones.conf"
@@ -89,6 +92,7 @@ class dns::params {
       $vardir             = '/var/named'
       $optionspath        = "${dnsdir}/named.options.conf"
       $zonefilepath       = "${vardir}/dynamic"
+      $zonefilepath_mode  = '0750'
       $localzonepath      = 'unmanaged' # "${dnsdir}/named.local.conf"
       $defaultzonepath    = 'unmanaged'
       $publicviewpath     = "${dnsdir}/zones.conf"

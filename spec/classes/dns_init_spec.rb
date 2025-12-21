@@ -109,6 +109,15 @@ describe 'dns' do
         end
       end
 
+      let(:zonefilepath_mode) do
+        case facts[:os]['family']
+        when 'RedHat'
+          '0770'
+        else
+          '0750'
+        end
+      end
+
       let(:service_name) { facts[:os]['family'] == 'Debian' ? 'bind9' : 'named' }
 
       describe 'with no custom parameters' do
@@ -162,7 +171,7 @@ describe 'dns' do
           verify_concat_fragment_exact_contents(catalogue, 'named.conf+10-main.dns', expected)
         end
 
-        it { should contain_file(zonefilepath).with_ensure('directory') }
+        it { should contain_file(zonefilepath).with_ensure('directory').with_mode(zonefilepath_mode) }
         it do
           should contain_exec('create-rndc.key')
             .with_command("#{sbin}/rndc-confgen -a -c #{rndc_key}")

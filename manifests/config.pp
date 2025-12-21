@@ -61,7 +61,7 @@ class dns::config {
     ensure => directory,
     owner  => $dns::params::user,
     group  => $dns::params::group,
-    mode   => '0750',
+    mode   => $dns::zonefilepath_mode,
   }
 
   exec { 'create-rndc.key':

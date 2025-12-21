@@ -30,6 +30,8 @@
 #   Name of the service
 # @param zonefilepath
 #   Directory containing zone files
+# @param zonefilepath_mode
+#   Mode of the directory containing zone files
 # @param localzonepath
 #   File holding local zones like RFC1912 or RFC1918 files.  The special value
 #   'unmanaged' can be used if one plans to create custom RFC1912/RFC1918 zones
@@ -159,6 +161,7 @@ class dns (
   Boolean $manage_service                                           = true,
   String $namedservicename                                          = $dns::params::namedservicename,
   Stdlib::Absolutepath $zonefilepath                                = $dns::params::zonefilepath,
+  Stdlib::Filemode $zonefilepath_mode                               = $dns::params::zonefilepath_mode,
   Variant[Enum['unmanaged'], Stdlib::Absolutepath] $localzonepath   = $dns::params::localzonepath,
   Variant[Enum['unmanaged'], Stdlib::Absolutepath] $defaultzonepath = $dns::params::defaultzonepath,
   Optional[Enum['only', 'first']] $forward                          = undef,
