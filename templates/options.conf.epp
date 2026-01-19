@@ -33,7 +33,7 @@ listen-on { <%= $dns::listen_on %>; };
 listen-on-v6 { <%= $dns::listen_on_v6 %>; };
 <% } -%>
 
-<% if $dns::allow_recursion { -%>
+<% unless empty($dns::allow_recursion) { -%>
 allow-recursion { <%= join($dns::allow_recursion, '; ') %>; };
 <% } -%>
 
