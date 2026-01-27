@@ -1,6 +1,21 @@
 # Changelog
 
-## [12.0.0](https://github.com/theforeman/puppet-dns/tree/12.0.0) (2025-11-05)
+## [12.1.0](https://github.com/theforeman/puppet-dns/tree/12.1.0) (2026-01-27)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/12.0.0...12.1.0)
+
+**Implemented enhancements:**
+
+- enable rpz zone support [\#284](https://github.com/theforeman/puppet-dns/pull/284) ([ikonia](https://github.com/ikonia))
+- Support CentOS Stream 10 [\#279](https://github.com/theforeman/puppet-dns/pull/279) ([kajinamit](https://github.com/kajinamit))
+
+**Fixed bugs:**
+
+- Omit allow-recursion if empty [\#290](https://github.com/theforeman/puppet-dns/pull/290) ([kajinamit](https://github.com/kajinamit))
+- Fix filemode of the zonefile directory [\#289](https://github.com/theforeman/puppet-dns/pull/289) ([kajinamit](https://github.com/kajinamit))
+- Fix permission of zonefilepath [\#286](https://github.com/theforeman/puppet-dns/pull/286) ([kajinamit](https://github.com/kajinamit))
+
+## [12.0.0](https://github.com/theforeman/puppet-dns/tree/12.0.0) (2025-11-06)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/11.1.0...12.0.0)
 
