@@ -25,7 +25,7 @@ class dns::config {
 
   concat::fragment { 'dns_zones+01-header.dns':
     target  => $dns::publicviewpath,
-    content => ' ',
+    content => '',
     order   => '01',
   }
 
