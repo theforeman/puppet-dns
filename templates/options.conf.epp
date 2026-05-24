@@ -33,6 +33,10 @@ listen-on { <%= $dns::listen_on %>; };
 listen-on-v6 { <%= $dns::listen_on_v6 %>; };
 <% } -%>
 
+<% if $dns::query_ipv6 { -%>
+query-ipv6 <%= $dns::query_ipv6 %>;
+<% } -%>
+
 <% unless empty($dns::allow_recursion) { -%>
 allow-recursion { <%= join($dns::allow_recursion, '; ') %>; };
 <% } -%>

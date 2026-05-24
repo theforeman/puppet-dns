@@ -51,6 +51,8 @@
 #   The listen-on option
 # @param listen_on_v6
 #   The listen-on-v6 option
+# @param query_ipv6
+#   The query-ipv6 option. Set to 'no' to disable IPv6 queries.
 # @param recursion
 #   The recursion option
 # @param allow_recursion
@@ -169,6 +171,7 @@ class dns (
   Array[Stdlib::Fqdn] $rpz_zones                                    = [],
   Optional[String] $listen_on                                       = undef,
   Variant[String, Boolean] $listen_on_v6                            = 'any',
+  Optional[Enum['yes', 'no']] $query_ipv6                           = undef,
   Enum['yes', 'no'] $recursion                                      = 'yes',
   Array[String] $allow_recursion                                    = ['localnets', 'localhost'],
   Array[String] $allow_query                                        = ['any'],
