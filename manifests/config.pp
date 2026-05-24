@@ -11,7 +11,6 @@ class dns::config {
     owner        => root,
     group        => $dns::params::group,
     mode         => '0640',
-    validate_cmd => $validate_cmd,
   }
 
   if $dns::enable_views {
