@@ -1,5 +1,14 @@
 # Changelog
 
+## [12.2.0](https://github.com/theforeman/puppet-dns/tree/12.2.0) (2026-05-25)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/12.1.0...12.2.0)
+
+**Implemented enhancements:**
+
+- Add optional query-ipv6 parameter [\#296](https://github.com/theforeman/puppet-dns/pull/296) ([ikonia](https://github.com/ikonia))
+- puppetlabs/concat: Allow 10.x [\#293](https://github.com/theforeman/puppet-dns/pull/293) ([bastelfreak](https://github.com/bastelfreak))
+
 ## [12.1.0](https://github.com/theforeman/puppet-dns/tree/12.1.0) (2026-01-27)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/12.0.0...12.1.0)
