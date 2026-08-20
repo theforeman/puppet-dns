@@ -586,11 +586,10 @@ describe 'dns' do
           end
 
           it {
-            verify_contents(catalogue, sysconfig_named_path, [
-              'BAZ="quux"',
-              'FOO="bar"',
-              'export SOMETHING="other"',
-            ])
+            is_expected.to contain_file(sysconfig_named_path)
+              .with_content(/BAZ="quux"/)
+              .with_content(/FOO="bar"/)
+              .with_content(/export SOMETHING="other"/)
           }
         end
       end
