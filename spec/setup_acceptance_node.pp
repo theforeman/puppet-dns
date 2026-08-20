@@ -16,6 +16,13 @@ if $facts['os']['name'] == 'Fedora' {
   }
 }
 
+# ISC DHCP is included in EPEL 10
+if $facts['os']['name'] == 'CentOS' and $facts['os']['release']['major'] == '10' {
+  package { 'epel-release':
+    ensure => installed,
+  }
+}
+
 # The both IPv4 and IPv6 are used to test views
 exec { 'sysctl -w net.ipv6.conf.all.disable_ipv6=0':
   path => ['/usr/sbin', '/sbin', '/usr/bin', '/bin'],
