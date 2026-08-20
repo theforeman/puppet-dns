@@ -30,10 +30,10 @@
 # @param syslog_facility
 #   The syslog facility to use when logging to a syslog log_type
 define dns::logging::channel (
+  Enum['file', 'null', 'stderr', 'syslog'] $log_type,
   Optional[Stdlib::Absolutepath] $file_path          = undef,
   Optional[String] $file_size                        = undef,
   Optional[Integer] $file_versions                   = undef,
-  Enum['file', 'null', 'stderr', 'syslog'] $log_type = undef,
   Integer[51, 59] $order                             = 51,
   Optional[Enum['no', 'yes']] $print_category        = undef,
   Optional[Enum['no', 'yes']] $print_severity        = undef,
