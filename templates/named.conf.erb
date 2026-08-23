@@ -20,6 +20,14 @@ options  {
         include "<%= scope.lookupvar('::dns::optionspath') %>";
 };
 
+<%- scope.lookupvar('::dns::acls').sort_by {|k, v| k}.each do |acl_name, acl_array| -%>
+acl "<%= acl_name %>"  {
+        <%- acl_array.sort.each do |subnet| -%>
+        <%= subnet %>;
+        <%- end -%>
+};
+<%- end -%>
+
 <% unless scope.lookupvar("::dns::enable_views") -%>
 <% if scope.lookupvar("::dns::localzonepath") != 'unmanaged' -%>
 include "<%= scope.lookupvar('::dns::localzonepath') %>";
@@ -28,14 +36,6 @@ include "<%= scope.lookupvar('::dns::localzonepath') %>";
 include "<%= scope.lookupvar('::dns::defaultzonepath') %>";
 <% end -%>
 <% end -%>
-
-<%- scope.lookupvar('::dns::acls').sort_by {|k, v| k}.each do |acl_name, acl_array| -%>
-acl "<%= acl_name %>"  {
-        <%- acl_array.sort.each do |subnet| -%>
-        <%= subnet %>;
-        <%- end -%>
-};
-<%- end -%>
 <%- if scope.lookupvar('::dns::additional_directives').any? -%>
 // additional directives
 <%- scope.lookupvar('::dns::additional_directives').each do |directive| -%>
