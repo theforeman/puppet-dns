@@ -34,7 +34,7 @@ describe 'dns' do
         when 'Debian'
           facts[:os]['release']['major'] != '11' ? "/usr/bin/named-checkconf" : "/usr/sbin/named-checkconf"
         when 'FreeBSD'
-          '/usr/local/sbin/named-checkconf'
+          '/usr/local/bin/named-checkconf'
         else
           '/usr/sbin/named-checkconf'
         end
@@ -70,7 +70,11 @@ describe 'dns' do
       let(:localzonepath) do
         case facts[:os]['family']
         when 'Debian'
-          if facts[:os]['release']['major'] != '13'
+          if facts[:os]['name'] == 'Ubuntu'
+            if facts[:os]['release']['major'] < '26.04'
+              "#{etc_directory}/zones.rfc1918"
+            end
+          elsif facts[:os]['release']['major'] != '13'
             "#{etc_directory}/zones.rfc1918"
           end
         when 'RedHat'
@@ -81,7 +85,11 @@ describe 'dns' do
       let(:defaultzonepath) do
         case facts[:os]['family']
         when 'Debian'
-          if facts[:os]['release']['major'] != '13'
+          if facts[:os]['name'] == 'Ubuntu'
+            if facts[:os]['release']['major'] < '26.04'
+              "#{etc_directory}/named.conf.default-zones"
+            end
+          elsif facts[:os]['release']['major'] != '13'
             "#{etc_directory}/named.conf.default-zones"
           end
         end
