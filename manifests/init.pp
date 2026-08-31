@@ -52,7 +52,16 @@
 # @param listen_on_v6
 #   The listen-on-v6 option
 # @param query_ipv6
-#   The query-ipv6 option. Set to 'no' to disable IPv6 queries.
+#   The query-source-v6 option. Set to 'no' to disable IPv6 queries for upstream
+#   name server connections. This option is only available in BIND 9.20 or later.
+#   For older BIND versions, use `sysconfig_startup_options => '-4'` instead.
+#   WARNING: Using this parameter with BIND < 9.20 will cause configuration errors.
+# @param bind_9_20_compat
+#   Internal parameter that indicates whether the system has BIND 9.20 or later.
+#   This is automatically detected based on the operating system version. Do not
+#   override this parameter unless you know the BIND version differs from the
+#   OS-based detection. Changing this parameter incorrectly may result in
+#   invalid named.conf configuration.
 # @param recursion
 #   The recursion option
 # @param allow_recursion
@@ -172,6 +181,7 @@ class dns (
   Optional[String] $listen_on                                       = undef,
   Variant[String, Boolean] $listen_on_v6                            = 'any',
   Optional[Enum['yes', 'no']] $query_ipv6                           = undef,
+  Boolean $bind_9_20_compat                                         = $dns::params::bind_9_20_compat,
   Enum['yes', 'no'] $recursion                                      = 'yes',
   Array[String] $allow_recursion                                    = ['localnets', 'localhost'],
   Array[String] $allow_query                                        = ['any'],
