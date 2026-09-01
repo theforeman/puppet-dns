@@ -56,6 +56,8 @@
 #   Applicable when forwarders are empty and zonetype is set to master.
 # @param forwarders
 # @param dns_notify
+# @param nameconfpath
+#   Moved to class parameter to allow zones split across multiple named.conf.x files
 # @param zone_statistics
 # @param key_directory
 # @param inline_signing
@@ -95,6 +97,7 @@ define dns::zone (
   Enum['first', 'only'] $forward                          = 'first',
   Boolean $master_empty_forwarders_enable                 = false,
   Array[Dns::Forwarder] $forwarders                       = [],
+  String $nameconfpath                                    = $dns::publicviewpath,
   Optional[Enum['yes', 'no', 'explicit']] $dns_notify     = undef,
   Optional[Enum['yes', 'no']] $zone_statistics            = undef,
   Optional[Dns::UpdatePolicy] $update_policy              = undef,
@@ -131,11 +134,11 @@ define dns::zone (
 
   $_target_views.each |$view| {
     $target = $view ? {
-      '_GLOBAL_' => $dns::publicviewpath,
+      '_GLOBAL_' => $nameconfpath,
       default    => "${dns::viewconfigpath}/${view}.conf",
     }
 
-    concat::fragment { "dns_zones+10_${view}_${title}.dns":
+    concat::fragment { "dns_zones+10_${nameconfpath}_${view}_${title}.dns":
       target  => $target,
       content => template('dns/named.zone.erb'),
       order   => "${view}-11-${zone}-1",
