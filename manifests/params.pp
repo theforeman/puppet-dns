@@ -36,6 +36,15 @@ class dns::params {
       $sysconfig_disable_zone_checking = undef
 
       $dnssec_enable = undef
+
+      # Determine if BIND 9.20+ is available based on OS version
+      # BIND 9.20+ supports query-source-v6 none
+      # Ubuntu uses version format like "26.04" in os.release.major
+      $bind_9_20_compat = $facts['os']['name'] ? {
+        'Ubuntu' => versioncmp($facts['os']['release']['major'], '26.04') >= 0,
+        'Debian' => versioncmp($facts['os']['release']['major'], '13') >= 0,
+        default => false,
+      }
     }
     'RedHat': {
       $dnsdir             = '/etc'
@@ -62,6 +71,20 @@ class dns::params {
       $sysconfig_resolvconf_integration = undef
 
       $dnssec_enable = if versioncmp($facts['os']['release']['major'], '9') >= 0 { undef } else { 'yes' }
+
+      # Determine if BIND 9.20+ is available based on OS
+      # RHEL 11+ has BIND 9.20+, Fedora has it from 43+
+      $bind_9_20_compat = if $facts['os']['family'] == 'RedHat' {
+        if $facts['os']['name'] != 'Fedora' {
+          # Red Hat Enterprise Linux and variants (RHEL, CentOS, Rocky, Alma)
+          versioncmp($facts['os']['release']['major'], '11') >= 0
+        } else {
+          # Fedora
+          versioncmp($facts['os']['release']['major'], '43') >= 0
+        }
+      } else {
+        false
+      }
     }
     /^(FreeBSD|DragonFly)$/: {
       $dnsdir             = '/usr/local/etc/namedb'
@@ -86,6 +109,8 @@ class dns::params {
       $sysconfig_disable_zone_checking = undef
       $sysconfig_resolvconf_integration = undef
       $dnssec_enable = undef
+      # FreeBSD 14+ includes BIND 9.20+
+      $bind_9_20_compat = versioncmp($facts['os']['release']['major'], '14') >= 0
     }
     'Archlinux': {
       $dnsdir             = '/etc'
@@ -111,6 +136,9 @@ class dns::params {
       $sysconfig_resolvconf_integration = undef
 
       $dnssec_enable = undef
+
+      # Archlinux rolling release includes BIND 9.20+
+      $bind_9_20_compat = true
     }
     default: {
       fail ("Unsupported operating system family ${facts['os']['family']}")

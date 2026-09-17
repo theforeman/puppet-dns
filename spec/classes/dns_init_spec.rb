@@ -593,6 +593,47 @@ describe 'dns' do
           }
         end
       end
+
+      context 'query_ipv6 (BIND 9.20+ only)' do
+        # Only test on OSes known to have BIND 9.20+
+        # Match the logic from params.pp: check os.family + os.name combinations
+        # The test framework (on_supported_os) already filters by version from metadata.json
+        # Use Puppet::Util::Package.versioncmp for version comparison (mirrors Puppet's versioncmp function)
+        supported_os = case os_facts[:os]['family']
+                       when 'Debian'
+                         case os_facts[:os]['name']
+                         when 'Ubuntu'
+                           Puppet::Util::Package.versioncmp(os_facts[:os]['release']['major'], '26.04') >= 0
+                         when 'Debian'
+                           Puppet::Util::Package.versioncmp(os_facts[:os]['release']['major'], '13') >= 0
+                         else
+                           false
+                         end
+                       when 'RedHat'
+                         # RHEL 11+ (but not Fedora)
+                         if os_facts[:os]['name'] == 'Fedora'
+                           Puppet::Util::Package.versioncmp(os_facts[:os]['release']['major'], '43') >= 0
+                         else
+                           Puppet::Util::Package.versioncmp(os_facts[:os]['release']['major'], '11') >= 0
+                         end
+                       else
+                         false
+                       end
+
+        let(:params) { {:query_ipv6 => 'no'} }
+
+        if supported_os
+          it 'should include query-source-v6 none' do
+            verify_concat_fragment_contents(catalogue, 'options.conf+10-main.dns', [
+              'query-source-v6 none;',
+            ])
+          end
+        else
+          it 'should not include query-source-v6' do
+            is_expected.to contain_concat_fragment('options.conf+10-main.dns').without_content('/query-source-v6/')
+          end
+        end
+      end
     end
   end
 end

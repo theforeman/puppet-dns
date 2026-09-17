@@ -32,8 +32,11 @@ listen-on { <%= $dns::listen_on %>; };
 <% if $dns::listen_on_v6 { -%>
 listen-on-v6 { <%= $dns::listen_on_v6 %>; };
 <% } -%>
-<% if $dns::query_ipv6 { -%>
-query-ipv6 <%= $dns::query_ipv6 %>;
+<% if $dns::query_ipv6 and $dns::bind_9_20_compat { -%>
+query-source-v6 none;
+<% } elsif $dns::query_ipv6 and !$dns::bind_9_20_compat { -%>
+<%# WARNING: query-source-v6 requires BIND 9.20+ %>
+<%# This system may not support the query-source-v6 option %>
 <% } -%>
 
 <% unless empty($dns::allow_recursion) { -%>
