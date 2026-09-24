@@ -8,10 +8,9 @@ class dns::config {
   }
 
   concat { $dns::publicviewpath:
-    owner        => root,
-    group        => $dns::params::group,
-    mode         => '0640',
-    validate_cmd => $validate_cmd,
+    owner => root,
+    group => $dns::params::group,
+    mode  => '0640',
   }
 
   if $dns::enable_views {
