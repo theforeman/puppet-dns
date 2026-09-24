@@ -41,6 +41,13 @@ view "<%= @title %>" {
 <% if @dnssec_validation -%>
     dnssec-validation <%= @dnssec_validation %>;
 <% end -%>
+<% if @response_policy -%>
+    response-policy {
+<% @response_policy.each do |policy| -%>
+        zone "<%= policy['zone'] %>"<% if policy['policy'] -%> policy <%= policy['policy'] %><% end -%><% if policy['policy'] == 'cname' && policy['cname_domain'] -%> <%= policy['cname_domain'] %><% end -%><% if policy['max_policy_ttl'] -%> max-policy-ttl <%= policy['max_policy_ttl'] %><% end -%><% if policy['log'] -%> log <%= policy['log'] %><% end -%>;
+<% end -%>
+    };
+<% end -%>
 
 <% if @include_localzones -%>
 <% if scope.lookupvar("::dns::localzonepath") != 'unmanaged' -%>
