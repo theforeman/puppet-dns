@@ -35,7 +35,7 @@ describe 'dns::logging::channel' do
           ).with('order' => 51)
         }
 
-        it { should contain_file(logdir).with_ensure('directory') }
+        it { should contain_file(logdir).with_ensure('directory').that_comes_before('Class[dns::service]') }
         it {
           is_expected.to contain_concat_fragment(
             'named.conf+50-logging-header.dns'

@@ -6,6 +6,7 @@ class dns::logging {
     owner  => $dns::params::user,
     group  => $dns::params::group,
     mode   => '0755',
+    before => Class['dns::service'],
   }
 
   concat::fragment { 'named.conf+50-logging-header.dns':
