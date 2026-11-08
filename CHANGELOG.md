@@ -1,12 +1,30 @@
 # Changelog
 
-## [12.2.0](https://github.com/theforeman/puppet-dns/tree/12.2.0) (2026-05-25)
+## [13.0.0](https://github.com/theforeman/puppet-dns/tree/13.0.0) (2026-10-23)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/12.2.0...13.0.0)
+
+**Breaking changes:**
+
+- Drop testing on puppet [\#300](https://github.com/theforeman/puppet-dns/pull/300) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add OpenVox 9 support [\#306](https://github.com/theforeman/puppet-dns/pull/306) ([bastelfreak](https://github.com/bastelfreak))
+- puppetlabs/stdlib: Allow 10.x [\#305](https://github.com/theforeman/puppet-dns/pull/305) ([bastelfreak](https://github.com/bastelfreak))
+- Add EL 10 support [\#298](https://github.com/theforeman/puppet-dns/pull/298) ([ekohl](https://github.com/ekohl))
+
+**Merged pull requests:**
+
+- remove white space from first zone config definition [\#292](https://github.com/theforeman/puppet-dns/pull/292) ([ikonia](https://github.com/ikonia))
+
+## [12.2.0](https://github.com/theforeman/puppet-dns/tree/12.2.0) (2026-05-26)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/12.1.0...12.2.0)
 
 **Implemented enhancements:**
 
-- Add optional query-ipv6 parameter [\#296](https://github.com/theforeman/puppet-dns/pull/296) ([ikonia](https://github.com/ikonia))
+- add optional query-ipv6 parameter [\#296](https://github.com/theforeman/puppet-dns/pull/296) ([ikonia](https://github.com/ikonia))
 - puppetlabs/concat: Allow 10.x [\#293](https://github.com/theforeman/puppet-dns/pull/293) ([bastelfreak](https://github.com/bastelfreak))
 
 ## [12.1.0](https://github.com/theforeman/puppet-dns/tree/12.1.0) (2026-01-27)
