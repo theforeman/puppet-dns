@@ -1,5 +1,24 @@
 # Changelog
 
+## [13.0.0](https://github.com/theforeman/puppet-dns/tree/13.0.0) (2026-11-09)
+
+[Full Changelog](https://github.com/theforeman/puppet-dns/compare/12.2.0...13.0.0)
+
+**Breaking changes:**
+
+- Require `log_type` when declaring `dns::logging::channel`.
+- Drop testing on puppet [\#300](https://github.com/theforeman/puppet-dns/pull/300) ([bastelfreak](https://github.com/bastelfreak))
+
+**Implemented enhancements:**
+
+- Add OpenVox 9 support [\#306](https://github.com/theforeman/puppet-dns/pull/306) ([bastelfreak](https://github.com/bastelfreak))
+- puppetlabs/stdlib: Allow 10.x [\#305](https://github.com/theforeman/puppet-dns/pull/305) ([bastelfreak](https://github.com/bastelfreak))
+- Add EL 10 support [\#298](https://github.com/theforeman/puppet-dns/pull/298) ([ekohl](https://github.com/ekohl))
+
+**Fixed bugs:**
+
+- Create the log directory before the service is started [\#308](https://github.com/theforeman/puppet-dns/pull/308) ([Selutha](https://github.com/Selutha))
+
 ## [12.2.0](https://github.com/theforeman/puppet-dns/tree/12.2.0) (2026-05-25)
 
 [Full Changelog](https://github.com/theforeman/puppet-dns/compare/12.1.0...12.2.0)
