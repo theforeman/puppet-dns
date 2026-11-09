@@ -374,12 +374,44 @@ describe 'dns' do
         ])}
       end
 
+      describe 'with acls whose order must be preserved' do
+        let(:params) { {:acls => { 'trusted_nets' => [ '!192.0.2.5', '192.0.2.0/24', '10.0.0.0/8' ] } } }
+
+        it { verify_concat_fragment_contents(catalogue, 'named.conf+10-main.dns', [
+          'acl "trusted_nets"  {',
+          '        !192.0.2.5;',
+          '        192.0.2.0/24;',
+          '        10.0.0.0/8;',
+          '};',
+        ])}
+      end
+
       describe 'with statistics channels' do
         let(:params) { { :statistics_channels => { '*' => { 'port' => 8053, 'allowed_addresses' => [ '127.0.0.0/8' ] } } } }
 
         it { verify_concat_fragment_contents(catalogue, 'named.conf+10-main.dns', [
           'statistics-channels  {',
           '        inet * port 8053 allow { 127.0.0.0/8; };',
+          '};',
+        ])}
+      end
+
+      describe 'with statistics channels allowed_addresses order preserved' do
+        let(:params) { { :statistics_channels => { '*' => { 'port' => 8053, 'allowed_addresses' => [ '!192.0.2.5', '192.0.2.0/24', '10.0.0.0/8' ] } } } }
+
+        it { verify_concat_fragment_contents(catalogue, 'named.conf+10-main.dns', [
+          'statistics-channels  {',
+          '        inet * port 8053 allow { !192.0.2.5; 192.0.2.0/24; 10.0.0.0/8; };',
+          '};',
+        ])}
+      end
+
+      describe 'with controls allowed_addresses order preserved' do
+        let(:params) { { :controls => { '127.0.0.1' => { 'port' => 953, 'allowed_addresses' => [ '!192.0.2.5', '192.0.2.0/24', '10.0.0.0/8' ], 'keys' => [ 'rndc-key' ] } } } }
+
+        it { verify_concat_fragment_contents(catalogue, 'named.conf+10-main.dns', [
+          'controls  {',
+          '        inet 127.0.0.1 port 953 allow { !192.0.2.5; 192.0.2.0/24; 10.0.0.0/8; } keys { "rndc-key"; };',
           '};',
         ])}
       end
