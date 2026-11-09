@@ -10,10 +10,12 @@ class dns::params {
       $zonefilepath_mode  = '0750'
       $localzonepath      = $facts['os']['name'] ? {
         'Debian' => if versioncmp($facts['os']['release']['major'], '13') >= 0 { 'unmanaged' } else { "${dnsdir}/zones.rfc1918" },
+        'Ubuntu' => if versioncmp($facts['os']['release']['major'], '26.04') >= 0 { 'unmanaged' } else { "${dnsdir}/zones.rfc1918" },
         default  => "${dnsdir}/zones.rfc1918",
       }
       $defaultzonepath    = $facts['os']['name'] ? {
         'Debian' => if versioncmp($facts['os']['release']['major'], '13') >= 0 { 'unmanaged' } else { "${dnsdir}/named.conf.default-zones" },
+        'Ubuntu' => if versioncmp($facts['os']['release']['major'], '26.04') >= 0 { 'unmanaged' } else { "${dnsdir}/named.conf.default-zones" },
         default  => "${dnsdir}/named.conf.default-zones",
       }
       $publicviewpath     = "${dnsdir}/zones.conf"
@@ -78,7 +80,7 @@ class dns::params {
       $user               = 'bind'
       $group              = 'bind'
       $rndcconfgen        = '/usr/local/sbin/rndc-confgen'
-      $named_checkconf    = '/usr/local/sbin/named-checkconf'
+      $named_checkconf    = '/usr/local/bin/named-checkconf'
       # The sysconfig settings are not relevant for FreeBSD
       $sysconfig_file     = undef
       $sysconfig_template = undef
